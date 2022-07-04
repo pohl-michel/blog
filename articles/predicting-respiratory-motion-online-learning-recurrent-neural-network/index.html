@@ -243,11 +243,59 @@
 
 						<p>I would like to mention the core mathematical property that is the foundation of UORO, and which was first introduced in [10]. Here it is:</p>
 
-						<p>Given a decomposition of a matrix A as a sum of rank-one outer products</p>
+						<blockquote>
+							<p>Given a decomposition of a matrix A as a sum of rank-one outer products</p>
 
-						<p>\[
-							A = \sum_{i=1}^n v_i w_i^T
-						\]</p>
+							<p>\[
+								A = \sum_{i=1}^n v_i w_i^T
+							\]</p>
+
+							<p>, independent random signs νᵢ ∈ {-1, 1}, and a vector ρ of n positive real numbers, the following quantity</p>
+
+							<p>\[
+								\tilde{A} = \left( \sum_{i=1}^n \rho_i \nu_i v_i \right)
+								\left( \sum_{i=1}^n \frac{\nu_i w_i}{\rho_i} \right)^T
+							\]</p>		
+							
+							<p>satisfies:</p>
+
+							<p>\[
+								\mathbb{E} \tilde{A} = A
+							\]</p>
+
+							<p>Furthermore, choosing </p>
+
+							<p>\[
+								\rho_i = \sqrt{\| w_i \| / \| v_i \|}
+							\]</p>
+
+							<p>minimizes the variance of the approximation.</p>
+						</blockquote>
+
+						<p>The first part of this property is relatively easy to proove, and results from the linearity of the expectation operator. The variance minimization part requires a more detailed analysis. While I will not make comments regarding the latter here, I would like to make a link with the Matlab implementation in section 2.3. You can look up at the code and see that the variable <code>nu</code> in my implementation corresponds to the vector ν above (line 30). The variables <code>rho0</code> and <code>rho1</code> (lines 40 and 41) correspond to the quantities ρᵢ in the formulas above. Notice also how the latter are expressed as the square root of the norm of two vectors in the code.  The variable pred_par.eps_normalizer appearing around those fractions is here to guarantee numerical stability.</p>
+
+						<p>To derive the UORO algorithm, the rank-one trick is actually applied twice in conjunction with the equation describing the recursive update of the influence matrix ∂xₙ/∂θ (cf section 2.2). The proof details are in the original UORO paper [8].</p>
+
+						<h2>References</h2>
+
+						<ol>
+							<li>Sung Hyuna, Jacques Ferlay, Rebecca L. Siegel, Mathieu Laversanne, Isabelle Soerjomataram, Ahmedin Jemal, and Freddie Bray, Global cancer statistics 2020: Globocan estimates of incidence and mortality worldwide for 36 cancers in 185 countries (2020), CA: A Cancer Journal for Clinicians</li>
+							<li>National Cancer Institute - Surveillance, Epidemiology and End Results Program, Cancer stat facts: Lung and bronchus cancer (2022) [accessed on June 15, 2021]</li>
+							<li>Pohl Michel, Mitsuru Uesaka, Hiroyuki Takahashi, Kazuyuki Demachi, and Ritu Bhusal Chhatkuli, Prediction of the Position of External Markers Using a Recurrent Neural Network Trained With Unbiased Online Recurrent Optimization for Safe Lung Cancer Radiotherapy (2022), Computer Methods and Programs in Biomedicine</li>
+							<li>Ritu Bhusal Chhatkuli, Development of a markerless tumor prediction system using principal component analysis and multi-channel singular spectral analysis with real-time respiratory phase recognition in radiation therapy (2016), PhD thesis, The University of Tokyo</li>
+							<li>Schweikard Achim, Hiroya Shiomi, and John Adler,  Respiration tracking in radiosurgery (2004), Medical physics</li>
+							<li>Pohl Michel, Mitsuru Uesaka, Kazuyuki Demachi, and Ritu Bhusal Chhatkuli, Prediction of the motion of chest internal points using a recurrent neural network trained with real-time recurrent learning for latency compensation in lung cancer radiotherapy (2021), Computerized Medical Imaging and Graphics</li>
+							<li>Krilavicius Tomas, Indre Zliobaite, Henrikas Simonavicius, and Laimonas Jaruevicius, Predicting respiratory motion for real-time tumour tracking in radiotherapy (2016), ArXiv.org</li>
+							<li>Corentin Tallec and Yann Ollivier, Unbiased online recurrent optimization (2017), ArXiv.org</li>
+							<li>Verma Poonam, Huanmei Wu, Mark Langer, Indra Das, and George Sandison, Survey: real-time tumor motion prediction for image-guided radiation treatment (2010), Computing in Science & Engineering</li>
+							<li>Ollivier Yann, Corentin Tallec, and Guillaume Charpiat, Training recurrent networks online without backtracking (2015), ArXiv.org</li>
+						</ol>
+
+
+
+
+
+
 
 
 

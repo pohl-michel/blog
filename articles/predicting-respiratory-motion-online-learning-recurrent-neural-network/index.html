@@ -6,9 +6,10 @@
 -->
 <html>
 	<head>
-		<title>Generic - Editorial by HTML5 UP</title>
+		<title>Pohl Michel - Blog</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/academicons.min.css"/>
 		<link rel="stylesheet" href="../../assets/css/main.css" />
 		<link rel="stylesheet" href="../../assets/css/github-gist-code-box.css" >
 		<script>
@@ -28,14 +29,7 @@
 
 					<!-- Header -->
 					<header id="header">
-						<a href="index.html" class="logo"><strong>Editorial</strong> by HTML5 UP</a>
-						<ul class="icons">
-							<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-							<li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
-							<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-							<li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
-						</ul>
+						<a href="index.html" class="logo"><strong>Pohl Michel</strong> - Personal blog </a>								
 					</header>
 
 					<!-- Content -->
@@ -61,8 +55,10 @@
 						
 						<p>Please feel free to read the original article if you are curious and leave a comment. The accepted manuscript version is freely accessible on Arxiv (first link above). In case you are new to machine learning, please note that I may not explain all the basic concepts of that field here. As a result, the technical part might be challenging to go through. Still, I will try to explain the essential ideas clearly while skipping details. If you have already read my published article, this can still be of interest to you, as I cover the topic differently here by discussing additional minor results, the practical implementation in Matlab, as well as the rank-one trick that is at the heart of unbiased online recurrent optimization (UORO).</p>
 
+					<!-- </section> -->
 
-						<h2>1. Why we need time series forecasting in lung radiotherapy</h2>
+
+						<h2 id="Introduction">1. Why we need time series forecasting in lung radiotherapy</h2>
 
 						<p>Lung tumors move with the respiratory motion. Hence, it is challenging to target them precisely, as real-time imaging during the radiotherapy treatment has limitations. </p>
 
@@ -80,8 +76,9 @@
 
 						<span class="image main"><img src="images/algorithm_pipeline.png" style="max-width: 60%" alt="" <figcaption>Deriving the future position of the tumor from external marker position measurements using a correspondence model. In this study, I focus exclusively on the prediction step to compensate for the latency of treatment systems. </figcaption> </span>
 
-						<h2> 2. Our approach</h2>
 
+						<h2 id="section 2"> 2. Our approach</h2>
+						
 						<h3> 2.1. The dataset </h3>
 
 						<p> In this study, I used the ExtMarker dataset comprising nine sequences with the 3D position of three external markers on the chest of healthy individuals. The sampling frequency is 10 Hz, and the movement amplitude in the spine direction is between 6mm and 40mm. That dataset is public and more information can be found in [7]. We divide the data for each sequence into training, cross-validation, and test sets. </p>
@@ -90,7 +87,7 @@
 
 						<p>Forecasting respiratory motion is challenging, as the breathing characteristics such as amplitude and period vary within each record, even though it appears predominantly cyclic. In addition, the individuals were asked to talk or laugh in approximately half of the records, which makes the task more complex. In real-world situations, sudden respiratory abnormalities such as coughing, hiccuping or yawning can also happen, which is why including challenging records is beneficial.</p>
 
-						<h3>2.2 Let's dive into the world of RNNs. </h3>
+						<h3 id="section 2.2">2.2 Let's dive into the world of RNNs. </h3>
 
 						<p>RNNs are a specific type of neural network equipped with a feedback loop enabling them to remember information acquired over time. As we perform forecasting, the position of the markers in the past and the future are respectively the input and the output of the network. Forecasting is a self-supervised learning problem, as manual annotation is not needed. This study uses a simple vanilla architecture with a single hidden layer.</p>
 
@@ -142,7 +139,8 @@
 
 						<p>Again, I will not describe how these two vectors are updated here in detail. The important point is that there is an efficient way to compress the information contained in the influence matrix that enables reducing the computational cost down to O(q²). I will describe the mathematical property at the core of UORO in a bonus section at the end of the article, so please make sure to follow along :) In this research, I performed prediction independently for each sequence and conducted cross-validation using grid search. </p>
 
-						<h3> 2.3. UORO implementation in Matlab </h3>
+
+						<h3 id="section 2.3"> 2.3. UORO implementation in Matlab </h3>
 
 						<p>Let's try to understand the basic implementation of UORO in Matlab. Here, I will describe the <code>rnn_UORO</code> function of the Github repository corresponding to my paper. If you have some knowledge of Python, there is nothing to be afraid of here, as the syntax of these two languages is very close to one another. You can skip this part if you are not interested in the code or prefer jumping to the analysis of the results.</p>
 
@@ -170,7 +168,8 @@
 
 						<p>The code in my Github repository differs slightly as it also handles GPU computing, but I skipped that part to make explanations simple. Also, I experimentally found that using my GPU made the UORO calculations slower. Therefore, my article only reports the performance of UORO corresponding to CPU calculations.</p>
 
-						<h2>3. Results</h2>
+
+						<h2 id="section 3">3. Results</h2>
 
 						<h3>3.1. Qualitative observation of the forecasting behavior</h3>
 
@@ -192,7 +191,7 @@
 
 						<span class="image main"><img src="images/prediction_trace_LMS.png" style="max-width: 60%" alt="" <figcaption> Prediction of the z coordinate (spine axis) of marker 3 in sequence 1 with LMS. Reprinted from [3], Copyright 2022, with permission from Elsevier. </figcaption> </span>
 
-						<h3>3.2. Numerical forecasting accuracy</h3>
+						<h3 id="section 3.2">3.2. Numerical forecasting accuracy</h3>
 
 						<p>I confess that I picked the particular example above because it makes UORO look good. Still, in some situations, UORO does not perform as well as the other methods. So let's look closely at what happens when we average numerical precision metrics over horizon values between 0.1s and 2.0s and the nine sequences. Indeed, it was reported previously that the range of latencies in radiotherapy is somewhere 0.1s and 2.0s [9].</p>
 
@@ -213,7 +212,8 @@
 
 						<span class="image main"><img src="images/nRMSE vs jitter.png" style="max-width: 60%" alt="" <figcaption> Prediction performance of each algorithm in terms of RMSE and jitter. Each point corresponds to the mean of the RMSE and jitter of a given algorithm of the test set over the regular or irregular breathing sequences for a single value of the horizon. Datapoints corresponding to linear regression with high horizon values have not been shown for readability as they correspond to high RMSE values. </figcaption> </span>
 
-						<h3>3.3. Hyper-parameter optimization</h3>
+
+						<h3 id="section 3.3">3.3. Hyper-parameter optimization</h3>
 
 						<p>Let's talk about hyper-parameter optimization. We indicated earlier that we used cross-validation to  select the network hyper-parameters leading to the best performance. I found that the learning rate and SHL were those having the strongest influence on performance in this study. So let's have a close look at how their selection impacts forecasting accuracy.</p>
 
@@ -221,14 +221,15 @@
 
 						<p>We observe again that the higher the horizon h, the higher the prediction error. In the case of high values of h, the network appears more efficient with a higher learning rate and lower SHL. In other words, in that scenario, the network works better when taking into account only the most recent signals and adapting the weights faster when changes in the incoming respiratory patterns occur.</p>
 
-						<h3>3.4. Time performance</h3>
+
+						<h3 id="section 3.4">3.4. Time performance</h3>
 
 						<p>Calculation time is one of the most important criteria for evaluating our algorithms. We observe that the prediction time increases with the SHL, which is proportional to the input layer size, and the number of hidden units. Linear regression appears to be the fastest forecasting method, followed by LMS. UORO was able to perform forecasting approximately 100 times faster than RTRL on my machine, which is a direct consequence of their respective computational complexity O(q²) and O(q⁴).</p>
 
 						<span class="image main"><img src="images/time performance.png" style="max-width: 60%" alt="" <figcaption> Calculation time (Dell Intel Core i9–9900K 3.60GHz CPU 32Gb RAM with Matlab). Adapted from [3], Copyright 2022, with permission from Elsevier. </figcaption> </span>
-				
 						
-						<h2>4. In short</h2>
+
+						<h2 id="section 4">4. In short</h2>
 
 						<p>This work is the first application of RNNs trained with UORO to respiratory motion compensation in radiotherapy. UORO is an online learning algorithm capable of learning data arriving in a streaming fashion, which enables high robustness to irregular breathing and needs fewer data than traditional learning algorithms. As a result, it has the potential to reduce irradiation of healthy tissues and, in turn, avoid side effects such as pneumothorax.</p>
 
@@ -239,7 +240,7 @@
 						<p>Thank you so much for the time that you have spent reading this. I sincerely hope that you could enjoy learning something interesting. Please do not hesitate to like this story, share it,  and let me know your thoughts in the comments section. :)</p>
 
 
-						<h2>5. Bonus: the rank-one trick</h2>
+						<h2 id="section 5">5. Bonus: the rank-one trick</h2>
 
 						<p>I would like to mention the core mathematical property that is the foundation of UORO, and which was first introduced in [10]. Here it is:</p>
 
@@ -276,7 +277,8 @@
 
 						<p>To derive the UORO algorithm, the rank-one trick is actually applied twice in conjunction with the equation describing the recursive update of the influence matrix ∂xₙ/∂θ (cf section 2.2). The proof details are in the original UORO paper [8].</p>
 
-						<h2>References</h2>
+
+						<h2 id ="References">References</h2>
 
 						<ol>
 							<li>Sung Hyuna, Jacques Ferlay, Rebecca L. Siegel, Mathieu Laversanne, Isabelle Soerjomataram, Ahmedin Jemal, and Freddie Bray, Global cancer statistics 2020: Globocan estimates of incidence and mortality worldwide for 36 cancers in 185 countries (2020), CA: A Cancer Journal for Clinicians</li>
@@ -291,25 +293,7 @@
 							<li>Ollivier Yann, Corentin Tallec, and Guillaume Charpiat, Training recurrent networks online without backtracking (2015), ArXiv.org</li>
 						</ol>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+						<i>Published on July 2022</i>
 
 					</section>
 
@@ -320,90 +304,76 @@
 			<div id="sidebar">
 				<div class="inner">
 
-					<!-- Search -->
-						<section id="search" class="alt">
-							<form method="post" action="#">
-								<input type="text" name="query" id="query" placeholder="Search" />
-							</form>
-						</section>
 
+					
 					<!-- Menu -->
-						<nav id="menu">
-							<header class="major">
-								<h2>Menu</h2>
-							</header>
-							<ul>
-								<li><a href="index.html">Homepage</a></li>
-								<li><a href="generic.html">Generic</a></li>
-								<li><a href="elements.html">Elements</a></li>
-								<li>
-									<span class="opener">Submenu</span>
-									<ul>
-										<li><a href="#">Lorem Dolor</a></li>
-										<li><a href="#">Ipsum Adipiscing</a></li>
-										<li><a href="#">Tempus Magna</a></li>
-										<li><a href="#">Feugiat Veroeros</a></li>
-									</ul>
-								</li>
-								<li><a href="#">Etiam Dolore</a></li>
-								<li><a href="#">Adipiscing</a></li>
-								<li>
-									<span class="opener">Another Submenu</span>
-									<ul>
-										<li><a href="#">Lorem Dolor</a></li>
-										<li><a href="#">Ipsum Adipiscing</a></li>
-										<li><a href="#">Tempus Magna</a></li>
-										<li><a href="#">Feugiat Veroeros</a></li>
-									</ul>
-								</li>
-								<li><a href="#">Maximus Erat</a></li>
-								<li><a href="#">Sapien Mauris</a></li>
-								<li><a href="#">Amet Lacinia</a></li>
-							</ul>
-						</nav>
+					<nav id="menu">
+						<header class="major">
+							<h2>Menu</h2>
+						</header>
+
+						<ul>
+							<li><a href="../../index.html" target="_blank"><b>Blog homepage</b></a></li>
+						</ul>
+
+						<hr />
+						<br />
+
+						<ul>
+							<li><a href="#header">Page top</a></li>
+							<li><a href="#Introduction">1. Why we need time series forecasting in lung radiotherapy</a></li>
+							<li>
+								<span class="opener">2. Our approach</span>
+								<ul>
+									<li><a href="#section 2">2.1. The dataset</a></li>
+									<li><a href="#section 2.2">2.2 Let's dive into the world of RNNs.</a></li>
+									<li><a href="#section 2.3">2.3. UORO implementation in Matlab </a></li>
+								</ul>
+							</li>
+							<li>
+								<span class="opener">3. Results</span>
+								<ul>
+									<li><a href="#section 3">3.1. Qualitative observation of the forecasting behavior</a></li>
+									<li><a href="#section 3.2">3.2. Numerical forecasting accuracy</a></li>
+									<li><a href="#section 3.3">3.3. Hyper-parameter optimization</a></li>
+									<li><a href="#section 3.4">3.4. Time performance</a></li>
+								</ul>
+							</li>
+							<li><a href="#section 4">4. In short</a></li>
+							<li><a href="#section 5">5. Bonus: the rank-one trick</a></li>
+							<li><a href="#References">References</a></li>
+						</ul>
+					</nav>
 
 					<!-- Section -->
-						<section>
-							<header class="major">
-								<h2>Ante interdum</h2>
-							</header>
-							<div class="mini-posts">
-								<article>
-									<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
-									<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-								</article>
-								<article>
-									<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
-									<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-								</article>
-								<article>
-									<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
-									<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-								</article>
-							</div>
-							<ul class="actions">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</section>
+					<section>
+						<header class="major">
+							<h2>Suggested reading</h2>
+						</header>
+						<div class="mini-posts">
+							<article>
+								<i class="ai ai-arxiv ai-7x"></i><br>
+								The version of my published article openly accessible on ArXiv <a href=" 	
+								https://doi.org/10.48550/arXiv.2106.01100" target ="_blank">(link here)</a>
+							</article>
+						</div>
+					</section>
 
 					<!-- Section -->
-						<section>
-							<header class="major">
-								<h2>Get in touch</h2>
-							</header>
-							<p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-							<ul class="contact">
-								<li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
-								<li class="icon solid fa-phone">(000) 000-0000</li>
-								<li class="icon solid fa-home">1234 Somewhere Road #8254<br />
-								Nashville, TN 00000-0000</li>
-							</ul>
-						</section>
+					<section>
+						<header class="major">
+							<h2>Contact</h2>
+						</header>
+						<ul class="contact">
+							<li class="icon solid fa-envelope"><a href="#">michel.pohl@centrale-marseille.fr</a></li>
+							<li class="icon solid fa-home">Tokyo, Japan</li>
+						</ul>
+					</section>
 
-					<!-- Footer -->
-						<footer id="footer">
-							<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-						</footer>
+				<!-- Footer -->
+					<footer id="footer">
+						<p class="copyright">&copy; 2022 Michel Pohl. All rights reserved. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+					</footer>
 
 				</div>
 			</div>

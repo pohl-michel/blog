@@ -25,7 +25,7 @@
 				text-align: justify;
 			}
 			@media screen and (max-width: 1680px) {
-					#main {
+				#main {
 						margin-left:10%; 
 						margin-right:10%} }
 			@media screen and (max-width: 1000px) {
@@ -37,9 +37,47 @@
 						margin-left:0px; 
 						margin-right:0px;} }
 			
-/* 			figcaption{
-				text-align: center;
+ 			image main{
+				display: block;
+				margin-left: auto;
+				margin-right: auto;
+				width: 50%;
+			}
+
+			.center img {        
+			display:block;
+			margin-left:auto;
+			margin-right:auto;
+			width: 100%;
+			max-width: 600px;
+			}
+
+			figure {
+				display:block;
+				margin-left:auto;
+				margin-right:auto;
+				width: 100%;
+				max-width: 600px;
+			}
+			figure img {
+				vertical-align: top;
+				width: 100%;
+				max-width: 600px;
+			}
+			figure figcaption {
+				text-align: justify;
+			}
+
+/*			figure {
+				display: block;
+				margin-left: auto;
+				margin-right: auto;
+				max-width: 80%;
+				text-align: justify;
+				text-indent: 0;
+				padding: 0.5em;
 			} */
+
 		</style>
 
 	</head>
@@ -63,7 +101,7 @@
 							<h2><i>An application of Unbiased Online Recurrent Optimization to time series forecasting for healthcare in Matlab</i><h2>
 						</header>
 
-						<span class="image main"><img src="images/unsplash_healthcare.jpg" style="max-width: 60%" alt="" <figcaption>Photo by National Cancer Institute on Unsplash </figcaption> </span>
+						<span class="image main"><img src="images/unsplash_healthcare.jpg" style="max-width: 60%;" alt="" <figcaption>Photo by National Cancer Institute on Unsplash </figcaption> </span>
 
 						<p>There were approximately 2 million new lung cancer cases worldwide in 2020, and the 5-year relative survival rate of lung cancer patients is slightly above 22% [1,2]. This motivates research in lung radiotherapy, and AI is one of the tools that is being utilized toward that goal. 
 
@@ -86,28 +124,47 @@
 
 						<p>Lung tumors move with the respiratory motion. Hence, it is challenging to target them precisely, as real-time imaging during the radiotherapy treatment has limitations. </p>
 
-						<span class="image main"><img src="images/pancreatic_tumor_motion.jpeg" style="max-width: 60%" alt="" <figcaption>Pancreatic tumor at the end of expiration phase (left) and inspiration phase (right) in a series of computed tomography (CT) scan images. The center of mass of the tumor moves up and down due to the breathing motion and the tumor shape also changes following that motion. Original figure in [4], edited with permission by the author. </figcaption> </span>
+						<figure>
+							<img src="images/pancreatic_tumor_motion.jpeg"  alt="" />
+							<figcaption> Pancreatic tumor at the end of expiration phase (left) and inspiration phase (right) in a series of computed tomography (CT) scan images. The center of mass of the tumor moves up and down due to the breathing motion and the tumor shape also changes following that motion. Original figure in [4], edited with permission by the author. </figcaption> 
+						</figure>
+						<br><br>
 
-						<p> External markers are metallic objects placed on the chest that can help infer the position of tumors in the chest using spatial regression models, also called correspondence models.</p>
+						<p><br>External markers are metallic objects placed on the chest that can help infer the position of tumors in the chest using spatial regression models, also called correspondence models.</p>
 
-						<span class="image main"><img src="images/radiotherapy_treatment_machine.png" style="max-width: 60%" alt="" <figcaption>Radiotherapy treatment system (Cyberknife) using external markers to guide the irradiation beam. Adapted from [5] with permission from Wiley, Copyright 2004 American Association of Physicists in Medicine. </figcaption> </span>
+						<figure>
+							<img src="images/radiotherapy_treatment_machine.png"  alt="" />
+							<figcaption>Radiotherapy treatment system (Cyberknife) using external markers to guide the irradiation beam. Adapted from [5] with permission from Wiley, Copyright 2004 American Association of Physicists in Medicine. </figcaption>
+						</figure>	
+						<br><br>
 
 						<p>Even with infrared tracking of external markers, the position of tumors is difficult to estimate accurately because of the inaccuracies inherent to these internal-external correspondence models but also because treatment systems are subject to latencies due to image acquisition, robotic control, and radiation beam activation. That delay can prevent effective tumor irradiation and lead to excessive dose delivery to healthy tissues, leading to side effects such as pneumonitis, a condition that can become life-threatening.</p>
 
-						<span class="image main"><img src="images/tumor_motion_drawing.png" style="max-width: 60%" alt="" <figcaption>Excessive irradiation of healthy lung tissue due to an overall system delay Δt not compensated. The area irradiated, represented here using diagonal stripes, is larger than the tumor size, to take into consideration effects such as the variation of the tumor shape during the treatment. Reprinted from [6], Copyright 2021, with permission from Elsevier. </figcaption> </span>
+						<figure>
+							<img src="images/tumor_motion_drawing.png" alt="" />
+							<figcaption>Excessive irradiation of healthy lung tissue due to an overall system delay Δt not compensated. The area irradiated, represented here using diagonal stripes, is larger than the tumor size, to take into consideration effects such as the variation of the tumor shape during the treatment. Reprinted from [6], Copyright 2021, with permission from Elsevier. </figcaption>
+						</figure>
+						<br><br>
 
 						<p>To address the issue of system delays, one can forecast the tumor position using past respiratory data. In the case of external guidance with markers as described above, we can predict the markers' positions.</p>
 
-						<span class="image main"><img src="images/algorithm_pipeline.png" style="max-width: 60%" alt="" <figcaption>Deriving the future position of the tumor from external marker position measurements using a correspondence model. In this study, I focus exclusively on the prediction step to compensate for the latency of treatment systems. </figcaption> </span>
-
-
+						<figure>
+							<img src="images/algorithm_pipeline.png" alt="" />
+							<figcaption>Deriving the future position of the tumor from external marker position measurements using a correspondence model. In this study, I focus exclusively on the prediction step to compensate for the latency of treatment systems. </figcaption>
+						</figure>
+						<br><br>
+						
 						<h2 id="section 2"> 2. Our approach</h2>
 						
 						<h3> 2.1. The dataset </h3>
 
 						<p> In this study, I used the ExtMarker dataset comprising nine sequences with the 3D position of three external markers on the chest of healthy individuals. The sampling frequency is 10 Hz, and the movement amplitude in the spine direction is between 6mm and 40mm. That dataset is public and more information can be found in [7]. We divide the data for each sequence into training, cross-validation, and test sets. </p>
 
-						<span class="image main"><img src="images/data_partition.png" style="max-width: 60%" alt="" <figcaption> Data partition into training set, cross-validation set and test set for each of the 9 sequences containing the position of the markers. </figcaption> </span>
+						<figure>
+							<img src="images/data_partition.png" alt="" /> 
+							<figcaption> Data partition into training set, cross-validation set and test set for each of the 9 sequences containing the position of the markers. </figcaption>
+						</figure>
+						<br><br>
 
 						<p>Forecasting respiratory motion is challenging, as the breathing characteristics such as amplitude and period vary within each record, even though it appears predominantly cyclic. In addition, the individuals were asked to talk or laugh in approximately half of the records, which makes the task more complex. In real-world situations, sudden respiratory abnormalities such as coughing, hiccuping or yawning can also happen, which is why including challenging records is beneficial.</p>
 
@@ -115,7 +172,11 @@
 
 						<p>RNNs are a specific type of neural network equipped with a feedback loop enabling them to remember information acquired over time. As we perform forecasting, the position of the markers in the past and the future are respectively the input and the output of the network. Forecasting is a self-supervised learning problem, as manual annotation is not needed. This study uses a simple vanilla architecture with a single hidden layer.</p>
 
-						<span class="image main"><img src="images/RNN structure.png" style="max-width: 60%" alt="" <figcaption> Structure of the RNN predicting the position of the markers. The input vector uₙ corresponds to the positions in the past and the output vector yₙ₊₁ corresponds to the predicted positions. Adapted from [6] with permission from Elsevier, Copyright 2022. </figcaption> </span>
+						<figure>
+							<img src="images/RNN structure.png" alt="" />
+							<figcaption> Structure of the RNN predicting the position of the markers. The input vector uₙ corresponds to the positions in the past and the output vector yₙ₊₁ corresponds to the predicted positions. Adapted from [6] with permission from Elsevier, Copyright 2022. </figcaption>
+						</figure>
+						<br><br>
 
 						<p>RNNs are typically trained offline using back-propagation through time (BPTT). Offline learning designates a learning process in which there are two separate steps for training and inference. In our study, we use online learning instead, which means that training and inference are performed simultaneously. In the context of radiotherapy, this enables the network to adapt to unseen respiratory patterns despite having seen only limited data. Indeed, data collection for medical applications of AI is often difficult due to regulations about personal information protection. This study investigates the efficiency of UORO [8], a recent approach to online learning with RNNs, to forecast respiratory motion.</p>
 
@@ -199,27 +260,45 @@
 
 						<p>Let's first define essential terms here. We call "horizon" and denote by h the time interval in advance for which the prediction is made, and signal history length (SHL) the interval of time, the information of which is used to make a single prediction at a given time step.</p>
 
-						<span class="image main"><img src="images/horison_SHL_definition.png" style="max-width: 60%" alt="" <figcaption> Forecasting a 1D position signal. The SHL and horizon are respectively denoted by h and  L. Reprinted from [3], Copyright 2022, with permission from Elsevier. </figcaption> </span>
+						<figure>
+							<img src="images/horison_SHL_definition.png" />
+							<figcaption> Forecasting a 1D position signal. The SHL and horizon are respectively denoted by h and  L. Reprinted from [3], Copyright 2022, with permission from Elsevier. </figcaption>
+						</figure><br><br>
 
 						<p>Let's first visually and qualitatively examine the predicted motion of marker 3 in sequence 1 (irregular breathing) along the spine direction for different horizon values.</p>
 
-						<span class="image main"><img src="images/3markers_chest_experiment.png" style="max-width: 60%" alt="" <figcaption> Three markers on the chest of one subject moving along with the respiratory motion. </figcaption> </span>
+						<figure>
+							<img src="images/3markers_chest_experiment.png" alt="" />
+							<figcaption> Three markers on the chest of one subject moving along with the respiratory motion. </figcaption>
+						</figure><br><br>
 
 						<p>The graphs below seem to indicate that UORO is more precise than RTRL and least mean squares (LMS). Indeed, we limited the number of hidden units and SHL associated with RTRL to keep an acceptable computing time. Furthermore, LMS is an adaptive linear filter that does not have the representational power of RNNs.</p>
 
-						<span class="image main"><img src="images/prediction_trace_UORO.png" style="max-width: 60%" alt="" <figcaption> Prediction of the z coordinate (spine axis) of marker 3 in sequence 1 with an RNN trained with UORO. Reprinted from [3], Copyright 2022, with permission from Elsevier. </figcaption> </span>
+						<figure>
+							<img src="images/prediction_trace_UORO.png" alt="" />
+							<figcaption> Prediction of the z coordinate (spine axis) of marker 3 in sequence 1 with an RNN trained with UORO. Reprinted from [3], Copyright 2022, with permission from Elsevier. </figcaption>
+						</figure><br><br>
 
-						<span class="image main"><img src="images/prediction_trace_RTRL.png" style="max-width: 60%" alt="" <figcaption> Prediction of the z coordinate (spine axis) of marker 3 in sequence 1 with an RNN trained with RTRL. Reprinted from [3], Copyright 2022, with permission from Elsevier. </figcaption> </span>
+						<figure>
+							<img src="images/prediction_trace_RTRL.png" alt="" />
+							<figcaption> Prediction of the z coordinate (spine axis) of marker 3 in sequence 1 with an RNN trained with RTRL. Reprinted from [3], Copyright 2022, with permission from Elsevier. </figcaption>
+						</figure><br><br>
 
 						<p>We observe that the prediction given by LMS has a high jitter, i.e., it oscillates a lot around the ground-truth marker coordinate.</p>
 
-						<span class="image main"><img src="images/prediction_trace_LMS.png" style="max-width: 60%" alt="" <figcaption> Prediction of the z coordinate (spine axis) of marker 3 in sequence 1 with LMS. Reprinted from [3], Copyright 2022, with permission from Elsevier. </figcaption> </span>
+						<figure>
+							<img src="images/prediction_trace_LMS.png" alt="" />
+							<figcaption> Prediction of the z coordinate (spine axis) of marker 3 in sequence 1 with LMS. Reprinted from [3], Copyright 2022, with permission from Elsevier. </figcaption>
+						</figure><br><br>
 
 						<h3 id="section 3.2">3.2. Numerical forecasting accuracy</h3>
 
 						<p>I confess that I picked the particular example above because it makes UORO look good. Still, in some situations, UORO does not perform as well as the other methods. So let's look closely at what happens when we average numerical precision metrics over horizon values between 0.1s and 2.0s and the nine sequences. Indeed, it was reported previously that the range of latencies in radiotherapy is somewhere 0.1s and 2.0s [9].</p>
 
-						<span class="image main"><img src="images/performance_comparison_table.png" style="max-width: 60%" alt="" <figcaption> Comparison of the forecasting performance of each algorithm. Each error value corresponds to the average of a given performance measure of the test set over the sequences considered and the horizon values between 0.1s and 2.0s. Adapted from [3], Copyright 2022, with permission from Elsevier. </figcaption> </span>
+						<figure>
+							<img src="images/performance_comparison_table.png" alt="" />
+							<figcaption> Comparison of the forecasting performance of each algorithm. Each error value corresponds to the average of a given performance measure of the test set over the sequences considered and the horizon values between 0.1s and 2.0s. Adapted from [3], Copyright 2022, with permission from Elsevier. </figcaption>
+						</figure><br><br>
 
 						<p>I reported several metrics as they give different information about the forecasting behavior of each algorithm. The mean average error (MAE) is the average absolute error over time stricto sensu, the root-mean-square error (RMSE) penalizes more high deviations, and the jitter measures the oscillation amplitude of the predicted signal. Predictions that oscillate much are not desirable because they make controlling the robot guiding the radiation beam more complex.</p>
 
@@ -227,21 +306,29 @@
 
 						<p>But different systems have different latency times. The choice of the best algorithm in each scenario depends on the latency of the radiotherapy system considered. Therefore, I plotted the forecasting errors as a function of the horizon values h.</p>
 
-						<span class="image main"><img src="images/MAE RMSE vs h.jpg" style="max-width: 60%" alt="" <figcaption> Forecasting performance of each algorithm as a function of the prediction horizon. Each point corresponds
-						to the average of one performance measure of the test set across the 9 sequences. Reprinted from [3], Copyright 2022, with permission from Elsevier. </figcaption> </span>
+						<figure>
+							<img src="images/MAE RMSE vs h.jpg" alt="" />
+							<figcaption> Forecasting performance of each algorithm as a function of the prediction horizon. Each point corresponds to the average of one performance measure of the test set across the 9 sequences. Reprinted from [3], Copyright 2022, with permission from Elsevier. </figcaption>
+						</figure><br><br>
 
 						<p>The graphs appear to have local irregularities because hyper-parameter optimization leads to different hyper-parameter choices for different values of h. However, the errors globally tend to increase as h increases. We observe that linear prediction is actually the most accurate forecasting algorithm for low values of h. LMS also appears to be efficient for intermediate values of h.</p>
 
 						<p>The following graph summarizes the performance of each algorithm in terms of RMSE and jitter. As a side note, in my original article, I used a similar graph describing performance in terms of "normalized RMSE," abbreviated as nRMSE, instead of RMSE; the former is a measure additionally taking into account the amplitudes of the signals when evaluating performance. Again, we observe that both the RMSE and jitter are higher for signals corresponding to irregular breathing. This 2D representation can help find the algorithm with the highest forecasting accuracy given an acceptable jitter level and a specific horizon value.</p>
 
-						<span class="image main"><img src="images/nRMSE vs jitter.png" style="max-width: 60%" alt="" <figcaption> Prediction performance of each algorithm in terms of RMSE and jitter. Each point corresponds to the mean of the RMSE and jitter of a given algorithm of the test set over the regular or irregular breathing sequences for a single value of the horizon. Datapoints corresponding to linear regression with high horizon values have not been shown for readability as they correspond to high RMSE values. </figcaption> </span>
+						<figure>
+							<img src="images/nRMSE vs jitter.png" alt="" />
+							<figcaption> Prediction performance of each algorithm in terms of RMSE and jitter. Each point corresponds to the mean of the RMSE and jitter of a given algorithm of the test set over the regular or irregular breathing sequences for a single value of the horizon. Datapoints corresponding to linear regression with high horizon values have not been shown for readability as they correspond to high RMSE values. </figcaption>
+						</figure><br><br>
 
 
 						<h3 id="section 3.3">3.3. Hyper-parameter optimization</h3>
 
 						<p>Let's talk about hyper-parameter optimization. We indicated earlier that we used cross-validation to  select the network hyper-parameters leading to the best performance. I found that the learning rate and SHL were those having the strongest influence on performance in this study. So let's have a close look at how their selection impacts forecasting accuracy.</p>
 
-						<span class="image main"><img src="images/Hyperpar optimization.jpg" style="max-width: 60%" alt="" <figcaption> Prediction nRMSE of UORO of the cross-validation set as a function of the learning rate and SHL, for different horizon values. The black dotted curves correspond to the nRMSE minimum averaged over the horizon values between 0.1s and 2.0s, and the associated error bars correspond to its standard deviation over these horizon values. Reprinted from [3], Copyright 2022, with permission from Elsevier. </figcaption> </span>
+						<figure>
+							<img src="images/Hyperpar optimization.jpg" alt="" />
+							<figcaption> Prediction nRMSE of UORO of the cross-validation set as a function of the learning rate and SHL, for different horizon values. The black dotted curves correspond to the nRMSE minimum averaged over the horizon values between 0.1s and 2.0s, and the associated error bars correspond to its standard deviation over these horizon values. Reprinted from [3], Copyright 2022, with permission from Elsevier. </figcaption>
+						</figure><br><br>
 
 						<p>We observe again that the higher the horizon h, the higher the prediction error. In the case of high values of h, the network appears more efficient with a higher learning rate and lower SHL. In other words, in that scenario, the network works better when taking into account only the most recent signals and adapting the weights faster when changes in the incoming respiratory patterns occur.</p>
 
@@ -250,7 +337,10 @@
 
 						<p>Calculation time is one of the most important criteria for evaluating our algorithms. We observe that the prediction time increases with the SHL, which is proportional to the input layer size, and the number of hidden units. Linear regression appears to be the fastest forecasting method, followed by LMS. UORO was able to perform forecasting approximately 100 times faster than RTRL on my machine, which is a direct consequence of their respective computational complexity O(q²) and O(q⁴).</p>
 
-						<span class="image main"><img src="images/time performance.png" style="max-width: 60%" alt="" <figcaption> Calculation time (Dell Intel Core i9–9900K 3.60GHz CPU 32Gb RAM with Matlab). Adapted from [3], Copyright 2022, with permission from Elsevier. </figcaption> </span>
+						<figure>
+							<img src="images/time performance.png" alt="" />
+							<figcaption> Calculation time (Dell Intel Core i9–9900K 3.60GHz CPU 32Gb RAM with Matlab). Adapted from [3], Copyright 2022, with permission from Elsevier. </figcaption>
+						</figure><br><br>
 						
 
 						<h2 id="section 4">4. In short</h2>

@@ -20,6 +20,7 @@
 		</script>
 		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
+
 	</head>
 	<body class="is-preload">
 
@@ -47,7 +48,7 @@
 
 						Have you ever wondered how AI could improve lung cancer treatment? And why recurrent neural networks (RNN) in particular may be helpful for that task? Also, what is online learning, and why is this particularly useful in that context?
 
-						Here, I will do my best to answer these questions by summarizing my recent research article "Prediction of the position of external markers using a recurrent neural network trained with unbiased online recurrent optimization for safe lung cancer radiotherapy" published in "Computer methods and programs in biomedicine" and presenting its main findings [3]. </p>
+						Here, I will do my best to answer these questions by summarizing my recent research article <a href="https://doi.org/10.1016/j.cmpb.2022.106908" target ="_blank">"Prediction of the position of external markers using a recurrent neural network trained with unbiased online recurrent optimization for safe lung cancer radiotherapy"</a> published in "Computer methods and programs in biomedicine" and presenting its main findings [3]. </p>
 
 <!-- 									<iframe src="https://doi.org/10.48550/arXiv.2106.01100" title="W3Schools Free Online Web Tutorials"></iframe> 
 
@@ -55,7 +56,7 @@
 
 <!-- 									<iframe src="https://www.sciencedirect.com/science/article/abs/pii/S0169260722002905" title="W3Schools Free Online Web Tutorials"></iframe>  -->
 						
-						<p>Please feel free to read the original article if you are curious and leave a comment. The accepted manuscript version is freely accessible on Arxiv (first link above). In case you are new to machine learning, please note that I may not explain all the basic concepts of that field here. As a result, the technical part might be challenging to go through. Still, I will try to explain the essential ideas clearly while skipping details. If you have already read my published article, this can still be of interest to you, as I cover the topic differently here by discussing additional minor results, the practical implementation in Matlab, as well as the rank-one trick that is at the heart of unbiased online recurrent optimization (UORO).</p>
+						<p>Please feel free to read the original article if you are curious and leave a comment. <b>The accepted manuscript version is freely accessible on <a href="https://doi.org/10.48550/arXiv.2106.01100" target ="_blank">Arxiv</a>.</b> In case you are new to machine learning, please note that I may not explain all the basic concepts of that field here. As a result, the technical part might be challenging to go through. Still, I will try to explain the essential ideas clearly while skipping details. If you have already read my published article, this can still be of interest to you, as I cover the topic differently here by discussing additional minor results, the practical implementation in Matlab, as well as the rank-one trick that is at the heart of unbiased online recurrent optimization (UORO).</p>
 
 					<!-- </section> -->
 
@@ -98,7 +99,7 @@
 						
 						<h3> 2.1. The dataset </h3>
 
-						<p> In this study, I used the ExtMarker dataset comprising nine sequences with the 3D position of three external markers on the chest of healthy individuals. The sampling frequency is 10 Hz, and the movement amplitude in the spine direction is between 6mm and 40mm. That dataset is public and more information can be found in [7]. We divide the data for each sequence into training, cross-validation, and test sets. </p>
+						<p> In this study, I used the <a href="https://paperswithcode.com/dataset/extmarker" target ="_blank">ExtMarker</a> dataset comprising nine sequences with the 3D position of three external markers on the chest of healthy individuals. The sampling frequency is 10 Hz, and the movement amplitude in the spine direction is between 6mm and 40mm. That dataset is public and more information can be found in [7]. We divide the data for each sequence into training, cross-validation, and test sets. </p>
 
 						<figure>
 							<img src="images/data_partition.png" alt="" /> 
@@ -110,7 +111,7 @@
 
 						<h3 id="section 2.2">2.2 Let's dive into the world of RNNs. </h3>
 
-						<p>RNNs are a specific type of neural network equipped with a feedback loop enabling them to remember information acquired over time. As we perform forecasting, the position of the markers in the past and the future are respectively the input and the output of the network. Forecasting is a self-supervised learning problem, as manual annotation is not needed. This study uses a simple vanilla architecture with a single hidden layer.</p>
+						<p><a href="https://www.deeplearningbook.org/contents/rnn.html" target ="_blank">RNNs</a> are a specific type of neural network equipped with a feedback loop enabling them to remember information acquired over time. As we perform forecasting, the position of the markers in the past and the future are respectively the input and the output of the network. Forecasting is a self-supervised learning problem, as manual annotation is not needed. This study uses a simple vanilla architecture with a single hidden layer.</p>
 
 						<figure>
 							<img src="images/RNN structure.png" alt="" />
@@ -167,15 +168,15 @@
 
 						<h3 id="section 2.3"> 2.3. UORO implementation in Matlab </h3>
 
-						<p>Let's try to understand the basic implementation of UORO in Matlab. Here, I will describe the <code>rnn_UORO</code> function of the Github repository corresponding to my paper. If you have some knowledge of Python, there is nothing to be afraid of here, as the syntax of these two languages is very close to one another. You can skip this part if you are not interested in the code or prefer jumping to the analysis of the results.</p>
+						<p>Let's try to understand the basic implementation of UORO in Matlab. Here, I will describe the <code>rnn_UORO</code> function of <a href="https://github.com/pohl-michel/time-series-forecasting-with-UORO-RTRL-LMS-and-linear-regression" target ="_blank">the Github repository corresponding to my paper</a>. If you have some knowledge of Python, there is nothing to be afraid of here, as the syntax of these two languages is very close to one another. You can skip this part if you are not interested in the code or prefer jumping to the analysis of the results.</p>
 
-						<p>As a side note, I would also like to mention the following in-depth guide comparing Matlab and Python, which helped me a lot learning Python from my experience in Matlab (which are very similar languages anyway). You can also read that if you are proficient in Python and want to understand the Matlab syntax better.</p>
+						<p>As a side note, I would also like to mention the in-depth guide on realpython.com, entitled <a href="https://realpython.com/matlab-vs-python/" target ="_blank">"MATLAB vs Python: Why and How to Make the Switch"</a>, which compares Matlab and Python and helped me a lot learning Python from my experience in Matlab (which are very similar languages anyway). You can also read that if you are proficient in Python and want to understand the Matlab syntax better.</p>
 
-						<p>First, I defined an auxiliary function to implement forward propagation according to the state equation (cf section 2.2). Functions in Matlab are defined using the <code>function</code> keyword, whereas the <code>def</code> keyword is used in Python. In this code, <code>myRNN</code> is a Matlab structure array (this is more or less the equivalent of a dictionary in Python and a structure in C) containing the RNN parameters. I chose the activation function <code>phi</code> as the hyperbolic tangent function. It is implemented using an anonymous function, which is the equivalent of a lambda function in Python.</p>
+						<p>First, I defined an auxiliary function to implement forward propagation according to the state equation (cf section 2.2). Functions in Matlab are defined using the <code>function</code> keyword, whereas the <code>def</code> keyword is used in Python. In this code, <code>myRNN</code> is a <a href="https://www.mathworks.com/help/matlab/ref/struct.html" target ="_blank">Matlab structure array</a> (this is more or less the equivalent of a dictionary in Python and a structure in C) containing the RNN parameters. I chose the activation function <code>phi</code> as the hyperbolic tangent function. It is implemented using an <a href="https://www.mathworks.com/help/matlab/matlab_prog/anonymous-functions.html" target ="_blank">anonymous function</a>, which is the equivalent of a <a href="https://realpython.com/python-lambda/#python-lambda-and-regular-functions" target ="_blank">lambda function</a> in Python.</p>
 
 						<script src="https://gist.github.com/pohl-michel/53606d9f5c6ea1fb83d0f888bfe11568.js"></script>
 
-						<p>I also used another auxiliary function to perform one gradient descent step with clipping at each time step. Here, <code>theta</code> is the RNN parameter vector, and <code>dtheta</code> is the loss gradient. Experimentally, I found that clipping helps stabilize the behavior of the RNN and achieve better performance.   If you look at my code in the GitHub repository, you will notice that I also implemented adaptive moment estimation (ADAM). However, I experimentally noticed that the latter did not improve the forecasting accuracy. Therefore I only reported the results obtained with gradient descent in my article.</p>
+						<p>I also used another auxiliary function to perform one gradient descent step with clipping at each time step. Here, <code>theta</code> is the RNN parameter vector, and <code>dtheta</code> is the loss gradient. Experimentally, I found that clipping helps stabilize the behavior of the RNN and achieve better performance.   If you look at my code in <a href="https://github.com/pohl-michel/time-series-forecasting-with-UORO-RTRL-LMS-and-linear-regression" target ="_blank">the Github repository</a>, you will notice that I also implemented adaptive moment estimation (ADAM). However, I experimentally noticed that the latter did not improve the forecasting accuracy. Therefore I only reported the results obtained with gradient descent in my article.</p>
 
 						<script src="https://gist.github.com/pohl-michel/356ecb4a0c13b92aad32d26e50a113dd.js"></script>
 
@@ -187,11 +188,11 @@
 
 						<p>Then we loop over the time steps and perform forward propagation using the auxiliary function <code>RNNstate_fwd_prop</code> above (lines 13 to 21). These lines include the computation of yₙ₊₁ using the measurement equation (with a linear output function) and the instantaneous error (cf section 2.2). The tic function is used to tell the computer to "start the stopwatch" to measure the computation time corresponding to the current time step.</p>
 
-						<p>The portion of code between line 23 and line 45  is where things get quite mathematical. I will not go into the details here, but I will explain what happens from an overall point of view. First, you can see that there is a vector <code>nu</code> initialized randomly using the rand function (line 30). The important point here is that two vectors <code>myRNN.xtilde</code> and <code>myRNN</code>.theta_tilde are calculated from that random vector (lines 44 and 45). These correspond to the two random vectors that we mentioned in section 2.2 and whose product is an unbiased estimate of the influence matrix ∂xₙ/∂θ. You can see that they are recursively updated at each time step. Another important line is the computation of the loss gradient estimate <code>gtilde</code> from these two vectors (line 27). If you are interested in the underlying math, I would like to refer you to the original paper about UORO [8] and my article [3], which is the first to provide closed-form expressions for <code>myRNN.dtheta</code>, <code>myRNN.dtheta_g</code>, and <code>dx</code> in the case of vanilla RNNs. These are used in this implementation to compute the loss gradient. Also, there is a bonus section at the end of this story covering the basic mathematical property that UORO relies on, so stick with me :) </p>
+						<p>The portion of code between line 23 and line 45  is where things get quite mathematical. I will not go into the details here, but I will explain what happens from an overall point of view. First, you can see that there is a vector <code>nu</code> initialized randomly using the <a href="https://www.mathworks.com/help/matlab/ref/rand.html" target ="_blank">rand</a> function (line 30). The important point here is that two vectors <code>myRNN.xtilde</code> and <code>myRNN</code>.theta_tilde are calculated from that random vector (lines 44 and 45). These correspond to the two random vectors that we mentioned in section 2.2 and whose product is an unbiased estimate of the influence matrix ∂xₙ/∂θ. You can see that they are recursively updated at each time step. Another important line is the computation of the loss gradient estimate <code>gtilde</code> from these two vectors (line 27). If you are interested in the underlying math, I would like to refer you to the original paper about UORO [8] and my article [3], which is the first to provide closed-form expressions for <code>myRNN.dtheta</code>, <code>myRNN.dtheta_g</code>, and <code>dx</code> in the case of vanilla RNNs. These are used in this implementation to compute the loss gradient. Also, there is a bonus section at the end of this story covering the basic mathematical property that UORO relies on, so stick with me :) </p>
 
-						<p>Finally, we update the gradient estimate with the <code>update_param_optim</code> auxiliary function described above (line 51). I used the reshape function and slicing, as the weight matrices <code>myRNN.Wa</code>, <code>myRNN.Wb</code>, and <code>myRNN.Wc</code> are hard-coded as 2D arrays and the vector <code>theta_vec</code> concatenating these weights is a line vector. In the end, I update the state vector and store the calculation time (with toc) and the instantaneous loss for later analysis.</p>
+						<p>Finally, we update the gradient estimate with the <code>update_param_optim</code> auxiliary function described above (line 51). I used the <a href="https://www.mathworks.com/help/matlab/ref/reshape.html" target ="_blank">reshape</a> function and slicing, as the weight matrices <code>myRNN.Wa</code>, <code>myRNN.Wb</code>, and <code>myRNN.Wc</code> are hard-coded as 2D arrays and the vector <code>theta_vec</code> concatenating these weights is a line vector. In the end, I update the state vector and store the calculation time (with toc) and the instantaneous loss for later analysis.</p>
 
-						<p>The code in my Github repository differs slightly as it also handles GPU computing, but I skipped that part to make explanations simple. Also, I experimentally found that using my GPU made the UORO calculations slower. Therefore, my article only reports the performance of UORO corresponding to CPU calculations.</p>
+						<p>The code in <a href="https://github.com/pohl-michel/time-series-forecasting-with-UORO-RTRL-LMS-and-linear-regression" target ="_blank">my Github repository</a> differs slightly as it also handles GPU computing, but I skipped that part to make explanations simple. Also, I experimentally found that using my GPU made the UORO calculations slower. Therefore, my article only reports the performance of UORO corresponding to CPU calculations.</p>
 
 
 						<h2 id="section 3">3. Results</h2>
@@ -289,7 +290,7 @@
 
 						<p>To the best of our knowledge, we used the most extensive range of horizon values  h to compare the different forecasting algorithms among the studies in the literature about respiratory motion prediction. We found that linear regression achieved the lowest RMSE for 0.1s ≤ h ≤  0.2s, followed by LMS for 0.3s ≤ h ≤ 0.5s, and UORO for h ≥ 0.6s, with respiratory signals sampled at 10Hz.</p>
 
-						<p>If this story was interesting to you, please do not hesitate to read the original research article, where I cover this topic more extensively and discuss mathematical details (the article is also the first to provide detailed calculations for some of  the expressions related to the loss gradient in UORO for vanilla RNNs). The dataset and Matlab code are openly available,  so you can use them for your own experiments if you wish. Please also kindly consider citing my research article if you do so.</p>
+						<p>If this story was interesting to you, please do not hesitate to read the <a href="https://arxiv.org/abs/2106.01100" target ="_blank">original research article</a>, where I cover this topic more extensively and discuss mathematical details (the article is also the first to provide detailed calculations for some of  the expressions related to the loss gradient in UORO for vanilla RNNs). <a href="https://doi.org/10.5281/zenodo.5506964" target ="_blank">The dataset and Matlab code</a> are openly available,  so you can use them for your own experiments if you wish. Please also kindly consider citing my research article if you do so.</p>
 
 						<p>Thank you so much for the time that you have spent reading this. I sincerely hope that you could enjoy learning something interesting. Please do not hesitate to like this story, share it,  and let me know your thoughts in the comments section. :)</p>
 

@@ -44,11 +44,11 @@
 
 						<span class="image main"><img src="images/unsplash_healthcare.jpg" style="max-width: 60%;" alt="" <figcaption>Photo by National Cancer Institute on Unsplash </figcaption> </span>
 
-						<p>There were approximately 2 million new lung cancer cases worldwide in 2020, and the 5-year relative survival rate of lung cancer patients is slightly above 22% [1,2]. This motivates research in lung radiotherapy, and AI is one of the tools that is being utilized toward that goal. 
+						<p>There were approximately 2 million new lung cancer cases worldwide in 2020, and the 5-year relative survival rate of lung cancer patients is slightly above 22% [<a href="https://doi.org/10.3322/caac.21660" target ="_blank">1</a>,<a href="https://seer.cancer.gov/statfacts/html/lungb.html" target ="_blank">2</a>]. This motivates research in lung radiotherapy, and AI is one of the tools that is being utilized toward that goal. 
 
 						Have you ever wondered how AI could improve lung cancer treatment? And why recurrent neural networks (RNN) in particular may be helpful for that task? Also, what is online learning, and why is this particularly useful in that context?
 
-						Here, I will do my best to answer these questions by summarizing my recent research article <a href="https://doi.org/10.1016/j.cmpb.2022.106908" target ="_blank">"Prediction of the position of external markers using a recurrent neural network trained with unbiased online recurrent optimization for safe lung cancer radiotherapy"</a> published in "Computer methods and programs in biomedicine" and presenting its main findings [3]. </p>
+						Here, I will do my best to answer these questions by summarizing my recent research article <a href="https://doi.org/10.1016/j.cmpb.2022.106908" target ="_blank">"Prediction of the position of external markers using a recurrent neural network trained with unbiased online recurrent optimization for safe lung cancer radiotherapy"</a> published in "Computer methods and programs in biomedicine" and presenting its main findings <a href="https://doi.org/10.48550/arXiv.2106.01100" target ="_blank">[3]</a>. </p>
 
 <!-- 									<iframe src="https://doi.org/10.48550/arXiv.2106.01100" title="W3Schools Free Online Web Tutorials"></iframe> 
 
@@ -67,7 +67,7 @@
 
 						<figure>
 							<img src="images/pancreatic_tumor_motion.jpeg"  alt="" />
-							<figcaption> Pancreatic tumor at the end of expiration phase (left) and inspiration phase (right) in a series of computed tomography (CT) scan images. The center of mass of the tumor moves up and down due to the breathing motion and the tumor shape also changes following that motion. Original figure in [4], edited with permission by the author. </figcaption> 
+							<figcaption> Pancreatic tumor at the end of expiration phase (left) and inspiration phase (right) in a series of computed tomography (CT) scan images. The center of mass of the tumor moves up and down due to the breathing motion and the tumor shape also changes following that motion. Original figure in <a href="https://doi.org/10.15083/00073584" target ="_blank">[4]</a>, edited with permission by the author. </figcaption> 
 						</figure>
 						<br><br>
 
@@ -75,7 +75,7 @@
 
 						<figure>
 							<img src="images/radiotherapy_treatment_machine.png"  alt="" />
-							<figcaption>Radiotherapy treatment system (Cyberknife) using external markers to guide the irradiation beam. Adapted from [5] with permission from Wiley, Copyright 2004 American Association of Physicists in Medicine. </figcaption>
+							<figcaption>Radiotherapy treatment system (Cyberknife) using external markers to guide the irradiation beam. Adapted from <a href="https://doi.org/10.1118/1.1774132" target ="_blank">[5]</a> with permission from Wiley, Copyright 2004 American Association of Physicists in Medicine. </figcaption>
 						</figure>	
 						<br><br>
 
@@ -83,7 +83,7 @@
 
 						<figure>
 							<img src="images/tumor_motion_drawing.png" alt="" />
-							<figcaption>Excessive irradiation of healthy lung tissue due to an overall system delay Δt not compensated. The area irradiated, represented here using diagonal stripes, is larger than the tumor size, to take into consideration effects such as the variation of the tumor shape during the treatment. Reprinted from [6], Copyright 2021, with permission from Elsevier. </figcaption>
+							<figcaption>Excessive irradiation of healthy lung tissue due to an overall system delay Δt not compensated. The area irradiated, represented here using diagonal stripes, is larger than the tumor size, to take into consideration effects such as the variation of the tumor shape during the treatment. Reprinted from <a href="https://doi.org/10.1016/j.compmedimag.2021.101941" target ="_blank">[6]</a>, Copyright 2021, with permission from Elsevier. </figcaption>
 						</figure>
 						<br><br>
 
@@ -99,7 +99,7 @@
 						
 						<h3> 2.1. The dataset </h3>
 
-						<p> In this study, I used the <a href="https://paperswithcode.com/dataset/extmarker" target ="_blank">ExtMarker</a> dataset comprising nine sequences with the 3D position of three external markers on the chest of healthy individuals. The sampling frequency is 10 Hz, and the movement amplitude in the spine direction is between 6mm and 40mm. That dataset is public and more information can be found in [7]. We divide the data for each sequence into training, cross-validation, and test sets. </p>
+						<p> In this study, I used the <a href="https://paperswithcode.com/dataset/extmarker" target ="_blank">ExtMarker</a> dataset comprising nine sequences with the 3D position of three external markers on the chest of healthy individuals. The sampling frequency is 10 Hz, and the movement amplitude in the spine direction is between 6mm and 40mm. That dataset is public and more information can be found in <a href="https://doi.org/10.48550/arXiv.1508.00749" target ="_blank">[7]</a>. We divide the data for each sequence into training, cross-validation, and test sets. </p>
 
 						<figure>
 							<img src="images/data_partition.png" alt="" /> 
@@ -115,11 +115,11 @@
 
 						<figure>
 							<img src="images/RNN structure.png" alt="" />
-							<figcaption> Structure of the RNN predicting the position of the markers. The input vector uₙ corresponds to the positions in the past and the output vector yₙ₊₁ corresponds to the predicted positions. Adapted from [6] with permission from Elsevier, Copyright 2022. </figcaption>
+							<figcaption> Structure of the RNN predicting the position of the markers. The input vector uₙ corresponds to the positions in the past and the output vector yₙ₊₁ corresponds to the predicted positions. Adapted from <a href="https://doi.org/10.1016/j.compmedimag.2021.101941" target ="_blank">[6]</a> with permission from Elsevier, Copyright 2022. </figcaption>
 						</figure>
 						<br><br>
 
-						<p>RNNs are typically trained offline using back-propagation through time (BPTT). Offline learning designates a learning process in which there are two separate steps for training and inference. In our study, we use online learning instead, which means that training and inference are performed simultaneously. In the context of radiotherapy, this enables the network to adapt to unseen respiratory patterns despite having seen only limited data. Indeed, data collection for medical applications of AI is often difficult due to regulations about personal information protection. This study investigates the efficiency of UORO [8], a recent approach to online learning with RNNs, to forecast respiratory motion.</p>
+						<p>RNNs are typically trained offline using back-propagation through time (BPTT). Offline learning designates a learning process in which there are two separate steps for training and inference. In our study, we use online learning instead, which means that training and inference are performed simultaneously. In the context of radiotherapy, this enables the network to adapt to unseen respiratory patterns despite having seen only limited data. Indeed, data collection for medical applications of AI is often difficult due to regulations about personal information protection. This study investigates the efficiency of UORO <a href="https://doi.org/10.48550/arXiv.1702.05043" target ="_blank">[8]</a>, a recent approach to online learning with RNNs, to forecast respiratory motion.</p>
 
 						<p>Let's briefly discuss how UORO works. First, let's write the RNN equations. The first equation below (state equation) describes the evolution of the internal state vector xₙ, and the second equation (measurement equation) enables calculating the output vector yₙ. θₙ and uₙ respectively designate the parameter vector and the input vector. Note that the parameter vector depends on n because we perform online learning.</p>
 
@@ -188,7 +188,7 @@
 
 						<p>Then we loop over the time steps and perform forward propagation using the auxiliary function <code>RNNstate_fwd_prop</code> above (lines 13 to 21). These lines include the computation of yₙ₊₁ using the measurement equation (with a linear output function) and the instantaneous error (cf section 2.2). The tic function is used to tell the computer to "start the stopwatch" to measure the computation time corresponding to the current time step.</p>
 
-						<p>The portion of code between line 23 and line 45  is where things get quite mathematical. I will not go into the details here, but I will explain what happens from an overall point of view. First, you can see that there is a vector <code>nu</code> initialized randomly using the <a href="https://www.mathworks.com/help/matlab/ref/rand.html" target ="_blank">rand</a> function (line 30). The important point here is that two vectors <code>myRNN.xtilde</code> and <code>myRNN</code>.theta_tilde are calculated from that random vector (lines 44 and 45). These correspond to the two random vectors that we mentioned in section 2.2 and whose product is an unbiased estimate of the influence matrix ∂xₙ/∂θ. You can see that they are recursively updated at each time step. Another important line is the computation of the loss gradient estimate <code>gtilde</code> from these two vectors (line 27). If you are interested in the underlying math, I would like to refer you to the original paper about UORO [8] and my article [3], which is the first to provide closed-form expressions for <code>myRNN.dtheta</code>, <code>myRNN.dtheta_g</code>, and <code>dx</code> in the case of vanilla RNNs. These are used in this implementation to compute the loss gradient. Also, there is a bonus section at the end of this story covering the basic mathematical property that UORO relies on, so stick with me :) </p>
+						<p>The portion of code between line 23 and line 45  is where things get quite mathematical. I will not go into the details here, but I will explain what happens from an overall point of view. First, you can see that there is a vector <code>nu</code> initialized randomly using the <a href="https://www.mathworks.com/help/matlab/ref/rand.html" target ="_blank">rand</a> function (line 30). The important point here is that two vectors <code>myRNN.xtilde</code> and <code>myRNN</code>.theta_tilde are calculated from that random vector (lines 44 and 45). These correspond to the two random vectors that we mentioned in section 2.2 and whose product is an unbiased estimate of the influence matrix ∂xₙ/∂θ. You can see that they are recursively updated at each time step. Another important line is the computation of the loss gradient estimate <code>gtilde</code> from these two vectors (line 27). If you are interested in the underlying math, I would like to refer you to the original paper about UORO <a href="https://doi.org/10.48550/arXiv.1702.05043" target ="_blank">[8]</a> and my article <a href="https://doi.org/10.48550/arXiv.2106.01100" target ="_blank">[3]</a>, which is the first to provide closed-form expressions for <code>myRNN.dtheta</code>, <code>myRNN.dtheta_g</code>, and <code>dx</code> in the case of vanilla RNNs. These are used in this implementation to compute the loss gradient. Also, there is a bonus section at the end of this story covering the basic mathematical property that UORO relies on, so stick with me :) </p>
 
 						<p>Finally, we update the gradient estimate with the <code>update_param_optim</code> auxiliary function described above (line 51). I used the <a href="https://www.mathworks.com/help/matlab/ref/reshape.html" target ="_blank">reshape</a> function and slicing, as the weight matrices <code>myRNN.Wa</code>, <code>myRNN.Wb</code>, and <code>myRNN.Wc</code> are hard-coded as 2D arrays and the vector <code>theta_vec</code> concatenating these weights is a line vector. In the end, I update the state vector and store the calculation time (with toc) and the instantaneous loss for later analysis.</p>
 
@@ -203,7 +203,7 @@
 
 						<figure>
 							<img src="images/horison_SHL_definition.png" />
-							<figcaption> Forecasting a 1D position signal. The SHL and horizon are respectively denoted by h and  L. Reprinted from [3], Copyright 2022, with permission from Elsevier. </figcaption>
+							<figcaption> Forecasting a 1D position signal. The SHL and horizon are respectively denoted by h and  L. Reprinted from <a href="https://doi.org/10.48550/arXiv.2106.01100" target ="_blank">[3]</a>, Copyright 2022, with permission from Elsevier. </figcaption>
 						</figure><br><br>
 
 						<p>Let's first visually and qualitatively examine the predicted motion of marker 3 in sequence 1 (irregular breathing) along the spine direction for different horizon values.</p>
@@ -217,28 +217,28 @@
 
 						<figure>
 							<img src="images/prediction_trace_UORO.png" alt="" />
-							<figcaption> Prediction of the z coordinate (spine axis) of marker 3 in sequence 1 with an RNN trained with UORO. Reprinted from [3], Copyright 2022, with permission from Elsevier. </figcaption>
+							<figcaption> Prediction of the z coordinate (spine axis) of marker 3 in sequence 1 with an RNN trained with UORO. Reprinted from <a href="https://doi.org/10.48550/arXiv.2106.01100" target ="_blank">[3]</a>, Copyright 2022, with permission from Elsevier. </figcaption>
 						</figure><br><br>
 
 						<figure>
 							<img src="images/prediction_trace_RTRL.png" alt="" />
-							<figcaption> Prediction of the z coordinate (spine axis) of marker 3 in sequence 1 with an RNN trained with RTRL. Reprinted from [3], Copyright 2022, with permission from Elsevier. </figcaption>
+							<figcaption> Prediction of the z coordinate (spine axis) of marker 3 in sequence 1 with an RNN trained with RTRL. Reprinted from <a href="https://doi.org/10.48550/arXiv.2106.01100" target ="_blank">[3]</a>, Copyright 2022, with permission from Elsevier. </figcaption>
 						</figure><br><br>
 
 						<p>We observe that the prediction given by LMS has a high jitter, i.e., it oscillates a lot around the ground-truth marker coordinate.</p>
 
 						<figure>
 							<img src="images/prediction_trace_LMS.png" alt="" />
-							<figcaption> Prediction of the z coordinate (spine axis) of marker 3 in sequence 1 with LMS. Reprinted from [3], Copyright 2022, with permission from Elsevier. </figcaption>
+							<figcaption> Prediction of the z coordinate (spine axis) of marker 3 in sequence 1 with LMS. Reprinted from <a href="https://doi.org/10.48550/arXiv.2106.01100" target ="_blank">[3]</a>, Copyright 2022, with permission from Elsevier. </figcaption>
 						</figure><br><br>
 
 						<h3 id="section 3.2">3.2. Numerical forecasting accuracy</h3>
 
-						<p>I confess that I picked the particular example above because it makes UORO look good. Still, in some situations, UORO does not perform as well as the other methods. So let's look closely at what happens when we average numerical precision metrics over horizon values between 0.1s and 2.0s and the nine sequences. Indeed, it was reported previously that the range of latencies in radiotherapy is somewhere 0.1s and 2.0s [9].</p>
+						<p>I confess that I picked the particular example above because it makes UORO look good. Still, in some situations, UORO does not perform as well as the other methods. So let's look closely at what happens when we average numerical precision metrics over horizon values between 0.1s and 2.0s and the nine sequences. Indeed, it was reported previously that the range of latencies in radiotherapy is somewhere 0.1s and 2.0s <a href="https://doi.org/10.1109/MCSE.2010.99" target ="_blank">[9]</a>.</p>
 
 						<figure>
 							<img src="images/performance_comparison_table.png" alt="" />
-							<figcaption> Comparison of the forecasting performance of each algorithm. Each error value corresponds to the average of a given performance measure of the test set over the sequences considered and the horizon values between 0.1s and 2.0s. Adapted from [3], Copyright 2022, with permission from Elsevier. </figcaption>
+							<figcaption> Comparison of the forecasting performance of each algorithm. Each error value corresponds to the average of a given performance measure of the test set over the sequences considered and the horizon values between 0.1s and 2.0s. Adapted from <a href="https://doi.org/10.48550/arXiv.2106.01100" target ="_blank">[3]</a>, Copyright 2022, with permission from Elsevier. </figcaption>
 						</figure><br><br>
 
 						<p>I reported several metrics as they give different information about the forecasting behavior of each algorithm. The mean average error (MAE) is the average absolute error over time stricto sensu, the root-mean-square error (RMSE) penalizes more high deviations, and the jitter measures the oscillation amplitude of the predicted signal. Predictions that oscillate much are not desirable because they make controlling the robot guiding the radiation beam more complex.</p>
@@ -249,7 +249,7 @@
 
 						<figure>
 							<img src="images/MAE RMSE vs h.jpg" alt="" />
-							<figcaption> Forecasting performance of each algorithm as a function of the prediction horizon. Each point corresponds to the average of one performance measure of the test set across the 9 sequences. Reprinted from [3], Copyright 2022, with permission from Elsevier. </figcaption>
+							<figcaption> Forecasting performance of each algorithm as a function of the prediction horizon. Each point corresponds to the average of one performance measure of the test set across the 9 sequences. Reprinted from <a href="https://doi.org/10.48550/arXiv.2106.01100" target ="_blank">[3]</a>, Copyright 2022, with permission from Elsevier. </figcaption>
 						</figure><br><br>
 
 						<p>The graphs appear to have local irregularities because hyper-parameter optimization leads to different hyper-parameter choices for different values of h. However, the errors globally tend to increase as h increases. We observe that linear prediction is actually the most accurate forecasting algorithm for low values of h. LMS also appears to be efficient for intermediate values of h.</p>
@@ -268,7 +268,7 @@
 
 						<figure>
 							<img src="images/Hyperpar optimization.jpg" alt="" />
-							<figcaption> Prediction nRMSE of UORO of the cross-validation set as a function of the learning rate and SHL, for different horizon values. The black dotted curves correspond to the nRMSE minimum averaged over the horizon values between 0.1s and 2.0s, and the associated error bars correspond to its standard deviation over these horizon values. Reprinted from [3], Copyright 2022, with permission from Elsevier. </figcaption>
+							<figcaption> Prediction nRMSE of UORO of the cross-validation set as a function of the learning rate and SHL, for different horizon values. The black dotted curves correspond to the nRMSE minimum averaged over the horizon values between 0.1s and 2.0s, and the associated error bars correspond to its standard deviation over these horizon values. Reprinted from <a href="https://doi.org/10.48550/arXiv.2106.01100" target ="_blank">[3]</a>, Copyright 2022, with permission from Elsevier. </figcaption>
 						</figure><br><br>
 
 						<p>We observe again that the higher the horizon h, the higher the prediction error. In the case of high values of h, the network appears more efficient with a higher learning rate and lower SHL. In other words, in that scenario, the network works better when taking into account only the most recent signals and adapting the weights faster when changes in the incoming respiratory patterns occur.</p>
@@ -280,7 +280,7 @@
 
 						<figure>
 							<img src="images/time performance.png" alt="" />
-							<figcaption> Calculation time (Dell Intel Core i9–9900K 3.60GHz CPU 32Gb RAM with Matlab). Adapted from [3], Copyright 2022, with permission from Elsevier. </figcaption>
+							<figcaption> Calculation time (Dell Intel Core i9–9900K 3.60GHz CPU 32Gb RAM with Matlab). Adapted from <a href="https://doi.org/10.48550/arXiv.2106.01100" target ="_blank">[3]</a>, Copyright 2022, with permission from Elsevier. </figcaption>
 						</figure><br><br>
 						
 
@@ -297,7 +297,7 @@
 
 						<h2 id="section 5">5. Bonus: the rank-one trick</h2>
 
-						<p>I would like to mention the core mathematical property that is the foundation of UORO, and which was first introduced in [10]. Here it is:</p>
+						<p>I would like to mention the core mathematical property that is the foundation of UORO, and which was first introduced in <a href="https://doi.org/10.48550/arXiv.1507.07680" target ="_blank">[10]</a>. Here it is:</p>
 
 						<blockquote>
 							<p>Given a decomposition of a matrix A as a sum of rank-one outer products</p>
@@ -330,22 +330,22 @@
 
 						<p>The first part of this property is relatively easy to proove, and results from the linearity of the expectation operator. The variance minimization part requires a more detailed analysis. While I will not make comments regarding the latter here, I would like to make a link with the Matlab implementation in section 2.3. You can look up at the code and see that the variable <code>nu</code> in my implementation corresponds to the vector ν above (line 30). The variables <code>rho0</code> and <code>rho1</code> (lines 40 and 41) correspond to the quantities ρᵢ in the formulas above. Notice also how the latter are expressed as the square root of the norm of two vectors in the code.  The variable pred_par.eps_normalizer appearing around those fractions is here to guarantee numerical stability.</p>
 
-						<p>To derive the UORO algorithm, the rank-one trick is actually applied twice in conjunction with the equation describing the recursive update of the influence matrix ∂xₙ/∂θ (cf section 2.2). The proof details are in the original UORO paper [8].</p>
+						<p>To derive the UORO algorithm, the rank-one trick is actually applied twice in conjunction with the equation describing the recursive update of the influence matrix ∂xₙ/∂θ (cf section 2.2). The proof details are in the original UORO paper <a href="https://doi.org/10.48550/arXiv.1702.05043" target ="_blank">[8]</a>.</p>
 
 
 						<h2 id ="References">References</h2>
 
 						<ol>
-							<li>Sung Hyuna, Jacques Ferlay, Rebecca L. Siegel, Mathieu Laversanne, Isabelle Soerjomataram, Ahmedin Jemal, and Freddie Bray, Global cancer statistics 2020: Globocan estimates of incidence and mortality worldwide for 36 cancers in 185 countries (2020), CA: A Cancer Journal for Clinicians</li>
-							<li>National Cancer Institute - Surveillance, Epidemiology and End Results Program, Cancer stat facts: Lung and bronchus cancer (2022) [accessed on June 15, 2021]</li>
-							<li>Pohl Michel, Mitsuru Uesaka, Hiroyuki Takahashi, Kazuyuki Demachi, and Ritu Bhusal Chhatkuli, Prediction of the Position of External Markers Using a Recurrent Neural Network Trained With Unbiased Online Recurrent Optimization for Safe Lung Cancer Radiotherapy (2022), Computer Methods and Programs in Biomedicine</li>
-							<li>Ritu Bhusal Chhatkuli, Development of a markerless tumor prediction system using principal component analysis and multi-channel singular spectral analysis with real-time respiratory phase recognition in radiation therapy (2016), PhD thesis, The University of Tokyo</li>
-							<li>Schweikard Achim, Hiroya Shiomi, and John Adler,  Respiration tracking in radiosurgery (2004), Medical physics</li>
-							<li>Pohl Michel, Mitsuru Uesaka, Kazuyuki Demachi, and Ritu Bhusal Chhatkuli, Prediction of the motion of chest internal points using a recurrent neural network trained with real-time recurrent learning for latency compensation in lung cancer radiotherapy (2021), Computerized Medical Imaging and Graphics</li>
-							<li>Krilavicius Tomas, Indre Zliobaite, Henrikas Simonavicius, and Laimonas Jaruevicius, Predicting respiratory motion for real-time tumour tracking in radiotherapy (2016), ArXiv.org</li>
-							<li>Corentin Tallec and Yann Ollivier, Unbiased online recurrent optimization (2017), ArXiv.org</li>
-							<li>Verma Poonam, Huanmei Wu, Mark Langer, Indra Das, and George Sandison, Survey: real-time tumor motion prediction for image-guided radiation treatment (2010), Computing in Science & Engineering</li>
-							<li>Ollivier Yann, Corentin Tallec, and Guillaume Charpiat, Training recurrent networks online without backtracking (2015), ArXiv.org</li>
+							<li>Sung Hyuna, Jacques Ferlay, Rebecca L. Siegel, Mathieu Laversanne, Isabelle Soerjomataram, Ahmedin Jemal, and Freddie Bray, <a href="https://doi.org/10.3322/caac.21660" target ="_blank">Global cancer statistics 2020: Globocan estimates of incidence and mortality worldwide for 36 cancers in 185 countries (2020)</a>, CA: A Cancer Journal for Clinicians</li>
+							<li>National Cancer Institute - Surveillance, Epidemiology and End Results Program, <a href="https://seer.cancer.gov/statfacts/html/lungb.html" target ="_blank">Cancer stat facts: Lung and bronchus cancer (2022)</a> [accessed on June 15, 2021]</li>
+							<li>Pohl Michel, Mitsuru Uesaka, Hiroyuki Takahashi, Kazuyuki Demachi, and Ritu Bhusal Chhatkuli, <a href="https://doi.org/10.48550/arXiv.2106.01100" target ="_blank">Prediction of the Position of External Markers Using a Recurrent Neural Network Trained With Unbiased Online Recurrent Optimization for Safe Lung Cancer Radiotherapy (2022)</a>, Computer Methods and Programs in Biomedicine</li>
+							<li>Ritu Bhusal Chhatkuli, <a href="https://doi.org/10.15083/00073584" target ="_blank">Development of a markerless tumor prediction system using principal component analysis and multi-channel singular spectral analysis with real-time respiratory phase recognition in radiation therapy</a> (2016), PhD thesis, The University of Tokyo</li>
+							<li>Schweikard Achim, Hiroya Shiomi, and John Adler,  <a href="https://doi.org/10.1118/1.1774132" target ="_blank">Respiration tracking in radiosurgery</a> (2004), Medical physics</li>
+							<li>Pohl Michel, Mitsuru Uesaka, Kazuyuki Demachi, and Ritu Bhusal Chhatkuli, <a href="https://doi.org/10.1016/j.compmedimag.2021.101941" target ="_blank">Prediction of the motion of chest internal points using a recurrent neural network trained with real-time recurrent learning for latency compensation in lung cancer radiotherapy</a> (2021), Computerized Medical Imaging and Graphics</li>
+							<li>Krilavicius Tomas, Indre Zliobaite, Henrikas Simonavicius, and Laimonas Jaruevicius, <a href="https://doi.org/10.48550/arXiv.1508.00749" target ="_blank">Predicting respiratory motion for real-time tumour tracking in radiotherapy</a> (2016), ArXiv.org</li>
+							<li>Corentin Tallec and Yann Ollivier, <a href="https://doi.org/10.48550/arXiv.1702.05043" target ="_blank">Unbiased online recurrent optimization</a> (2017), ArXiv.org</li>
+							<li>Verma Poonam, Huanmei Wu, Mark Langer, Indra Das, and George Sandison, <a href="https://doi.org/10.1109/MCSE.2010.99" target ="_blank">Survey: real-time tumor motion prediction for image-guided radiation treatment</a> (2010), Computing in Science & Engineering</li>
+							<li>Ollivier Yann, Corentin Tallec, and Guillaume Charpiat, <a href="https://doi.org/10.48550/arXiv.1507.07680" target ="_blank">Training recurrent networks online without backtracking</a> (2015), ArXiv.org</li>
 						</ol>
 
 						<i>Published on July 5, 2022</i>

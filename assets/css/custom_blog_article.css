@@ -5,15 +5,15 @@ p{
     text-align: justify;
 }
 @media screen and (max-width: 1680px) {
-    #main {
+    #main > .inner {
+            margin-left:15%; 
+            margin-right:15%} }
+@media screen and (max-width: 1300px) {
+    #main > .inner {
             margin-left:10%; 
-            margin-right:10%} }
-@media screen and (max-width: 1000px) {
-    #main {
-            margin-left:10%; 
-            margin-right:0px;} }
+            margin-right:10%;} }
 @media screen and (max-width: 600px) {
-    #main {
+    #main > .inner {
             margin-left:0px; 
             margin-right:0px;} }
 

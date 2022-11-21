@@ -121,14 +121,14 @@
 
 						<p>RNNs are typically trained offline using back-propagation through time (BPTT). Offline learning designates a learning process in which there are two separate steps for training and inference. In our study, we use online learning instead, which means that training and inference are performed simultaneously. In the context of radiotherapy, this enables the network to adapt to unseen respiratory patterns despite having seen only limited data. Indeed, data collection for medical applications of AI is often difficult due to regulations about personal information protection. This study investigates the efficiency of UORO <a href="https://doi.org/10.48550/arXiv.1702.05043" target ="_blank">[8]</a>, a recent approach to online learning with RNNs, to forecast respiratory motion.</p>
 
-						<p>Let's briefly discuss how UORO works. First, let's write the RNN equations. The first equation below (state equation) describes the evolution of the internal state vector xₙ, and the second equation (measurement equation) enables calculating the output vector yₙ. θₙ and uₙ respectively designate the parameter vector and the input vector. Note that the parameter vector depends on n because we perform online learning.</p>
+						<p>Let's briefly discuss how UORO works. First, let's write the RNN equations. The first equation below (state equation) describes the evolution of the internal state vector xₙ, and the second equation (measurement equation) enables calculating the output vector yₙ₊₁. θₙ and uₙ respectively designate the parameter vector and the input vector. Note that the parameter vector depends on n because we perform online learning.</p>
 
 						<p>\[
 							x_{n+1} = F_{st}(x_n, u_n, \theta_n)
 						\]</p>
 
 						<p>\[
-							y_n = F_{out}(x_n, \theta_n)
+							y_{n+1} = F_{out}(x_n, u_n, \theta_n)
 						\]</p>
 
 						<p>The loss function that we seek to minimize is:</p>
@@ -139,11 +139,11 @@
 						<p>In this equation, yₙ* designates the ground-truth labels (the positions of the markers that we want to predict). We can calculate the derivative of the loss with respect to θ using the definition of yₙ and the chain rule:</p>
 
 						<p>\[
-							\frac{\partial{L_{n+1}}}{\partial \theta} = 
+							\frac{\partial{L_{n+1}}}{\partial \theta} = 	
 							\frac{\partial{L_{n+1}}}{\partial y}(y_{n+1}) 
-							\left[ \frac{\partial{F_{out}}}{\partial x}(x_n, \theta_n)
-							\frac{\partial{x_n}}{\partial \theta} \right. \\
-							\left. + \frac{\partial{F_{out}}}{\partial \theta}(x_n, \theta_n) \right]
+							\left[ \frac{\partial{F_{out}}}{\partial x}(x_n, u_n, \theta_n)				
+							\frac{\partial{x_n}}{\partial \theta}
+							+ \frac{\partial{F_{out}}}{\partial \theta}(x_n, u_n, \theta_n) \right]
 						\]</p>
 
 						<p>
@@ -348,7 +348,7 @@
 							<li>Ollivier Yann, Corentin Tallec, and Guillaume Charpiat, <a href="https://doi.org/10.48550/arXiv.1507.07680" target ="_blank">Training recurrent networks online without backtracking</a> (2015), ArXiv.org</li>
 						</ol>
 
-						<i>Published on July 5, 2022</i>
+						<i>Published on July 5, 2022, last update on November 21, 2022</i>
 
 					</section>
 

@@ -1,2 +1,3 @@
 https://pohl-michel.github.io/blog/
 https://pohl-michel.github.io/blog/articles/predicting-respiratory-motion-online-learning-rnn/article.html
+https://pohl-michel.github.io/blog/articles/ai-research-articles/article.html

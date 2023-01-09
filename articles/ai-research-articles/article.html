@@ -49,9 +49,9 @@
 					<!-- </section> -->
 
 
-						<h2 id="Computer Vision">1. Computer Vision</h2>
+						<h2 id="Computer Vision"> Computer Vision</h2>
 
-						<h3 id="Classical computer vision"> 1.1. Classical computer vision </h3>
+						<h3 id="Classical computer vision"> Classical computer vision </h3>
 
 						<p>
 							<ul>
@@ -61,15 +61,24 @@
 							</ul>
 						</p>
 
-
-
-
-
-						<p>This paper presents a method to extract feature points and corresponding descriptors (or feature vectors) from images that are invariant to scale and rotation, and robust to affine distorsion, 3D viewpoint change, noise, and illumination. First, a scale-space pyramidal representation of the image is constructed and extremas corresponding to blobs are located in that space using 3D quadratic function optimization after computation of the difference of Gaussians. Keypoints with low contrast and corresponding to strong edges are eliminated. Each keypoint (extrema) is characterized by its 2D position, scale, and orientation, derived from the local orientation histogram. The local image descriptor is composed of the binned local orientation histograms along the keypoint direction around the keypoint for each neighbor box. 
+						<p>This paper presents the scale-invariant feature transform (SIFT), a method to extract feature points and corresponding descriptors (or feature vectors) from images that are invariant to scale and rotation, and robust to affine distorsion, 3D viewpoint change, noise, and illumination. First, a scale-space pyramidal representation of the image is constructed and extremas corresponding to blobs are located in that space using 3D quadratic function optimization after computation of the difference of Gaussians. Keypoints with low contrast and corresponding to strong edges are eliminated. Each keypoint (extrema) is characterized by its 2D position, scale, and orientation, derived from the local orientation histogram. The local image descriptor is composed of the binned local orientation histograms along the keypoint direction around the keypoint for each neighbor box. 
 
 						I found that the videos of Pratik Jain about <a href="https://www.youtube.com/watch?v=kH3IzumEc1Q" target ="_blank">homography</a>, <a href="https://www.youtube.com/watch?v=pwFeeVXLhsE" target ="_blank">image registration</a>, <a href="https://www.youtube.com/watch?v=8aNOzgIbaeA" target ="_blank">the Harris corner detector</a> and <a href="https://www.youtube.com/watch?v=gh7Zrc121Q8" target ="_blank">its properties</a>, and the SIFT <a href="https://www.youtube.com/watch?v=LXk4A24V8mQ" target ="_blank">invariant features</a> and <a href="https://www.youtube.com/watch?v=LWSx0p_PAS8" target ="_blank">feature descriptors</a> were very helpful to understand the context of the paper and its concepts.
-
 						</p>
+
+						<h3 id="Computer vision with deep learning"> Computer vision with deep learning </h3>
+
+						<p>
+							<ul>
+								<li>
+									Jonathan Long, <a href="https://openaccess.thecvf.com/content_cvpr_2015/papers/Long_Fully_Convolutional_Networks_2015_CVPR_paper.pdf" target ="_blank">Fully convolutional networks for semantic segmentation (2015)</a>, Proceedings of the IEEE conference on computer vision and pattern recognition
+								</il>
+							</ul>
+						</p>
+
+						<p> This paper uses fully convolutional networks (FCN), that is, networks that only use convolutions and no fully connected layers, to perform segmentation of natural images. In opposition to classical ConvNets, FCNs do not have a fixed input size image and they also have low time complexity. “Deconvolution” or upsampling layers are used to map features at the coarse level to larger 2D output segmentation results. Combining the information from features at different depths in the network using skip connections help refine the dense output by adding localization information to more content-related features.   
+						</p>
+
 
 						<i>Published on January 5, 2023, last update on January 5, 2023</i>
 
@@ -100,9 +109,10 @@
 						<ul>
 							<li><a href="#header">Page top</a></li>
 							<li>
-								<span class="opener">1. Computer Vision</span>
+								<span class="opener"> Computer Vision</span>
 								<ul>
-									<li><a href="#Classical computer vision">1.1. Classical computer vision</a></li>
+									<li><a href="#Classical computer vision"> Classical computer vision</a></li>
+									<li><a href="#Computer vision with deep learning"> Computer vision with deep learning</a></li>
 								</ul>
 							</li>
 						</ul>

@@ -71,16 +71,39 @@
 						<p>
 							<ul>
 								<li>
-									Jonathan Long, <a href="https://openaccess.thecvf.com/content_cvpr_2015/papers/Long_Fully_Convolutional_Networks_2015_CVPR_paper.pdf" target ="_blank">Fully convolutional networks for semantic segmentation (2015)</a>, Proceedings of the IEEE conference on computer vision and pattern recognition
+									Jonathan Long et al., <a href="https://openaccess.thecvf.com/content_cvpr_2015/papers/Long_Fully_Convolutional_Networks_2015_CVPR_paper.pdf" target ="_blank">Fully convolutional networks for semantic segmentation (2015)</a>, Proceedings of the IEEE conference on computer vision and pattern recognition
 								</il>
 							</ul>
 						</p>
 
-						<p> This paper uses fully convolutional networks (FCN), that is, networks that only use convolutions and no fully connected layers, to perform segmentation of natural images. In opposition to classical ConvNets, FCNs do not have a fixed input size image and they also have low time complexity. “Deconvolution” or upsampling layers are used to map features at the coarse level to larger 2D output segmentation results. Combining the information from features at different depths in the network using skip connections help refine the dense output by adding localization information to more content-related features.   
+						<p> This paper uses fully convolutional networks (FCN), that is, networks that only use convolutions and no fully connected layers, to perform segmentation of natural images. In opposition to classical ConvNets for image classification, FCNs do not have a fixed input size image; they also have low time complexity. 1D convolutions are used to replace fully connected layers to produce a coarse heat map where each channel represents a class, and “deconvolution” or upsampling layers are used to map features at the coarse level to larger 2D output segmentation results. Combining the information from features at different depths in the network using skip connections help refine the dense output by adding localization information to more content-related features. I found <a href="https://d2l.ai/chapter_computer-vision/fcn.html" target ="_blank">the implementation in the d2l.ai book</a> helpful to understand the paper, although the skip layers were not implemented.
+						</p>
+
+						<p>
+							<ul>
+								<li>
+									Olaf Ronneberger et al., <a href="https://link.springer.com/content/pdf/10.1007/978-3-319-24574-4_28.pdf" target ="_blank">U-Net: Convolutional Networks for Biomedical Image Segmentation (2015)</a>, International Conference on Medical image computing and computer-assisted intervention
+								</il>
+							</ul>
+						</p>
+
+						<p> U-Net is a neural network for image segmentation that uses relatively symmetric contracting and expanding paths (that hence form a U shape) with skip connections. That architecture leads to a good balance between localization accuracy and the use of context, while keeping the computing cost low. It is based on the FCN architecture, but the difference is that the U-Net has many feature channels in the up-sampling part. 
 						</p>
 
 
-						<i>Published on January 5, 2023, last update on January 5, 2023</i>
+						<p>
+							<ul>
+								<li>
+									Tsung-Yi Lin et al., <a href="https://openaccess.thecvf.com/content_cvpr_2017/papers/Lin_Feature_Pyramid_Networks_CVPR_2017_paper.pdf" target ="_blank">Feature Pyramid Networks for Object Detection (2017)</a>, Proceedings of the IEEE conference on computer vision and pattern recognition
+								</il>
+							</ul>
+						</p>
+
+						<p> This paper introduces feature pyramid networks (FPN), a framework that uses the inherent multi-scale pyramidal hierarchy of ConvNets with low-resolution semantically strong features and high-resolution but semantically weak features, to construct a feature pyramid that has strong semantics at all scales. The bottom-up pathway of the FPN is the feed-forward computation of the backbone ConvNet, computing feature maps at several scales. The subsequent top-down pathway upsamples the feature map from the highest level, that lateral connections enhance at each level by element-wise addition. Prediction is performed at each scale of the bottom-down path. The authors adapt Region Proposal Network (RPN) and Fast R-CNN to the FCN framework respectively for bounding box proposal generation and object detection, and also show high performance with segmentation.
+						</p>
+
+
+						<i>Published on January 5, 2023, last update on January 11, 2023</i>
 
 					</section>
 

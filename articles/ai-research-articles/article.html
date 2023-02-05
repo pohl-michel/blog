@@ -102,7 +102,7 @@
 						<p> This paper introduces feature pyramid networks (FPN), a framework that uses the inherent multi-scale pyramidal hierarchy of ConvNets with low-resolution semantically strong features and high-resolution but semantically weak features, to construct a feature pyramid that has strong semantics at all scales. The bottom-up pathway of the FPN is the feed-forward computation of the backbone ConvNet, computing feature maps at several scales. The subsequent top-down pathway upsamples the feature map from the highest level, that lateral connections enhance at each level by element-wise addition. Prediction is performed at each scale of the bottom-down path. The authors adapt Region Proposal Network (RPN) and Fast R-CNN to the FCN framework respectively for bounding box proposal generation and object detection, and also show high performance with segmentation.
 						</p>
 
-						<p>
+						<!-- <p>
 							<ul>
 								<li>
 									He et al., <a href="https://openaccess.thecvf.com/content_CVPR_2020/papers/He_Momentum_Contrast_for_Unsupervised_Visual_Representation_Learning_CVPR_2020_paper.pdf" target ="_blank">Momentum contrast for unsupervised visual representation learning (2020)</a>, Proceedings of the IEEE/CVF conference on computer vision and pattern recognition
@@ -111,10 +111,21 @@
 						</p>
 
 						<p> Unsupervised representation learning is successful in natural language processing, but supervised pre-training still prevails in computer vision. This paper introduces Momentum Contrast (MoCo) for unsupervised visual representation learning. A dynamic dictionary with a queue and moving-averaged encoder are built to make contrastive unsupervised learning easier. This paper follows an instance discrimination task: a query matches a dictionary key if they are encoded views of the same image.  <i>Details to be added later</i> 
+						</p> -->
+
+						<p>
+							<ul>
+								<li>
+									Chen et al., <a href="https://arxiv.org/abs/2002.05709" target ="_blank">A Simple Framework for Contrastive Learning of Visual Representations (2020)</a>, International conference on machine learning
+								</il>
+							</ul>
+						</p>
+
+						<p> Unsupervised representation learning is successful in natural language processing, but supervised pre-training still prevails in computer vision. Furthermore, constructing large scale labeled datasets is a difficult task, so self-supervised learning could be useful in computer vision. In the SimCLR method, data is augmented using random cropping, resizing, and color distorsion to form positive and negative pairs of images. Two functions <i>f</i> and <i>g</i> are learned, where <i>f</i> corresponds to the learned representation and <i>g</i> is the “projection head” such that the contrastive loss function is minimized for <i>(g o f)</i>. That loss function is the normalized cross entropy loss with adjustable temperature. One of the key findings is that unsupervised learning seems to benefit more from scaling up (model size, batch size, training epochs, data augmentation) than supervised learning.
 						</p>
 
 
-						<i>Published on January 5, 2023, last update on January 11, 2023</i>
+						<i>Published on January 5, 2023, last update on February 4, 2023</i>
 
 					</section>
 

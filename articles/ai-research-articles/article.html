@@ -48,6 +48,19 @@
 
 					<!-- </section> -->
 
+						<h2 id="Deep generative modeling"> Deep generative modeling</h2>
+
+						<p>
+							<ul>
+								<li>
+									Kingma, D. P., & Welling, <a href="https://arxiv.org/abs/1312.6114" target ="_blank">Auto-Encoding Variational Bayes (2013)</a>, Proceedings of the International Conference on Learning Representations (ICLR)
+								</il>
+							</ul>
+						</p>
+
+						<p>Generative modeling is an unsupervised form of machine learning where the model learns to discover the patterns in input data. Among these deep generative models, two major families stand out and deserve a special attention: Generative Adversarial Networks (GANs) and Variational Autoencoders (VAEs). VAEs are autoencoders that tackle the problem of the latent space irregularity of classical autoencoder neural networks by making the encoder return a distribution over the latent space instead of a single point. The encodings' distribution is regularised during training to ensure that its latent space has good properties allowing us to generate some new
+						data. The loss function of VAEs, composed of a reconstruction term and a regularisation term (the Kullback-Leibler divergence between the prior latent distribution and its approximated distribution given the input data) are derived using variational inference. The following articles by Joseph Rocca on Towards Data Science were helpful for understanding the paper: <a href="https://towardsdatascience.com/understanding-variational-autoencoders-vaes-f70510919f73" target ="_blank">"Understanding Variational Autoencoders (VAEs)"</a> and <a href="https://towardsdatascience.com/bayesian-inference-problem-mcmc-and-variational-inference-25a8aa9bce29" target ="_blank">"Bayesian inference problem, MCMC and variational inference"</a>. I also found the following Stack Exchange post about the calculation of the <a href="https://stats.stackexchange.com/questions/60680/kl-divergence-between-two-multivariate-gaussians" target ="_blank">Kullback-Leibler divergence between two multivariate Gaussians</a> useful.</p>
+
 
 						<h2 id="Computer Vision"> Computer Vision</h2>
 
@@ -125,7 +138,7 @@
 						</p>
 
 
-						<i>Published on January 5, 2023, last update on February 4, 2023</i>
+						<i>Published on January 5, 2023, last update on February 5, 2023</i>
 
 					</section>
 
@@ -153,6 +166,7 @@
 
 						<ul>
 							<li><a href="#header">Page top</a></li>
+							<li><a href="#Deep generative modeling">Deep generative modeling</a></li>
 							<li>
 								<span class="opener"> Computer Vision</span>
 								<ul>

@@ -1,0 +1,212 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Michel Pohl- Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/academicons.min.css"/>
+		<link rel="stylesheet" href="../../assets/css/main.css" />
+		<link rel="stylesheet" href="../../assets/css/github-gist-code-box.css" >
+		<link rel="stylesheet" href="../../assets/css/custom_blog_article.css" >
+		<script>
+			MathJax = {
+			  tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+			};
+		</script>
+		<style>
+			ul, ol, li {
+			  color: black !important;
+			}
+			/* Target nested unordered lists inside ordered lists */
+			ol li ul {
+				margin-bottom: 0;
+				padding-bottom: 0;
+			}
+			
+			/* Target the list item that contains a nested unordered list */
+			ol li:has(ul) {
+				margin-bottom: 0;
+				padding-bottom: 0;
+			}
+			
+			/* Target the list item that follows a list item with a nested unordered list */
+			ol li:has(ul) + li {
+				margin-top: 0;
+				padding-top: 0;
+			}
+		</style>
+		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+
+	</head>
+	<body class="is-preload">
+
+		<div id="wrapper">
+
+			<!-- Main -->
+			<div id="main">
+				<div class="inner">
+
+					<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo"><strong>Michel Pohl</strong> - Personal blog </a>								
+					</header>
+
+					<!-- Content -->
+					<section>
+						<header class="main">
+							<h1>Handling some challenging requests during peer review </h1>
+							<h2><i>Implementing state-of-the-art algorithms and validating your approach on a more extensive dataset </i><h2>
+						</header>
+
+						<span class="image main"><img src="research_children.jpg" style="max-width: 60%;" alt="" <figcaption>Photo by Clarisse Crosset on Unsplash </figcaption> </span>
+
+						<p> Properly handling tough comments in the peer review process is complex; here are some brief thoughts concerning two of these, particularly relevant to machine learning research: implementing state-of-the-art methods and validating your findings using a larger dataset. Understanding why these arise and what are possibilities to navigate them will help you succeed in your career as a researcher and computer scientist. Note: these are brief comments only; I may expand the article later when I find time.</p>
+
+					<!-- </section> -->
+
+						<h2 id="challenging comments"> Why those comments are challenging</h2>
+
+						<p>When publishing academic work in computer science acquiring more data and comparing your proposed algorithms against state-of-the-art (SOTA) models are among the most challenging reviewer requests, for several reasons: 
+							<ol>
+								<li>Acquiring more data
+									<ul>
+										<li> collecting data can be time-consuming. In some cases (e.g., applied work in medical imaging or finance), ethical approvals or permissions can be required. </li>
+										<li> the additional data might introduce variability, making results less favorable or requiring further adjustments. </li>
+										<li> processing and analyzing new data adds a significant workload. </li>
+									</ul>
+								</li>
+								<li>Comparing against SOTA models
+									<ul>
+										<li> reproducibility issues can arise, as some SOTA models do not release code or require extensive hyperparameter tuning, making fair comparison difficult. </li>
+										<li> there can be challenges due to computational costs, as deep learning models often require powerful GPUs and long training times. </li>
+										<li> lastly, the outcome can be negative: there is a risk that the SOTA method outperforms your approach, weakening your contribution. </li>
+									</ul>
+								</li>
+							</ol>
+						</p>
+
+						<h2 id="Why these comments are formulated"> Why these comments are formulated</h2>
+
+						<p>Would a request to add more data or include a SOTA comparison suggest that your research is relatively weak on crucial aspects? Not necessarily:
+							<ul>
+								<li> High standards for publication: many journals, especially top-tier ones, expect rigorous experimental validation, even for strong papers. </li>
+								<li> Routine reviewer expectations: some reviewers always request more data or comparisons as a default without fully considering feasibility. </li>
+								<li> A sign of interest, not rejection: if reviewers thought that your work was fundamentally flawed, they might have outright rejected it rather than suggested improvements. These comments suggest they see value but want stronger validation. </li>
+								<li> Field-specific bias: in some fields (e.g., machine learning, medical imaging), it is standard to compare against deep learning, even if the study is not focused on it. </li>	
+							</ul>							
+						</p>						
+
+						<h2 id="Partial revisions"> One possible solution: partial revisions</h2>
+
+						<p>If answering such requests feels impossible, one solution could be to request a partial revision. Unless the justification is strong, a partial revision is unlikely to be accepted in high-impact journals (typically with an impact factor greater than 5.0). Top-tier journals often enforce high experimental standards. However, the editor will make a decision at their own discretion. Some editors are flexible if you can convince them that the paper still makes a substantial contribution without the additional experiments. The following could be included in a partial revision:</p>	
+						<ol>
+							<li>Strengthening Existing Results – instead of adding new data, you could provide additional analysis on the current dataset (e.g., statistical analysis, visualization).</li>
+							<li>Theoretical or conceptual justifications – if adding SOTA comparisons is challenging, you could:
+								<ul>
+									<li>clearly state why your method differs from deep learning approaches (e.g., interpretability, lower computational cost, domain-specific advantages).</li>
+									<li>cite existing comparative studies that highlight deep learning's limitations in your context.</li>
+								</ul>
+							</li>
+							<li >Acknowledging limitations transparently – journals appreciate honesty, so you can:
+								<ul>
+									<li>add a discussion about potential future work, stating that while deep learning comparisons would be ideal, they are beyond the scope due to computational or data constraints.</li>
+									<li>mention the results of some previous experiments where your method failed in particular settings.</li>
+								</ul>
+							</li>
+						</ol>
+
+						<h2 id="Other challenging comments"> Other challenging possible comments</h2>
+
+						<p>Are these the hardest reviewer comments? The two comments above are certainly among the hardest, but other tough ones include:</p>
+						<ul>
+							<li> "The proposed method is fundamentally flawed." If reviewers claim that your approach is incorrect or theoretically unsound, the entire study might need rethinking. </li>
+							<li> "The novelty is insufficient." If they argue your method is too similar to prior work, proving novelty is difficult. </li>
+							<li> "The data do not support your conclusions." If your claims do not match the evidence, reworking the analysis may be impossible without new experiments. </li>
+						</ul>							
+						
+
+
+						<i>Published on April 5, 2025</i>
+
+					</section>
+
+				</div>
+			</div>
+
+			<!-- Sidebar -->
+			<div id="sidebar">
+				<div class="inner">
+
+					<!-- Menu -->
+					<nav id="menu">
+						<header class="major">
+							<h2>Menu</h2>
+						</header>
+
+						<ul>
+							<li><a href="../../index.html" target="_blank"><b>Blog homepage</b></a></li>
+						</ul>
+
+						<hr />
+						<br />
+
+						<ul>
+							<li><a href="#header">Page top</a></li>
+							<li><a href="#challenging comments">Challenges</a></li>
+							<li><a href="#Why these comments are formulated">The reasons behind those comments</a></li>
+							<li><a href="#Partial revisions">Partial revisions</a></li>
+							<li><a href="#Other challenging comments">Other challenging comments</a></li>
+						</ul>
+					</nav>
+
+					<!-- Section -->
+					<section>
+						<header class="major">
+							<h2>Suggested reading</h2>
+						</header>
+						<div class="mini-posts">
+							<article>
+								<i class="ai ai-arxiv ai-7x"></i><br>
+								The version of my published article openly accessible on ArXiv <a href=" 	
+								https://doi.org/10.48550/arXiv.2106.01100" target ="_blank">(link here)</a>
+							</article>
+						</div>
+					</section>
+
+					<!-- Section -->
+					<section>
+						<header class="major">
+							<h2>Contact</h2>
+						</header>
+						<ul class="contact">
+							<li class="icon solid fa-envelope"><a href="#">michel.pohl@centrale-marseille.fr</a></li>
+							<li class="icon solid fa-home">Oxford, United Kingdom</li>
+						</ul>
+					</section>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<p class="copyright">&copy; 2022 Michel Pohl. All rights reserved. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+					</footer>
+
+				</div>
+			</div>
+
+
+		</div>
+
+		<!-- Scripts -->
+		<script src="../../assets/js/jquery.min.js"></script>
+		<script src="../../assets/js/browser.min.js"></script>
+		<script src="../../assets/js/breakpoints.min.js"></script>
+		<script src="../../assets/js/util.js"></script>
+		<script src="../../assets/js/main.js"></script>
+
+	</body>
+</html>

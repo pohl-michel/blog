@@ -2274,3 +2274,23 @@ button,
     border-top: 0;
     margin-top: 0;
     padding-top: 0; }
+
+/* Desktop: keep hamburger toggle visible while scrolling */
+@media screen and (min-width: 1281px) {
+  #sidebar .toggle {
+    position: fixed;
+    top: 0;
+    z-index: 10001;
+  }
+
+  /* Match sidebar widths (26em normally, 24em at <=1680px) */
+  #sidebar .toggle { left: 26em; }
+  @media screen and (max-width: 1680px) {
+    #sidebar .toggle { left: 24em; }
+  }
+
+  /* When sidebar is collapsed, keep toggle at the left edge */
+  #sidebar.inactive .toggle {
+    left: 0;
+  }
+}

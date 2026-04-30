@@ -43,7 +43,7 @@
 						</header>
 
 						<span class="image main"><img src="images/brain_as_graph.png" style="max-width: 35%;" alt="" </span>
-
+						<br>
 
 					<!-- </section> -->
 
@@ -52,10 +52,15 @@
 
 						<p>Brain imaging data often exhibit structured relationships between regions. Instead of treating features independently, this project models PET data for each subject as a signal on a graph, where nodes represent anatomical brain regions and edge weights encode similarity between regions across subjects. The classification task is formulated as a hypothesis test between two graph models (healthy versus diseased), using spectral properties of graph signals. </p>
 						
+						<h2 id="Data">2. Data</h2>
+
+						<p>The data that I use contains statistical features extracted from 142 segmented brain FDG-PET images. These images were provided by La Timone Hospital (Marseille) and correspond to 61 healthy control subjects and 81 patients with Alzheimer's disease. Each brain image was segmented into 116 regions of interest (ROIs) using WFU-PickAtlas. For each region, the first four moments (mean, variance, skewness, and kurtosis) and the entropy were computed; they proved to be useful for the discrimination between the two classes (healthy control and Alzheimer's disease) in prior work from Garali et al. [<a href="https://doi.org/10.1109/JTEHM.2018.2796600" target ="_blank">1</a>]. The resulting data are stored as two tensors of size 116 × 5 × N, where N denotes the number of subjects in each class.</p>
+
 
 						<h2 id ="References">References</h2>
 
 						<ol>
+							<li>Imène Garali, Mouloud Adel, Salah Bourennane, and Eric Guedj, <a href="https://doi.org/10.1109/JTEHM.2018.2796600" target ="_blank">"Histogram-based features selection and volume of interest ranking for brain PET image classification"</a>, IEEE journal of translational engineering in health and medicine (2018)</li>
 							<li>Chenhui Hu, Jorge Sepulcre, Keith A. Johnson, Georges E. Fakhri, Yue M. Lu, and Quanzheng Li, <a href="https://doi.org/10.3322/caac.21660" target ="_blank">"Matched signal detection on graphs: Theory and application to brain imaging data classification"</a>, NeuroImage (2016)</li>
 						</ol>
 
@@ -88,6 +93,7 @@
 						<ul>
 							<li><a href="#header">Page top</a></li>
 							<li><a href="#Introduction">1. Introduction</a></li>
+							<li><a href="#Data">2. Data</a></li>
 							<li><a href="#References">References</a></li>
 						</ul>
 					</nav>

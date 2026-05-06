@@ -54,11 +54,30 @@
 						
 						<h2 id="Data">2. Data</h2>
 
-						<p>The data used in this work contains statistical features extracted from 142 segmented brain FDG-PET images. These images were provided by La Timone Hospital (Marseille) and correspond to 61 healthy control subjects and 81 patients with Alzheimer's disease. Each brain image was segmented into 116 regions of interest (ROIs) using WFU-PickAtlas. For each region, the first four moments (mean, variance, skewness, and kurtosis) and the entropy were computed; they proved to be useful for the discrimination between the two classes (healthy control and Alzheimer's disease) in prior work from Garali et al. [<a href="https://doi.org/10.1109/JTEHM.2018.2796600" target ="_blank">6</a>]. The resulting data are stored as two tensors of size 116 × 5 × $N$, where $N$ denotes the number of subjects in each class.</p>
+						<p>The data used in this work contains statistical features extracted from 142 segmented brain FDG-PET images. These images were provided by La Timone Hospital (Marseille) and correspond to 61 healthy control subjects and 81 patients with Alzheimer's disease. Each brain image was segmented into 116 regions of interest (ROIs) using WFU-PickAtlas. For each region, the first four moments (mean, variance, skewness, and kurtosis) and the entropy were computed; they proved to be useful for the discrimination between the two classes (healthy control and Alzheimer's disease) in prior work from Garali et al. [<a href="https://doi.org/10.1109/JTEHM.2018.2796600" target ="_blank">6</a>]. The resulting data are stored as two tensors of different shapes 116 × 5 × $N_k$, where $N_k$ denotes the number of subjects in class $k$.</p>
 
 						<h2 id="Methods">3. Methods</h2>
 						
-						<p>Given the 5-dimensional feature vector $x$...
+						<p> First, the 5-dimensional feature vectors containing the first four moments and entropy for each subject are normalized across brain regions, potentially improving performance. We denote by $\bar{x}_{r,s} \in \mathbb{R}^5$ the normalized feature vector associated with region $r$ and subject $s$. Subsequently, we compute the scalar feature 
+							\[
+								x_{r,s} = \alpha \bar{x}_{r,s} \:,
+							\]
+						where $\alpha \in \mathbb{R}^5$ represent region- and subject-independent linear combination coefficients. This allows constructing one fully connected, undirected graph per class, whose nodes each represent one anatomical brain region. Given two regions indexed by $i$ and $j$, its weight $W_{i,j}$ characterize overall similarity between the corresponding scalar features in each class, as follows:
+							\[
+								W_{i,j} = \text{exp} \left( -\sum_{s = 1}^{N_k}{(x_{i,s} - x_{j,s})^2} \right).
+							\]
+						For each subject $s$, the more the features $x_{i,s}$ and $x_{j,s}$ are close to one another, the more $W_{i,j}$ becomes closer to 1, and the farther apart $x_{i,s}$ and $x_{j,s}$ are, the more $W_{i,j}$ becomes closer to 0, thereby reflecting the notion of similarity. This specific similarity metric is called the Gaussian radial basis function (RBF) kernel.
+
+						For each class, we can compute the Laplacian $L$ of its reference graph, from its adjacency matrix $W$, as follows:
+							\[
+								L = D - W,
+							\]
+						where $D$ is the degree matrix, i.e., the diagonal matrix whose diagonal elements are:
+
+
+						</p>
+
+
 
 						<h2 id ="References">References</h2>
 

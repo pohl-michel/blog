@@ -42,7 +42,7 @@
 							<h2><i>An application to Alzheimer's disease diagnosis from PET image data</i><h2>
 						</header>
 
-						<span class="image main"><img src="images/brain_as_graph.png" style="max-width: 45%;" alt="" </span>
+						<span class="image main"><img src="images/brain_as_graph.png" style="max-width: 50%;" alt="" </span>
 						<br>
 
 					<!-- </section> -->
@@ -56,7 +56,14 @@
 
 						<h3 id="Data">2.1. Regional features derived from brain PET imaging</h2>
 
-						<p>The data used in this work contains statistical features extracted from 142 segmented brain fluorodeoxyglucose-PET images. These images were provided by La Timone Hospital (Marseille) and correspond to $N_0 = 61$ healthy control subjects and $N_1 = 81$ patients with Alzheimer's disease. Each brain image was segmented into $N_\text{ROI} = 116$ regions of interest (ROIs) using WFU-PickAtlas. For each region, the first four moments (mean, variance, skewness, and kurtosis) and the entropy were computed; they proved to be useful for the discrimination between the two classes (healthy control and Alzheimer's disease) in prior work from Garali et al. [<a href="https://doi.org/10.1109/JTEHM.2018.2796600" target ="_blank">6</a>]. The resulting data are stored as two tensors of different shapes $N_\text{ROI}$ × 5 × $N_k$, where $N_k$ denotes the number of subjects in class $k \in \{0, 1\}$.</p>
+						<p>The data used in this work contains statistical features extracted from 142 segmented brain fluorodeoxyglucose-PET images. These images were provided by La Timone Hospital (Marseille) and correspond to $N_0 = 61$ healthy control subjects and $N_1 = 81$ patients with Alzheimer's disease. Each brain image was segmented into $N_\text{ROI} = 116$ regions of interest (ROIs) using WFU-PickAtlas. For each region, the first four moments (mean, variance, skewness, and kurtosis) and the entropy were computed; they proved to be useful for the discrimination between the two classes (healthy control and Alzheimer's disease) in prior work from Garali et al. [<a href="https://doi.org/10.1109/JTEHM.2018.2796600" target ="_blank">6</a>] [<a href="https://doi.org/10.70675/97069f6bz44bcz44c8z87f8z9058b2808c08" target ="_blank">7</a>]. The resulting data are stored as two tensors of different shapes $N_\text{ROI}$ × 5 × $N_k$, where $N_k$ denotes the number of subjects in class $k \in \{0, 1\}$.</p>
+
+						<figure>
+							<img src="images/PET_healthy_brain.png" alt="" /> 
+							<img src="images/PET_AD_brain.png" alt="" /> 
+							<figcaption> Axial FDG-PET cross-sections from a healthy subject (top row) and patient with Alzheimer's disease (bottom row). The glucose consumption of the patient's brain is reduced compared with the healthy case. Reprinted from [<a href="https://doi.org/10.70675/97069f6bz44bcz44c8z87f8z9058b2808c08" target ="_blank">7</a>]. </figcaption>
+						</figure>
+						<br><br>
 
 						<h3 id="Reference graphs"> 2.2. Reference graph for each class </h3>
 						
@@ -82,9 +89,6 @@
 								D_{i,i} = \sum_{j=1}^{N_\text{R}}{W_{i,j}}
 							\]
 						</p>
-						
-
-
 
 						<h2 id ="References">References</h2>
 
@@ -95,6 +99,7 @@
 							<li>Thomas N. Kipf and Max Welling, <a href="https://doi.org/10.48550/arXiv.1609.02907" target ="_blank">"Semi-supervised classification with graph convolutional networks"</a>, arXiv preprint arXiv:1609.02907 (2016)</li>
 							<li>Deyu Bo, Xiao Wang, Yang Liu, Yuan Fang, Yawen Li, and Chuan Shi, <a href="https://doi.org/10.48550/arXiv.2302.05631" target ="_blank">"A survey on spectral graph neural networks"</a>, arXiv preprint arXiv:2302.05631 (2023)</li>
 							<li>Imène Garali, Mouloud Adel, Salah Bourennane, and Eric Guedj, <a href="https://doi.org/10.1109/JTEHM.2018.2796600" target ="_blank">"Histogram-based features selection and volume of interest ranking for brain PET image classification"</a>, <em>IEEE journal of translational engineering in health and medicine</em> (2018)</li>
+							<li>Imène Garali, <a href="https://doi.org/10.70675/97069f6bz44bcz44c8z87f8z9058b2808c08" target ="_blank">"Aide au diagnostic de la maladie d'Alzheimer par des techniques de sélection d'attributs pertinents dans des images cérébrales fonctionnelles obtenues par Tomographie par Emission de Positons au 18FDG"</a>, Aix-Marseille Université, Ph.D. thesis (2015)</li>
 						</ol>
 
 						<i>Published on April 24, 2026, last update on April 24, 2026</i>

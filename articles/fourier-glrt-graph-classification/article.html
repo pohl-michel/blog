@@ -52,11 +52,13 @@
 
 						<p>Many real-world datasets are not optimally represented in Euclidean space as they naturally lie on irregular structures such as graphs (e.g., molecules, social networks, or sensor networks). Brain imaging data, in particular, often exhibit structured relationships between regions. Instead of treating all features independently, in this project, the data for each subject is modeled as a signal on a graph whose nodes represent anatomical brain regions, with edge weights encoding connectivity between regions. The classification task is formulated as a hypothesis test between two representative graphs&mdash;one built from healthy controls and one built from patients with Alzheimer's disease&mdash;using spectral properties of graph signals. This approach, building on the framework introduced by Hu et al. [<a href="https://doi.org/10.1016/j.neuroimage.2015.10.026" target ="_blank">1</a>], is applied here to multi-dimensional graph signals: regional statistical features derived from positron emission tomography (PET) images. Specifically, I focus on the bandlimited graph-signal setting, where the underlying noiseless signal is assumed to concentrate in low graph frequencies and higher-frequency components are modeled as additive noise. Although the application explored in this work is brain image classification, the core method&mdash;treating structured data as signals defined on graphs, transforming them using the graph Fourier transform, and performing classification via a generalized likelihood test (GLRT)&mdash;is general and applies to any graph-structured data. Notably, the ideas on graph spectral analysis discussed here are closely related to the foundations of graph deep learning. In several early studies on graph convolutional neural networks (CNNs), convolution was defined via eigendecomposition of the graph Laplacian [<a href="https://doi.org/10.48550/arXiv.1312.6203" target ="_blank">2</a>], while efficient polynomial or first-order approximations of spectral graph convolutions were introduced in later architectures such as ChebNet and the graph convolutional network (GCN) [<a href="https://doi.org/10.48550/arXiv.1606.09375" target ="_blank">3</a>] [<a href="https://doi.org/10.48550/arXiv.1609.02907" target ="_blank">4</a>]. More broadly, modern graph neural networks (GNNs) are often discussed from two complementary viewpoints: spatial or message-passing methods, which aggregate information from neighboring nodes, and spectral methods, which use graph filters defined via the graph-Laplacian eigenspectrum. The latter viewpoint, more directly connected to the field of signal processing and the graph Fourier transform used in this work, remains particularly important, as spectral GNNs naturally capture global information and offer better expressiveness and interpretability [<a href="https://doi.org/10.48550/arXiv.2302.05631" target ="_blank">5</a>]. Although I conducted this short project on graph signal processing more than ten years ago during my postgraduate studies, I revisit it in this article to highlight core concepts that remain relevant to modern machine learning.</p>
 						
-						<h2 id="Data">2. Data</h2>
+						<h2 id="Methods">2. Materials and methods</h2>
 
-						<p>The data used in this work contains statistical features extracted from 142 segmented brain FDG-PET images. These images were provided by La Timone Hospital (Marseille) and correspond to 61 healthy control subjects and 81 patients with Alzheimer's disease. Each brain image was segmented into 116 regions of interest (ROIs) using WFU-PickAtlas. For each region, the first four moments (mean, variance, skewness, and kurtosis) and the entropy were computed; they proved to be useful for the discrimination between the two classes (healthy control and Alzheimer's disease) in prior work from Garali et al. [<a href="https://doi.org/10.1109/JTEHM.2018.2796600" target ="_blank">6</a>]. The resulting data are stored as two tensors of different shapes 116 × 5 × $N_k$, where $N_k$ denotes the number of subjects in class $k$.</p>
+						<h3 id="Data">2.1. Regional features derived from brain PET imaging</h2>
 
-						<h2 id="Methods">3. Methods</h2>
+						<p>The data used in this work contains statistical features extracted from 142 segmented brain fluorodeoxyglucose-PET images. These images were provided by La Timone Hospital (Marseille) and correspond to 61 healthy control subjects and 81 patients with Alzheimer's disease. Each brain image was segmented into 116 regions of interest (ROIs) using WFU-PickAtlas. For each region, the first four moments (mean, variance, skewness, and kurtosis) and the entropy were computed; they proved to be useful for the discrimination between the two classes (healthy control and Alzheimer's disease) in prior work from Garali et al. [<a href="https://doi.org/10.1109/JTEHM.2018.2796600" target ="_blank">6</a>]. The resulting data are stored as two tensors of different shapes 116 × 5 × $N_k$, where $N_k$ denotes the number of subjects in class $k$.</p>
+
+						<h3 id="Reference graphs"> 2.2. Reference graph for each class </h3>
 						
 						<p> First, the 5-dimensional feature vectors containing the first four moments and entropy for each subject are normalized across brain regions, potentially improving performance. We denote by $\bar{x}_{r,s} \in \mathbb{R}^5$ the normalized feature vector associated with region $r$ and subject $s$. Subsequently, we compute the scalar feature 
 							\[
@@ -67,15 +69,18 @@
 								W_{i,j} = \text{exp} \left( -\sum_{s = 1}^{N_k}{(x_{i,s} - x_{j,s})^2} \right).
 							\]
 						For each subject $s$, the more the features $x_{i,s}$ and $x_{j,s}$ are close to one another, the more $W_{i,j}$ becomes closer to 1, and the farther apart $x_{i,s}$ and $x_{j,s}$ are, the more $W_{i,j}$ becomes closer to 0, thereby reflecting the notion of similarity. This specific similarity metric is called the Gaussian radial basis function (RBF) kernel.
+						</p>
 
-						For each class, we can compute the Laplacian $L$ of its reference graph, from its adjacency matrix $W$, as follows:
+						<h3 id="Fourier transform"> 2.3. The Fourier graph transform </h3>
+
+						<p> For each class, we can compute the Laplacian $L$ of its reference graph, from its adjacency matrix $W$, as follows:
 							\[
 								L = D - W,
 							\]
 						where $D$ is the degree matrix, i.e., the diagonal matrix whose diagonal elements are:
 
-
 						</p>
+						
 
 
 
@@ -119,7 +124,15 @@
 						<ul>
 							<li><a href="#header">Page top</a></li>
 							<li><a href="#Introduction">1. Introduction</a></li>
-							<li><a href="#Data">2. Data</a></li>
+							
+							<li>
+								<span class="opener">2. Materials and methods</span>
+								<ul>
+									<li><a href="#Methods">2.1. Regional features derived from brain PET</a></li>
+									<li><a href="#Reference graphs">2.2 Reference graph for each class</a></li>
+									<li><a href="#Fourier transform">2.3. The Fourier graph transform </a></li>
+								</ul>
+							</li>					
 							<li><a href="#References">References</a></li>
 						</ul>
 					</nav>

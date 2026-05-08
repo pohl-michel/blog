@@ -50,7 +50,7 @@
 
 						<h2 id="Introduction">1. Introduction</h2>
 
-						<p>Many real-world datasets are not optimally represented in Euclidean space as they naturally lie on irregular structures such as graphs (e.g., molecules, social networks, or sensor networks). Brain imaging data, in particular, often exhibit structured relationships between regions. Instead of treating all features independently, in this project, the data for each subject is modeled as a signal on a graph whose nodes represent anatomical brain regions, with edge weights encoding connectivity between regions. The classification task is formulated as a hypothesis test between two representative graphs&mdash;one built from healthy controls and one built from patients with Alzheimer's disease&mdash;using spectral properties of graph signals. This approach, building on the framework introduced by Hu et al. [<a href="https://doi.org/10.1016/j.neuroimage.2015.10.026" target ="_blank">1</a>], is applied here to multi-dimensional graph signals: regional statistical features derived from positron emission tomography (PET) images. Specifically, I focus on the bandlimited graph-signal setting, where the underlying noiseless signal is assumed to concentrate in low graph frequencies and higher-frequency components are modeled as additive noise. Although the application explored in this work is brain image classification, the core method&mdash;treating structured data as signals defined on graphs, transforming them using the graph Fourier transform, and performing classification via a generalized likelihood test (GLRT)&mdash;is general and applies to any graph-structured data. Notably, the ideas on graph spectral analysis discussed here are closely related to the foundations of graph deep learning. In several early studies on graph convolutional neural networks (CNNs), convolution was defined via eigendecomposition of the graph Laplacian [<a href="https://doi.org/10.48550/arXiv.1312.6203" target ="_blank">2</a>], while efficient polynomial or first-order approximations of spectral graph convolutions were introduced in later architectures such as ChebNet and the graph convolutional network (GCN) [<a href="https://doi.org/10.48550/arXiv.1606.09375" target ="_blank">3</a>] [<a href="https://doi.org/10.48550/arXiv.1609.02907" target ="_blank">4</a>]. More broadly, modern graph neural networks (GNNs) are often discussed from two complementary viewpoints: spatial or message-passing methods, which aggregate information from neighboring nodes, and spectral methods, which use graph filters defined via the graph-Laplacian eigenspectrum. The latter viewpoint, more directly connected to the field of signal processing and the graph Fourier transform used in this work, remains particularly important, as spectral GNNs naturally capture global information and offer better expressiveness and interpretability [<a href="https://doi.org/10.48550/arXiv.2302.05631" target ="_blank">5</a>]. Although I conducted this short project on graph signal processing more than ten years ago during my postgraduate studies, I revisit it in this article to highlight core concepts that remain relevant to modern machine learning.</p>
+						<p>Many real-world datasets are not optimally represented in Euclidean space as they naturally lie on irregular structures such as graphs (e.g., molecules, social networks, or sensor networks). Brain imaging data, in particular, often exhibit structured relationships between regions. Instead of treating all features independently, in this project, the data for each subject is modeled as a signal on a graph whose nodes represent anatomical brain regions, with edge weights encoding connectivity between regions. The classification task is formulated as a hypothesis test between two representative graphs&mdash;one built from healthy controls and one built from patients with Alzheimer's disease&mdash;using spectral properties of graph signals. This approach, building on the framework introduced by Hu et al. [<a href="https://doi.org/10.1016/j.neuroimage.2015.10.026" target ="_blank">1</a>], is applied here to multi-dimensional graph signals: regional statistical features derived from positron emission tomography (PET) images. Specifically, I focus on the bandlimited graph-signal setting, where the underlying noiseless signal is assumed to concentrate in low graph frequencies and higher-frequency components are modeled as additive noise. Although the application explored in this work is brain image classification, the core method&mdash;treating structured data as signals defined on graphs, transforming them using the graph Fourier transform, and performing classification via a generalized likelihood ratio test (GLRT)&mdash;is general and applies to any graph-structured data. Notably, the ideas on graph spectral analysis discussed here are closely related to the foundations of graph deep learning. In several early studies on graph convolutional neural networks (CNNs), convolution was defined via eigendecomposition of the graph Laplacian [<a href="https://doi.org/10.48550/arXiv.1312.6203" target ="_blank">2</a>], while efficient polynomial or first-order approximations of spectral graph convolutions were introduced in later architectures such as ChebNet and the graph convolutional network (GCN) [<a href="https://doi.org/10.48550/arXiv.1606.09375" target ="_blank">3</a>] [<a href="https://doi.org/10.48550/arXiv.1609.02907" target ="_blank">4</a>]. More broadly, modern graph neural networks (GNNs) are often discussed from two complementary viewpoints: spatial or message-passing methods, which aggregate information from neighboring nodes, and spectral methods, which use graph filters defined via the graph-Laplacian eigenspectrum. The latter viewpoint, more directly connected to the field of signal processing and the graph Fourier transform used in this work, remains particularly important, as spectral GNNs naturally capture global information and offer better expressiveness and interpretability [<a href="https://doi.org/10.48550/arXiv.2302.05631" target ="_blank">5</a>]. Although I conducted this short project on graph signal processing more than ten years ago during my postgraduate studies, I revisit it in this article to highlight core concepts that remain relevant to modern machine learning.</p>
 						
 						<h2 id="Methods">2. Materials and methods</h2>
 
@@ -112,6 +112,24 @@
 
 						</p>
 
+						<h3 id="GLRT"> 2.4. The generalized likelihood ratio test for bandlimited signals</h3>
+
+						<p style ="margin-bottom: 0.5em">Given the input graph signal $x$, we consider the classification problem between the following two hypotheses:</p>
+						<!-- <p style="margin-bottom: 0"></p> -->
+						<ul style="color:black">
+							<li>$x$ belongs to the graph $\mathcal{G}_0$ corresponding to the healthy subjects</li>
+							<li>$x$ belongs to the graph $\mathcal{G}_1$ corresponding to the patients with Alzheimer's disease.</li>
+						</ul>
+						<p>
+						We consider the bandlimited signal setting, under which a noiseless signal $x$ satisfies the following approximation, for both classes $k \in \{0, 1\}$:
+							\[
+								\text{for all } m > M,\:  \mathscr{F}_{\mathcal{G}_k}(x)_m \approx 0 \:,
+							\]							
+						where $M$ is a cutoff frequency selected arbitrarily. In other words, ...
+
+						</p>
+
+
 						<h2 id ="References">References</h2>
 
 						<ol>
@@ -157,9 +175,10 @@
 							<li>
 								<span class="opener">2. Materials and methods</span>
 								<ul>
-									<li><a href="#Methods">2.1. Regional features derived from brain PET</a></li>
+									<li><a href="#Methods">2.1. Regional features derived from brain PET imaging</a></li>
 									<li><a href="#Reference graphs">2.2 Reference graph for each class</a></li>
 									<li><a href="#Fourier transform">2.3. The Fourier graph transform </a></li>
+									<li><a href="#GLRT">2.4. The GLRT for bandlimited signals </a></li>
 								</ul>
 							</li>					
 							<li><a href="#References">References</a></li>

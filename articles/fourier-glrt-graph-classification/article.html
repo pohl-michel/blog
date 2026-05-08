@@ -59,9 +59,11 @@
 						<p>The data used in this work contains statistical features extracted from 142 segmented brain fluorodeoxyglucose-PET images. These images were provided by La Timone Hospital (Marseille) and correspond to $N_0 = 61$ healthy control subjects and $N_1 = 81$ patients with Alzheimer's disease. Each brain image was segmented into $N_\text{ROI} = 116$ regions of interest (ROIs) using WFU-PickAtlas. For each region, the first four moments (mean, variance, skewness, and kurtosis) and the entropy were computed; they proved to be useful for the discrimination between the two classes (healthy control and Alzheimer's disease) in prior work from Garali et al. [<a href="https://doi.org/10.1109/JTEHM.2018.2796600" target ="_blank">6</a>] [<a href="https://doi.org/10.70675/97069f6bz44bcz44c8z87f8z9058b2808c08" target ="_blank">7</a>]. The resulting data are stored as two tensors of different shapes $N_\text{ROI}$ × 5 × $N_k$, where $N_k$ denotes the number of subjects in class $k \in \{0, 1\}$.</p>
 
 						<figure>
-							<img src="images/PET_healthy_brain.png" alt="" /> 
-							<img src="images/PET_AD_brain.png" alt="" /> 
-							<figcaption> Axial FDG-PET cross-sections from a healthy subject (top row) and patient with Alzheimer's disease (bottom row). The glucose consumption of the patient's brain is reduced compared with the healthy case. Reprinted from [<a href="https://doi.org/10.70675/97069f6bz44bcz44c8z87f8z9058b2808c08" target ="_blank">7</a>]. </figcaption>
+							<div align="center">
+							<img src="images/PET_healthy_brain.png" style="max-width: 80%;" alt="" /> 
+							<img src="images/PET_AD_brain.png" style="max-width: 80%;" alt="" /> 
+							</div>
+							<sub>Axial FDG-PET cross-sections from a healthy subject (top row) and patient with Alzheimer's disease (bottom row). The glucose consumption of the patient's brain is reduced compared with the healthy case. Reprinted from [<a href="https://doi.org/10.70675/97069f6bz44bcz44c8z87f8z9058b2808c08" target ="_blank">7</a>]. </sub>
 						</figure>
 						<br><br>
 
@@ -86,13 +88,27 @@
 							\]
 						where $D$ is the degree matrix, i.e., the diagonal matrix whose diagonal elements are:
 							\[
-								D_{i,i} = \sum_{j=1}^{N_\text{R}}{W_{i,j}}
+								D_{i,i} = \sum_{j=1}^{N_\text{ROI}}{W_{i,j}} \:.
 							\]
 						$L$ is symmetrical with entries in $\mathbb{R}$, so it can be diagonalized in the following way:
 							\[
 								D = F \Lambda F^\text{T} \:,
 							\]		
-						where $F$ is an orthogonal matrix and $\Lambda$ a diagonal matrix.					
+						where $F$ is an orthogonal matrix and $\Lambda$ a diagonal matrix whose values are ordered in increasing order, i.e. $\Lambda_{i,i} = \lambda_i$ with  $ \lambda_1 \leq ... \lambda_{N_\text{ROI}} $.	
+						
+						Given a real-valued signal $x$ on the graph $\mathcal{G} = (V, E)$, i.e., a mapping from the set of vertices $S$ to $\mathbb{R}$, its Fourier transform on the graph $\mathcal{G}$ is defined as:
+							\[
+								\mathscr{F}_{\mathcal{G}}(x) = F^\text{T} x \:.
+							\]	
+
+						The first eigenvectors correspond to smooth, low-frequency variations on the graph, while higher eigenvectors capture more oscillatory components. This is the graph analogue of classical Fourier analysis.
+
+						<br>
+							<div align="center">
+							<img src="images/graph_signal_example.png" style="max-width: 60%;"/>
+							</div>
+							<sub>Example of a graph signal, with positive and negative values shown as green and blue bars, respectively. For readability, this illustration shows a sparse graph; the graphs used in this work are fully connected (i.e., complete) and undirected. </sub>
+						<br>
 
 						</p>
 

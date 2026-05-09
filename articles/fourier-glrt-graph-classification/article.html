@@ -69,15 +69,15 @@
 
 						<h3 id="Reference graphs"> 2.2. Reference graph for each class </h3>
 						
-						<p> First, the 5-dimensional feature vectors containing the first four moments and entropy for each subject are normalized across brain regions, potentially improving performance. We denote by $\bar{x}_{r,s} \in \mathbb{R}^5$ the normalized feature vector associated with region $r$ and subject $s$. Subsequently, we compute the scalar feature 
+						<p> First, the 5-dimensional feature vectors containing the first four moments and entropy for each subject are normalized across brain regions, potentially improving performance. We denote by $\bar{y}_{r,s} \in \mathbb{R}^5$ the normalized feature vector associated with region $r$ and subject $s$. Subsequently, we compute the scalar feature 
 							\[
-								x_{r,s} = \alpha \bar{x}_{r,s} \:,
+								y_{r,s} = \alpha \bar{y}_{r,s} \:,
 							\]
 						where $\alpha \in \mathbb{R}^5$ represent region- and subject-independent linear combination coefficients. This allows constructing one fully connected, undirected graph per class, whose nodes each represent one anatomical brain region. Given two regions indexed by $i$ and $j$, its weight $W_{i,j}$ characterize overall similarity between the corresponding scalar features in each class, as follows:
 							\[
-								W_{i,j} = \text{exp} \left( -\sum_{s = 1}^{N_k}{(x_{i,s} - x_{j,s})^2} \right).
+								W_{i,j} = \text{exp} \left( -\sum_{s = 1}^{N_k}{(y_{i,s} - y_{j,s})^2} \right).
 							\]
-						For each subject $s$, the more the features $x_{i,s}$ and $x_{j,s}$ are close to one another, the more $W_{i,j}$ becomes closer to 1, and the farther apart $x_{i,s}$ and $x_{j,s}$ are, the more $W_{i,j}$ becomes closer to 0, thereby reflecting the notion of similarity. This specific similarity metric is called the Gaussian radial basis function (RBF) kernel.
+						For each subject $s$, the more the features $y_{i,s}$ and $y_{j,s}$ are close to one another, the more $W_{i,j}$ becomes closer to 1, and the farther apart $y_{i,s}$ and $y_{j,s}$ are, the more $W_{i,j}$ becomes closer to 0, thereby reflecting the notion of similarity. This specific similarity metric is called the Gaussian radial basis function (RBF) kernel.
 						</p>
 
 						<h3 id="Fourier transform"> 2.3. The Fourier graph transform </h3>
@@ -94,11 +94,11 @@
 							\[
 								D = F \Lambda F^\text{T} \:,
 							\]		
-						where $F$ is an orthogonal matrix and $\Lambda$ a diagonal matrix whose values are ordered in increasing order, i.e. $\Lambda_{i,i} = \lambda_i$ with  $ \lambda_1 \leq ... \lambda_{N_\text{ROI}} $.	
+						where $F$ is an orthogonal matrix and $\Lambda$ a diagonal matrix whose values are ordered in increasing order, i.e. $\Lambda_{i,i} = \lambda_i$ with  $ \lambda_1 \leq \ldots \leq \lambda_{N_\text{ROI}} $.	
 						
-						Given a real-valued signal $x$ on the graph $\mathcal{G} = (V, E)$, i.e., a mapping from the set of vertices $S$ to $\mathbb{R}$, its Fourier transform on the graph $\mathcal{G}$ is defined as:
+						Given a real-valued signal $y$ on the graph $\mathcal{G} = (V, E)$, i.e., a mapping from the set of vertices $S$ to $\mathbb{R}$, its Fourier transform on the graph $\mathcal{G}$ is defined as:
 							\[
-								\mathscr{F}_{\mathcal{G}}(x) = F^\text{T} x \:.
+								\mathscr{F}_{\mathcal{G}}(y) = F^\text{T} y \:.
 							\]	
 
 						The first eigenvectors correspond to smooth, low-frequency variations on the graph, while higher eigenvectors capture more oscillatory components. This is the graph analogue of classical Fourier analysis.
@@ -114,21 +114,57 @@
 
 						<h3 id="GLRT"> 2.4. The generalized likelihood ratio test for bandlimited signals</h3>
 
-						<p style ="margin-bottom: 0.5em">Given the input graph signal $x$, we consider the classification problem between the following two hypotheses:</p>
+						<p style ="margin-bottom: 0.5em">Given the input graph signal $y \in \mathbb{R}^{N_{\text{ROI}}}$ for one subject to classify, we consider the following two alternative hypotheses:</p>
 						<!-- <p style="margin-bottom: 0"></p> -->
-						<ul style="color:black">
-							<li>$x$ belongs to the graph $\mathcal{G}_0$ corresponding to the healthy subjects</li>
-							<li>$x$ belongs to the graph $\mathcal{G}_1$ corresponding to the patients with Alzheimer's disease.</li>
+						<ul style="color:black; margin-bottom: 1em">
+							<li>$y$ belongs to the reference graph $\mathcal{G}_0$ corresponding to the healthy subjects</li>
+							<li>$y$ belongs to the reference graph $\mathcal{G}_1$ corresponding to the patients with Alzheimer's disease.</li>
 						</ul>
 						<p>
-						We consider the bandlimited signal setting, under which a noiseless signal $x$ satisfies the following approximation, for both classes $k \in \{0, 1\}$:
+						We consider the bandlimited signal setting, under which a noiseless signal $x$ on graph $\mathcal{G}$ satisfies the following approximation:
 							\[
-								\text{for all } m > M,\:  \mathscr{F}_{\mathcal{G}_k}(x)_m \approx 0 \:,
-							\]							
-						where $M$ is a cutoff frequency selected arbitrarily. In other words, ...
+								\text{for all } m > M,\:  \mathscr{F}_{\mathcal{G}}(x)_m \approx 0 \:,
+							\]
+						where $M$ is a cutoff frequency intrinsic to $x$. In other words, given the input graph signal $y$ to classify, we assume that most information is concentrated in its low-frequency Fourier transform components, and that its components of order $m > M$ correspond to noise. </p> 
+
+						<p>
+						In addition, we assume that the input $y$ has white, additive, Gaussian noise. In other words, it can be decomposed as: 
+							\[
+								y = x + \epsilon \:,
+							\]
+						where $x$ corresponds to the denoised signal and $\epsilon$ is an $N_{\text{ROI}}$-dimensional random variable following the distribution
+							\[
+								p(\epsilon) = \frac{1}{(2 \pi \sigma^2)^{N_{\text{ROI}}/2}} \operatorname{exp} 
+								\left(
+									\frac{1}{2 \sigma^2} \lVert \epsilon \rVert_2^2   
+								\right)
+								\:.
+							\]
+						
+						using the orthonormality of the Laplacian eigenvector matrix $F$ of graph $\mathcal{G}$, we can rewrite:
+							\[
+								\lVert \epsilon \rVert_2^2   
+								= \lVert y - x \rVert_2^2 
+								= \lVert F (F^{\text{T}} y - F^{\text{T}} x) \rVert_2^2 
+								= \lVert F^{\text{T}} y - F^{\text{T}} x \rVert_2^2 
+								\:.
+							\]
+
+						Hence, the likelihood of observing signal $y$ on graph $\mathcal{G}$ given the Gaussian standard deviation $\sigma$ and true signal $x$ is:
+						\[
+							l(x, \sigma; y) = \frac{1}{(2 \pi \sigma^2)^{N_{\text{ROI}}/2}} \operatorname{exp}
+							\left(
+								\frac{1}{2 \sigma^2} \lVert F^{\text{T}} y - F^{\text{T}} x \rVert_2^2 
+							\right)
+							\:.
+						\]
+
+						We can estimate $\sigma$ using the maximum-a-posteriori method, as it is not directly observed, i.e., by maximizing $l(x, \sigma; y)$. We notice that:
+						\[
+							\frac{\partial \operatorname{ln} l}{\partial \sigma} (x, \sigma; y) = ...
+						\]
 
 						</p>
-
 
 						<h2 id ="References">References</h2>
 

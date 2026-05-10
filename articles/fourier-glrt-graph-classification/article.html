@@ -117,8 +117,8 @@
 						<p style ="margin-bottom: 0.5em">Given the input graph signal $y \in \mathbb{R}^{N_{\text{ROI}}}$ for one subject to classify, we consider the following two alternative hypotheses:</p>
 						<!-- <p style="margin-bottom: 0"></p> -->
 						<ul style="color:black; margin-bottom: 1em">
-							<li>$y$ belongs to the reference graph $\mathcal{G}_0$ corresponding to the healthy subjects</li>
-							<li>$y$ belongs to the reference graph $\mathcal{G}_1$ corresponding to the patients with Alzheimer's disease.</li>
+							<li>$\mathcal{H}_0$: $y$ belongs to the reference graph $\mathcal{G}_0$ corresponding to the healthy subjects</li>
+							<li>$\mathcal{H}_1$: $y$ belongs to the reference graph $\mathcal{G}_1$ corresponding to the patients with Alzheimer's disease.</li>
 						</ul>
 						<p>
 						We consider the bandlimited signal setting, under which a noiseless signal $x$ on graph $\mathcal{G}$ satisfies the following approximation:
@@ -177,6 +177,17 @@
 							\right)^{N_{\text{ROI}}/2} \:.
 						\]
 						In particular, this indicates that the likelihood of signal $x$ being the denoised version of $y$ increases when the associated standard deviation of the noise $\epsilon$ decreases.
+
+						The GLRT ratio corresponding to the two alternative hypotheses $\mathcal{H}_0$ and $\mathcal{H}_1$ can then be written as:
+						\[
+							\rho = 
+							\frac{l(x_0, \hat{\sigma_0}; y)}{l(x_1, \hat{\sigma_1}; y)} = 
+							\left(
+								\frac{\hat{\sigma_1}}{\hat{\sigma_0}}
+							\right)^{N_{\text{ROI}}} \:.
+						\]
+
+						Using the hypothesis of a non-informative prior (i.e., both class are equally probable), ...
 
 						</p>
 

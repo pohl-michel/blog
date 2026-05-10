@@ -159,10 +159,24 @@
 							\:.
 						\]
 
-						We can estimate $\sigma$ using the maximum-a-posteriori method, as it is not directly observed, i.e., by maximizing $l(x, \sigma; y)$. We notice that:
+						We can estimate $\sigma$ using the maximum-a-posteriori (MAP) method, as it is not directly observed, i.e., by maximizing $l(x, \sigma; y)$. We notice that:
 						\[
-							\frac{\partial \operatorname{ln} l}{\partial \sigma} (x, \sigma; y) = ...
+							\frac{\partial \operatorname{ln} l}{\partial \sigma} (x, \sigma; y) = - \frac{N_{\text{ROI}}}{\sigma} + \frac{1}{\sigma^3} 
+							\lVert F^{\text{T}} y - F^{\text{T}} x \rVert_2^2 \:.
 						\]
+						Hence, the value of $\sigma$ that maximizes the likelihood of the observation satisfies:
+						\[
+							\hat{\sigma}^2
+							= \frac{\lVert F^{\text{T}} y - F^{\text{T}} x \rVert_2^2 }{N_{\text{ROI}}} \:.
+						\]
+						Plugging this expression back into the likelihood equation, we obtain:
+						\[
+							l(x, \hat{\sigma}; y) = 
+							\left(
+								\frac{e}{2 \pi \hat{\sigma}^2}
+							\right)^{N_{\text{ROI}}/2} \:.
+						\]
+						In particular, this indicates that the likelihood of signal $x$ being the denoised version of $y$ increases when the associated standard deviation of the noise $\epsilon$ decreases.
 
 						</p>
 

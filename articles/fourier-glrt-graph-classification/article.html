@@ -105,14 +105,14 @@
 
 						<br>
 							<div align="center">
-							<img src="images/graph_signal_example.png" style="max-width: 60%;"/>
+							<img src="images/graph_signal_example.png" style="max-width: 45%;"/>
 							</div>
 							<sub>Example of a graph signal, with positive and negative values shown as green and blue bars, respectively. For readability, this illustration shows a sparse graph; the graphs used in this work are fully connected (i.e., complete) and undirected. </sub>
 						<br>
 
 						</p>
 
-						<h3 id="GLRT"> 2.4. The generalized likelihood ratio test for bandlimited signals</h3>
+						<h3 id="GLRT"> 2.4. The generalized likelihood ratio test for signals with white, additive, Gaussian noise</h3>
 
 						<p style ="margin-bottom: 0.5em">Given the input graph signal $y \in \mathbb{R}^{N_{\text{ROI}}}$ for one subject to classify, we consider the following two alternative hypotheses:</p>
 						<!-- <p style="margin-bottom: 0"></p> -->
@@ -120,15 +120,9 @@
 							<li>$\mathcal{H}_0$: $y$ belongs to the reference graph $\mathcal{G}_0$ corresponding to the healthy subjects</li>
 							<li>$\mathcal{H}_1$: $y$ belongs to the reference graph $\mathcal{G}_1$ corresponding to the patients with Alzheimer's disease.</li>
 						</ul>
-						<p>
-						We consider the bandlimited signal setting, under which a noiseless signal $x$ on graph $\mathcal{G}$ satisfies the following approximation:
-							\[
-								\text{for all } m > M,\:  \mathscr{F}_{\mathcal{G}}(x)_m \approx 0 \:,
-							\]
-						where $M$ is a cutoff frequency intrinsic to $x$. In other words, given the input graph signal $y$ to classify, we assume that most information is concentrated in its low-frequency Fourier transform components, and that its components of order $m > M$ correspond to noise. </p> 
 
 						<p>
-						In addition, we assume that the input $y$ has white, additive, Gaussian noise. In other words, it can be decomposed as: 
+						In this subsection, we won't use the graph structure of the data but only assume that $y$ contains white, additive, Gaussian noise. In other words, the observed input can be decomposed as: 
 							\[
 								y = x + \epsilon \:,
 							\]
@@ -136,38 +130,28 @@
 							\[
 								p(\epsilon) = \frac{1}{(2 \pi \sigma^2)^{N_{\text{ROI}}/2}} \operatorname{exp} 
 								\left(
-									\frac{1}{2 \sigma^2} \lVert \epsilon \rVert_2^2   
+									- \frac{\lVert \epsilon \rVert_2^2}{2 \sigma^2}
 								\right)
 								\:.
 							\]
-						
-						using the orthonormality of the Laplacian eigenvector matrix $F$ of graph $\mathcal{G}$, we can rewrite:
-							\[
-								\lVert \epsilon \rVert_2^2   
-								= \lVert y - x \rVert_2^2 
-								= \lVert F (F^{\text{T}} y - F^{\text{T}} x) \rVert_2^2 
-								= \lVert F^{\text{T}} y - F^{\text{T}} x \rVert_2^2 
-								\:.
-							\]
 
-						Hence, the likelihood of observing signal $y$ on graph $\mathcal{G}$ given the Gaussian standard deviation $\sigma$ and true signal $x$ is:
+						In other words, the likelihood of observing the signal $y$ on graph $\mathcal{G}$ given the Gaussian standard deviation $\sigma$ and true signal $x$ is:
 						\[
 							l(x, \sigma; y) = \frac{1}{(2 \pi \sigma^2)^{N_{\text{ROI}}/2}} \operatorname{exp}
 							\left(
-								\frac{1}{2 \sigma^2} \lVert F^{\text{T}} y - F^{\text{T}} x \rVert_2^2 
+								- \frac{\lVert y - x \rVert_2^2}{2 \sigma^2}
 							\right)
 							\:.
 						\]
 
-						We can estimate $\sigma$ using the maximum-a-posteriori (MAP) method, as it is not directly observed, i.e., by maximizing $l(x, \sigma; y)$. We notice that:
+						We can determine $\sigma$ using the maximum-a-posteriori (MAP) estimation method, as this quantity is not directly observed. In other words, we can set $\sigma$ to the value that maximizes $l(x, \sigma; y)$. We notice that:
 						\[
-							\frac{\partial \operatorname{ln} l}{\partial \sigma} (x, \sigma; y) = - \frac{N_{\text{ROI}}}{\sigma} + \frac{1}{\sigma^3} 
-							\lVert F^{\text{T}} y - F^{\text{T}} x \rVert_2^2 \:.
+							\frac{\partial \operatorname{ln} l}{\partial \sigma} (x, \sigma; y) = - \frac{N_{\text{ROI}}}{\sigma} + \frac{\lVert y - x \rVert_2^2}{\sigma^3} \:.
 						\]
-						Hence, the value of $\sigma$ that maximizes the likelihood of the observation satisfies:
+						Hence, the value of $\sigma$ that maximizes the likelihood of the observation is:
 						\[
 							\hat{\sigma}^2
-							= \frac{\lVert F^{\text{T}} y - F^{\text{T}} x \rVert_2^2 }{N_{\text{ROI}}} \:.
+							= \frac{\lVert y - x \rVert_2^2 }{N_{\text{ROI}}} \:.
 						\]
 						Plugging this expression back into the likelihood equation, we obtain:
 						\[
@@ -176,7 +160,7 @@
 								\frac{e}{2 \pi \hat{\sigma}^2}
 							\right)^{N_{\text{ROI}}/2} \:.
 						\]
-						In particular, this indicates that the likelihood of signal $x$ being the denoised version of $y$ increases when the associated standard deviation of the noise $\epsilon$ decreases.
+						In particular, this indicates that the likelihood of signal $x$ being the denoised version of $y$ increases when the standard deviation of the associated noise $\epsilon$ decreases.
 
 						The GLRT ratio corresponding to the two alternative hypotheses $\mathcal{H}_0$ and $\mathcal{H}_1$ can then be written as:
 						\[
@@ -187,8 +171,26 @@
 							\right)^{N_{\text{ROI}}} \:.
 						\]
 
-						Using the hypothesis of a non-informative prior (i.e., both class are equally probable), ...
+						Using the equal-prior hypothesis (i.e., both class are equally probable), the incoming data is classified as corresponding to the healthy case when $\rho \geq 1$, i.e. $\hat{\sigma_1} \geq \hat{\sigma_0}$. In other words, the class selected is that for which the input signal is the least noisy. 
 
+
+						<h3 id="Bandlimited signals"> 2.5. The bandlimited signal assumption</h3>
+
+						<p>
+						We consider the bandlimited signal setting, under which a noiseless signal $x$ on graph $\mathcal{G}$ satisfies the following approximation:
+							\[
+								\text{for all } m > M,\:  \mathscr{F}_{\mathcal{G}}(x)_m \approx 0 \:,
+							\]
+						where $M$ is a cutoff frequency intrinsic to $x$. In other words, given the input graph signal $y$ to classify, we assume that most information is concentrated in its low-frequency Fourier transform components, and that its components of order $m > M$ correspond to noise. </p> 
+
+						<p> Using the orthonormality of the Laplacian eigenvector matrix $F$ of graph $\mathcal{G}$, we can rewrite:
+						$$\begin{aligned} 
+						\lVert y - x \rVert_2^2 &= \lVert F (F^{\text{T}} y - F^{\text{T}} x) \rVert_2^2 \\ 
+						&= \lVert F^{\text{T}} y - F^{\text{T}} x \rVert_2^2 \\ 
+						&= \lVert \Phi(F^{\text{T}} y) + \Phi^*(F^{\text{T}} y) - F^{\text{T}} x \rVert_2^2 \\
+						&= \lVert \Phi(F^{\text{T}} y) \rVert_2^2 + \lVert \Phi^*(F^{\text{T}} y) - F^{\text{T}} x \rVert_2^2 \\
+						\end{aligned}$$
+						where $\Phi$ and $\Phi^*$ denote the orthogonal projections onto the subspace of $\mathbb{R}^{N_{\text{ROI}}}$ spanned by the first $M$ and last $N_{\text{ROI}} - M$ canonical basis vectors of $\mathbb{R}^{N_{\text{ROI}}}$.
 						</p>
 
 						<h2 id ="References">References</h2>
@@ -238,8 +240,9 @@
 								<ul>
 									<li><a href="#Methods">2.1. Regional features derived from brain PET imaging</a></li>
 									<li><a href="#Reference graphs">2.2 Reference graph for each class</a></li>
-									<li><a href="#Fourier transform">2.3. The Fourier graph transform </a></li>
-									<li><a href="#GLRT">2.4. The GLRT for bandlimited signals </a></li>
+									<li><a href="#Fourier transform">2.3. The Fourier graph transform</a></li>
+									<li><a href="#GLRT">2.4. The GLRT for signal with Gaussian noise</a></li>
+									<li><a href="#Bandlimited signals">2.5. The bandlimited signal assumption</a></li>
 								</ul>
 							</li>					
 							<li><a href="#References">References</a></li>

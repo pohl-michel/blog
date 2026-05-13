@@ -187,11 +187,53 @@
 						$$\begin{aligned} 
 						\lVert y - x \rVert_2^2 &= \lVert F (F^{\text{T}} y - F^{\text{T}} x) \rVert_2^2 \\ 
 						&= \lVert F^{\text{T}} y - F^{\text{T}} x \rVert_2^2 \\ 
-						&= \lVert \Phi(F^{\text{T}} y) + \Phi^*(F^{\text{T}} y) - F^{\text{T}} x \rVert_2^2 \\
-						&= \lVert \Phi(F^{\text{T}} y) \rVert_2^2 + \lVert \Phi^*(F^{\text{T}} y) - F^{\text{T}} x \rVert_2^2 \\
+						&= \lVert \Phi^*(F^{\text{T}} y) + \Phi(F^{\text{T}} y) - F^{\text{T}} x \rVert_2^2 \\
+						&= \lVert \Phi^*(F^{\text{T}} y) \rVert_2^2 + \lVert \Phi(F^{\text{T}} y) - F^{\text{T}} x \rVert_2^2 \\
 						\end{aligned}$$
-						where $\Phi$ and $\Phi^*$ denote the orthogonal projections onto the subspace of $\mathbb{R}^{N_{\text{ROI}}}$ spanned by the first $M$ and last $N_{\text{ROI}} - M$ canonical basis vectors of $\mathbb{R}^{N_{\text{ROI}}}$.
+						where $\Phi$ and $\Phi^*$ denote the orthogonal projections onto the subspace of $\mathbb{R}^{N_{\text{ROI}}}$ spanned by the first $M$ and last $N_{\text{ROI}} - M$ canonical basis vectors of $\mathbb{R}^{N_{\text{ROI}}}$. In particular, we have the inequality:
+							\[
+								\lVert y - x \rVert_2 \geq \lVert \Phi(F^{\text{T}} y) \rVert_2 \:,
+							\]
+						and the equality is reached if and only if $x$ is chosen as:
+							\[
+								\hat{x} = F \, \Phi(F^{\text{T}} y) \:.
+							\]							
+
+						In particular, maximization of the likelihood $l(x, \sigma; y)$ leads to that value for $\hat{x}$, the MAP estimate of $x$. Under the bandlimited signal assumption, we can also rewrite the MAP estimate of $\sigma$ as:
+						\[
+							\hat{\sigma}^2
+							= \frac{\lVert \Phi^*(F^{\text{T}} y) \rVert_2^2}{N_{\text{ROI}}} \:.
+						\]	
+
+						We also have the following equalities:
+						$$\begin{aligned} 
+						\lVert y \rVert_2^2 &= \lVert F^{\text{T}} y \rVert_2^2 \\ 
+						&= \lVert \Phi^*(F^{\text{T}} y) + \Phi(F^{\text{T}} y) \rVert_2^2 \\ 
+						&= \lVert \Phi^*(F^{\text{T}} y) \rVert_2^2 + \lVert \Phi(F^{\text{T}} y) \rVert_2^2\\
+						\end{aligned}$$
+
+						Hence:
+						\[
+							\hat{\sigma}^2
+							= \frac{\lVert y \rVert_2^2 - \lVert \Phi(F^{\text{T}} y) \rVert_2^2}{N_{\text{ROI}}} \:.
+						\]
+
+						In the binary graph-signal classification task using the GLRT rule under the equal-prior hypothesis, class 0 is selected when $\hat{\sigma_1} \geq \hat{\sigma_0}$, i.e. when:
+						\[
+							\lVert \Phi(F_{\mathcal{G}_0}^{\text{T}} y) \rVert_2^2 \geq \lVert \Phi(F_{\mathcal{G}_1}^{\text{T}} y) \rVert_2^2 \:,
+						\]				
+						where $F_{\mathcal{G}_0}$ and $F_{\mathcal{G}_1}$ represent the Laplacian matrices of graphs $\mathcal{G}_0$ and $\mathcal{G}_1$, respectively. The previous inequality can be rewritten as:
+						\[
+							
+							\sum_{m=1}^{M}{\left(F_{\mathcal{G}_0}^{\text{T}} y\right)_m^2} \geq 
+							\sum_{m=1}^{M}{\left(F_{\mathcal{G}_1}^{\text{T}} y\right)_m^2} \:.
+						\]
+						
+						In other words, the input signal is assigned to the class whose graph Fourier basis yields the largest low-frequency projection energy.
+
 						</p>
+						
+
 
 						<h2 id ="References">References</h2>
 

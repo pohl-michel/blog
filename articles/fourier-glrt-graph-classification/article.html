@@ -229,6 +229,50 @@
 
 						</p>
 						
+						<h2 id="Results">3. Results</h2>
+
+						<p>
+						The classifier is evaluated using a leave-one-out procedure with the first
+						$K=3$ graph-Laplacian eigenvectors, ordered by increasing eigenvalue,
+						for each class. The positive class corresponds to patients with Alzheimer's
+						disease. The five features in the coefficient vector $\alpha$ are ordered as:
+						mean, variance, skewness, kurtosis, and entropy.
+						</p>
+
+						<table style="max-width: 85%; margin-left: auto; margin-right: auto;">
+						<thead>
+							<tr>
+							<th>Linear feature combination</th>
+							<th>Coefficients $\alpha$</th>
+							<th>Sensitivity</th>
+							<th>Specificity</th>
+							<th>F1 score</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+							<td>Equal weighting of all five features</td>
+							<td>(0.2, 0.2, 0.2, 0.2, 0.2)</td>
+							<td>0.91</td>
+							<td>0.69</td>
+							<td>0.85</td>
+							</tr>
+							<tr>
+							<td>Mean/variance-focused weighting</td>
+							<td>(0.5, 0.5, 0.0, 0.0, 0.0)</td>
+							<td>0.67</td>
+							<td>0.95</td>
+							<td>0.78</td>
+							</tr>
+						</tbody>
+						</table>
+
+						<p>
+						These results suggest that simple linear combinations of the five regional
+						statistics can already produce meaningful classification behavior, with
+						different trade-offs between sensitivity and specificity.
+						</p>
+
 
 
 						<h2 id ="References">References</h2>
@@ -272,7 +316,6 @@
 						<ul>
 							<li><a href="#header">Page top</a></li>
 							<li><a href="#Introduction">1. Introduction</a></li>
-							
 							<li>
 								<span class="opener">2. Materials and methods</span>
 								<ul>
@@ -282,7 +325,8 @@
 									<li><a href="#GLRT">2.4. The GLRT for signal with Gaussian noise</a></li>
 									<li><a href="#Bandlimited signals">2.5. The bandlimited graph-signal assumption</a></li>
 								</ul>
-							</li>					
+							</li>	
+							<li><a href="#Results">3. Results</a></li>			
 							<li><a href="#References">References</a></li>
 						</ul>
 					</nav>

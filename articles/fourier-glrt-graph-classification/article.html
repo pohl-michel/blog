@@ -56,7 +56,7 @@
 
 						<h3 id="Data">2.1. Regional features derived from brain PET imaging</h2>
 
-						<p>The data used in this work contains statistical features extracted from 142 segmented brain fluorodeoxyglucose-PET images. These images were provided by La Timone Hospital (Marseille) and correspond to $N_0 = 61$ healthy control subjects and $N_1 = 81$ patients with AD. Each brain image was segmented into $N_\text{ROI} = 116$ regions of interest (ROIs) using WFU-PickAtlas. For each region, the first four moments (mean, variance, skewness, and kurtosis) and the entropy were computed; they proved to be useful for the discrimination between the two classes (healthy control and AD) in prior work from Garali et al. [<a href="https://doi.org/10.1109/JTEHM.2018.2796600" target ="_blank">6</a>] [<a href="https://doi.org/10.70675/97069f6bz44bcz44c8z87f8z9058b2808c08" target ="_blank">7</a>]. The resulting data are stored as two tensors of different shapes $N_\text{ROI}$ × 5 × $N_k$, where $N_k$ denotes the number of subjects in class $k \in \{0, 1\}$.</p>
+						<p>The data used in this work contains statistical features extracted from 142 segmented brain fluorodeoxyglucose-PET images. These images were provided by La Timone Hospital (Marseille) and correspond to $N_0 = 61$ healthy control subjects and $N_1 = 81$ patients with AD. Each brain image was segmented into $M = 116$ regions of interest (ROIs) using WFU-PickAtlas. For each region, the first four moments (mean, variance, skewness, and kurtosis) and the entropy were computed; they proved to be useful for the discrimination between the two classes (healthy control and AD) in prior work from Garali et al. [<a href="https://doi.org/10.1109/JTEHM.2018.2796600" target ="_blank">6</a>] [<a href="https://doi.org/10.70675/97069f6bz44bcz44c8z87f8z9058b2808c08" target ="_blank">7</a>]. The resulting data are stored as two tensors of different shapes $M$ × 5 × $N_k$, where $N_k$ denotes the number of subjects in class $k \in \{0, 1\}$.</p>
 
 						<figure>
 							<div align="center">
@@ -79,7 +79,7 @@
 						
 						<p> First, the 5-dimensional feature vectors containing the first four moments and entropy for each subject are normalized across brain regions, potentially improving performance. We denote by $\bar{y}_{r,s} \in \mathbb{R}^5$ the normalized feature vector associated with region $r$ and subject $s$. Subsequently, we compute the scalar feature 
 							\[
-								y_{r,s} = \alpha \bar{y}_{r,s} \:,
+								y_{r,s} = \alpha \, \bar{y}_{r,s} \:,
 							\]
 						where $\alpha \in \mathbb{R}^5$ represent region- and subject-independent linear combination coefficients. This allows constructing one fully connected, undirected graph per class, whose nodes each represent one anatomical brain region. Given two regions indexed by $i$ and $j$, its weight $W_{i,j}$ characterize overall similarity between the corresponding scalar features in each class, as follows:
 							\[
@@ -96,13 +96,13 @@
 							\]
 						where $D$ is the degree matrix, i.e., the diagonal matrix whose diagonal elements are:
 							\[
-								D_{i,i} = \sum_{j=1}^{N_\text{ROI}}{W_{i,j}} \:.
+								D_{i,i} = \sum_{j=1}^{M}{W_{i,j}} \:.
 							\]
 						$L$ is symmetrical with entries in $\mathbb{R}$, so it can be diagonalized in the following way:
 							\[
 								D = F \Lambda F^\text{T} \:,
 							\]		
-						where $F$ is an orthogonal matrix and $\Lambda$ a diagonal matrix whose values are ordered in increasing order, i.e. $\Lambda_{i,i} = \lambda_i$ with  $ \lambda_1 \leq \ldots \leq \lambda_{N_\text{ROI}} $.	
+						where $F$ is an orthogonal matrix and $\Lambda$ a diagonal matrix whose values are ordered in increasing order, i.e. $\Lambda_{i,i} = \lambda_i$ with  $ \lambda_1 \leq \ldots \leq \lambda_{M} $.	
 						
 						Given a real-valued signal $y$ on the graph $\mathcal{G} = (V, E)$, i.e., a mapping from the set of vertices $S$ to $\mathbb{R}$, its Fourier transform on the graph $\mathcal{G}$ is defined as:
 							\[
@@ -122,7 +122,7 @@
 
 						<h3 id="GLRT"> 2.4. The generalized likelihood ratio test for signals with white, additive, Gaussian noise</h3>
 
-						<p style ="margin-bottom: 0.5em">Given the input graph signal $y \in \mathbb{R}^{N_{\text{ROI}}}$ for one subject to classify, we consider the following two alternative hypotheses:</p>
+						<p style ="margin-bottom: 0.5em">Given the input graph signal $y \in \mathbb{R}^{M}$ for one subject to classify, we consider the following two alternative hypotheses:</p>
 						<!-- <p style="margin-bottom: 0"></p> -->
 						<ul style="color:black; margin-bottom: 1em">
 							<li>$\mathcal{H}_0$: $y$ belongs to the reference graph $\mathcal{G}_0$ corresponding to the healthy subjects</li>
@@ -134,9 +134,9 @@
 							\[
 								y = x + \epsilon \:,
 							\]
-						where $x$ corresponds to the denoised signal and $\epsilon$ is an $N_{\text{ROI}}$-dimensional random variable following the distribution
+						where $x$ corresponds to the denoised signal and $\epsilon$ is an $M$-dimensional random variable following the distribution
 							\[
-								p(\epsilon) = \frac{1}{(2 \pi \sigma^2)^{N_{\text{ROI}}/2}} \operatorname{exp} 
+								p(\epsilon) = \frac{1}{(2 \pi \sigma^2)^{M/2}} \operatorname{exp} 
 								\left(
 									- \frac{\lVert \epsilon \rVert_2^2}{2 \sigma^2}
 								\right)
@@ -145,7 +145,7 @@
 
 						In other words, the likelihood of observing the signal $y$ on graph $\mathcal{G}$ given the Gaussian standard deviation $\sigma$ and true signal $x$ is:
 						\[
-							l(x, \sigma; y) = \frac{1}{(2 \pi \sigma^2)^{N_{\text{ROI}}/2}} \operatorname{exp}
+							l(x, \sigma; y) = \frac{1}{(2 \pi \sigma^2)^{M/2}} \operatorname{exp}
 							\left(
 								- \frac{\lVert y - x \rVert_2^2}{2 \sigma^2}
 							\right)
@@ -154,19 +154,19 @@
 
 						We can determine $\sigma$ using the maximum-a-posteriori (MAP) estimation method, as this quantity is not directly observed. In other words, we can set $\sigma$ to the value that maximizes $l(x, \sigma; y)$. We notice that:
 						\[
-							\frac{\partial \operatorname{ln} l}{\partial \sigma} (x, \sigma; y) = - \frac{N_{\text{ROI}}}{\sigma} + \frac{\lVert y - x \rVert_2^2}{\sigma^3} \:.
+							\frac{\partial \operatorname{ln} l}{\partial \sigma} (x, \sigma; y) = - \frac{M}{\sigma} + \frac{\lVert y - x \rVert_2^2}{\sigma^3} \:.
 						\]
 						Hence, the value of $\sigma$ that maximizes the likelihood of the observation is:
 						\[
 							\hat{\sigma}^2
-							= \frac{\lVert y - x \rVert_2^2 }{N_{\text{ROI}}} \:.
+							= \frac{\lVert y - x \rVert_2^2 }{M} \:.
 						\]
 						Plugging this expression back into the likelihood equation, we obtain:
 						\[
 							l(x, \hat{\sigma}; y) = 
 							\left(
 								\frac{e}{2 \pi \hat{\sigma}^2}
-							\right)^{N_{\text{ROI}}/2} \:.
+							\right)^{M/2} \:.
 						\]
 						In particular, this indicates that the likelihood of signal $x$ being the denoised version of $y$ increases when the standard deviation of the associated noise $\epsilon$ decreases.
 
@@ -176,7 +176,7 @@
 							\frac{l(x_0, \hat{\sigma_0}; y)}{l(x_1, \hat{\sigma_1}; y)} = 
 							\left(
 								\frac{\hat{\sigma_1}}{\hat{\sigma_0}}
-							\right)^{N_{\text{ROI}}} \:.
+							\right)^{M} \:.
 						\]
 
 						Using the equal-prior hypothesis (i.e., both class are equally probable), the incoming data is classified as corresponding to the healthy case when $\rho \geq 1$, i.e. $\hat{\sigma_1} \geq \hat{\sigma_0}$. In other words, the class selected is that for which the input signal is the least noisy. 
@@ -187,9 +187,9 @@
 						<p>
 						We consider the bandlimited signal setting, under which a noiseless signal $x$ on graph $\mathcal{G}$ satisfies the following approximation:
 							\[
-								\text{for all } m > M,\:  \mathscr{F}_{\mathcal{G}}(x)_m \approx 0 \:,
+								\text{for all } k > K,\:  \mathscr{F}_{\mathcal{G}}(x)_k \approx 0 \:,
 							\]
-						where $M$ is a cutoff frequency intrinsic to $x$. In other words, given the input graph signal $y$ to classify, we assume that most information is concentrated in its low-frequency GFT components, and that its components of order $m > M$ correspond to noise. </p> 
+						where $K$ is a cutoff frequency intrinsic to $x$. In other words, given the input graph signal $y$ to classify, we assume that most information is concentrated in its low-frequency GFT components, and that its components of order $k > K$ correspond to noise. </p> 
 
 						<p> Using the orthonormality of the Laplacian eigenvector matrix $F$ of graph $\mathcal{G}$, we can rewrite:
 						$$\begin{aligned} 
@@ -198,7 +198,7 @@
 						&= \lVert \Phi^*(F^{\text{T}} y) + \Phi(F^{\text{T}} y) - F^{\text{T}} x \rVert_2^2 \\
 						&= \lVert \Phi^*(F^{\text{T}} y) \rVert_2^2 + \lVert \Phi(F^{\text{T}} y) - F^{\text{T}} x \rVert_2^2 \\
 						\end{aligned}$$
-						where $\Phi$ and $\Phi^*$ denote the orthogonal projections onto the subspace of $\mathbb{R}^{N_{\text{ROI}}}$ spanned by the first $M$ and last $N_{\text{ROI}} - M$ canonical basis vectors of $\mathbb{R}^{N_{\text{ROI}}}$. In particular, we have the inequality:
+						where $\Phi$ and $\Phi^*$ denote the orthogonal projections onto the subspace of $\mathbb{R}^{M}$ spanned by the first $K$ and last $M - K$ canonical basis vectors of $\mathbb{R}^{M}$. In particular, we have the inequality:
 							\[
 								\lVert y - x \rVert_2 \geq \lVert \Phi(F^{\text{T}} y) \rVert_2 \:,
 							\]
@@ -210,8 +210,8 @@
 						In particular, maximization of the likelihood $l(x, \sigma; y)$ leads to that value for $\hat{x}$, the MAP estimate of $x$. Under the bandlimited signal assumption, we can also rewrite the MAP estimate of $\sigma$ as:
 						\[
 							\hat{\sigma}^2
-							= \frac{\lVert \Phi^*(F^{\text{T}} y) \rVert_2^2}{N_{\text{ROI}}} 
-							= \frac{\lVert y \rVert_2^2 - \lVert \Phi(F^{\text{T}} y) \rVert_2^2}{N_{\text{ROI}}}\:.
+							= \frac{\lVert \Phi^*(F^{\text{T}} y) \rVert_2^2}{M} 
+							= \frac{\lVert y \rVert_2^2 - \lVert \Phi(F^{\text{T}} y) \rVert_2^2}{M}\:.
 						\]	
 
 						The second equality can be obtained by setting $x=0$ in the formula for $\lVert y - x \rVert_2^2$ above—it essentially uses the preservation of the signal energy (i.e., norm) by the GFT. In the binary graph-signal classification task using the GLRT rule under the equal-prior hypothesis, class 0 is selected when $\hat{\sigma_1} \geq \hat{\sigma_0}$, i.e. when:
@@ -221,8 +221,8 @@
 						where $F_{\mathcal{G}_0}$ and $F_{\mathcal{G}_1}$ represent the Laplacian matrices of graphs $\mathcal{G}_0$ and $\mathcal{G}_1$, respectively. The previous inequality can be rewritten as:
 						\[
 							
-							\sum_{m=1}^{M}{\left(F_{\mathcal{G}_0}^{\text{T}} y\right)_m^2} \geq 
-							\sum_{m=1}^{M}{\left(F_{\mathcal{G}_1}^{\text{T}} y\right)_m^2} \:.
+							\sum_{k=1}^{K}{\left(F_{\mathcal{G}_0}^{\text{T}} y\right)_k^2} \geq 
+							\sum_{k=1}^{K}{\left(F_{\mathcal{G}_1}^{\text{T}} y\right)_k^2} \:.
 						\]
 
 						In other words, the input signal is assigned to the class whose graph Fourier basis yields the largest low-frequency projection energy. This corresponds to the "simple matched signal detection" classifier proposed by Hu et al. [<a href="https://doi.org/10.1016/j.neuroimage.2015.10.026" target ="_blank">1</a>].

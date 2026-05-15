@@ -50,13 +50,13 @@
 
 						<h2 id="Introduction">1. Introduction</h2>
 
-						<p>Many real-world datasets are not optimally represented in Euclidean space as they naturally lie on irregular structures such as graphs (e.g., molecules, social networks, or sensor networks). Brain imaging data, in particular, often exhibit structured relationships between regions. Instead of treating all features independently, in this project, the data for each subject is modeled as a signal on a graph whose nodes represent anatomical brain regions, with edge weights encoding connectivity between regions. The classification task is formulated as a hypothesis test between two representative graphs&mdash;one built from healthy controls and one built from patients with Alzheimer's disease (AD)&mdash;using spectral properties of graph signals. This approach, building on the framework introduced by Hu et al. [<a href="https://doi.org/10.1016/j.neuroimage.2015.10.026" target ="_blank">1</a>], is applied here to multi-dimensional graph signals: regional statistical features derived from positron emission tomography (PET) images. Specifically, I focus on the bandlimited graph-signal setting, where the underlying noiseless signal is assumed to concentrate in low graph frequencies and higher-frequency components are modeled as additive noise. Although the application explored in this work is brain image classification, the core method&mdash;treating structured data as signals defined on graphs, transforming them using the graph Fourier transform (GFT), and performing classification via a generalized likelihood ratio test (GLRT)&mdash;is general and applies to any graph-structured data. Notably, the ideas on graph spectral analysis discussed here are closely related to the foundations of graph deep learning. In several early studies on graph convolutional neural networks (CNNs), convolution was defined via eigendecomposition of the graph Laplacian [<a href="https://doi.org/10.48550/arXiv.1312.6203" target ="_blank">2</a>], while efficient polynomial or first-order approximations of spectral graph convolutions were introduced in later architectures such as ChebNet and the graph convolutional network (GCN) [<a href="https://doi.org/10.48550/arXiv.1606.09375" target ="_blank">3</a>] [<a href="https://doi.org/10.48550/arXiv.1609.02907" target ="_blank">4</a>]. More broadly, modern graph neural networks (GNNs) are often discussed from two complementary viewpoints: spatial or message-passing methods, which aggregate information from neighboring nodes, and spectral methods, which use graph filters defined via the graph-Laplacian eigenspectrum. The latter viewpoint, more directly connected to the field of signal processing and the GFT used in this work, remains particularly important, as spectral GNNs naturally capture global information and offer better expressiveness and interpretability [<a href="https://doi.org/10.48550/arXiv.2302.05631" target ="_blank">5</a>]. Although I conducted this short project on graph signal processing more than ten years ago during my postgraduate studies, I revisit it in this article to highlight core concepts that remain relevant to modern machine learning.</p>
+						<p>Many real-world datasets are not optimally represented in Euclidean space as they naturally lie on irregular structures such as graphs (e.g., molecules, social networks, or sensor networks). Brain imaging data, in particular, often exhibit structured relationships between regions. Instead of treating all features independently, in this project, the data for each subject is modeled as a signal on a graph whose nodes represent anatomical brain regions, with edge weights encoding connectivity between regions. The classification task is formulated as a hypothesis test between two representative graphs&mdash;one built from healthy controls and one built from patients with Alzheimer's disease (AD)&mdash;using spectral properties of graph signals. This approach, building on the framework introduced by Hu et al. [<a href="https://doi.org/10.1016/j.neuroimage.2015.10.026" target ="_blank">1</a>], is applied here to multi-dimensional graph signals: regional statistical features derived from positron emission tomography (PET) images. Specifically, I focus on the bandlimited graph-signal setting, where the underlying noiseless signal is assumed to concentrate in low graph frequencies and higher-frequency components are modeled as additive noise. From a medical perspective, early detection of AD-related brain changes via PET imaging before the appearance of symptoms may open pathways to earlier, more effective treatment. Although the application explored in this work is brain image classification, the core method&mdash;treating structured data as signals defined on graphs, transforming them using the graph Fourier transform (GFT), and performing classification via a generalized likelihood ratio test (GLRT)&mdash;is general and applies to any graph-structured data. Notably, the ideas on graph spectral analysis discussed here are closely related to the foundations of graph deep learning. In several early studies on graph convolutional neural networks (CNNs), convolution was defined via eigendecomposition of the graph Laplacian [<a href="https://doi.org/10.48550/arXiv.1312.6203" target ="_blank">2</a>], while efficient polynomial or first-order approximations of spectral graph convolutions were introduced in later architectures such as ChebNet and the graph convolutional network (GCN) [<a href="https://doi.org/10.48550/arXiv.1606.09375" target ="_blank">3</a>] [<a href="https://doi.org/10.48550/arXiv.1609.02907" target ="_blank">4</a>]. More broadly, modern graph neural networks (GNNs) are often discussed from two complementary viewpoints: spatial or message-passing methods, which aggregate information from neighboring nodes, and spectral methods, which use graph filters defined via the graph-Laplacian eigenspectrum. The latter viewpoint, more directly connected to the field of signal processing and the GFT used in this work, remains particularly important, as spectral GNNs naturally capture global information and offer better expressiveness and interpretability [<a href="https://doi.org/10.48550/arXiv.2302.05631" target ="_blank">5</a>]. Although I conducted this short project on graph signal processing more than ten years ago during my postgraduate studies, I revisit it in this article to highlight core concepts that remain relevant to modern machine learning (ML).</p>
 						
 						<h2 id="Methods">2. Materials and methods</h2>
 
 						<h3 id="Data">2.1. Regional features derived from brain PET imaging</h2>
 
-						<p>The data used in this work contains statistical features extracted from 142 segmented brain fluorodeoxyglucose-PET images. These images were provided by La Timone Hospital (Marseille) and correspond to $N_0 = 61$ healthy control subjects and $N_1 = 81$ patients with AD. Each brain image was segmented into $M = 116$ regions of interest (ROIs) using WFU-PickAtlas. For each region, the first four moments (mean, variance, skewness, and kurtosis) and the entropy were computed; they proved to be useful for the discrimination between the two classes (healthy control and AD) in prior work from Garali et al. [<a href="https://doi.org/10.1109/JTEHM.2018.2796600" target ="_blank">6</a>] [<a href="https://doi.org/10.70675/97069f6bz44bcz44c8z87f8z9058b2808c08" target ="_blank">7</a>]. The resulting data are stored as two tensors of different shapes $M$ × 5 × $N_k$, where $N_k$ denotes the number of subjects in class $k \in \{0, 1\}$.</p>
+						<p>The data used in this work contains statistical features extracted from 142 segmented brain fluorodeoxyglucose-PET images. These images were provided by La Timone Hospital (Marseille) and correspond to $N_0 = 61$ healthy control subjects and $N_1 = 81$ patients with AD. Each brain image was segmented into $M = 116$ regions of interest (ROIs) using WFU-PickAtlas. Indeed, considering features characterizing brain ROIs globally instead of directly feeding raw voxel intensities to a classifier can help mitigate overfitting in a low-data context (142 images in total). For each region, the first four moments (mean, variance, skewness, and kurtosis) and the entropy were computed; they proved to be useful for the discrimination between the two classes (healthy control and AD) in prior related work [<a href="https://doi.org/10.1109/JTEHM.2018.2796600" target ="_blank">6</a>] [<a href="https://doi.org/10.70675/97069f6bz44bcz44c8z87f8z9058b2808c08" target ="_blank">7</a>]. The resulting data are stored as two tensors of different shapes $M$ × 5 × $N_k$, where $N_k$ denotes the number of subjects in class $k \in \{0, 1\}$.</p>
 
 						<figure>
 							<div align="center">
@@ -225,11 +225,11 @@
 							\sum_{k=1}^{K}{\left(F_{\mathcal{G}_1}^{\text{T}} y\right)_k^2} \:.
 						\]
 
-						In other words, the input signal is assigned to the class whose graph Fourier basis yields the largest low-frequency projection energy. This corresponds to the "simple matched signal detection" classifier proposed by Hu et al. [<a href="https://doi.org/10.1016/j.neuroimage.2015.10.026" target ="_blank">1</a>].
+						In other words, the input signal is assigned to the class whose graph Fourier basis yields the largest low-frequency projection energy. This corresponds to the "simple matched signal detection" classifier proposed in [<a href="https://doi.org/10.1016/j.neuroimage.2015.10.026" target ="_blank">1</a>].
 
 						</p>
 						
-						<h2 id="Results">3. Results</h2>
+						<h2 id="Results">3. Results and future directions</h2>
 
 						<p>
 						The classifier is evaluated using a leave-one-out procedure with the first
@@ -273,7 +273,21 @@
 						different trade-offs between sensitivity and specificity.
 						</p>
 
+						<p>
+						So far, only a few arbitrarily selected values of $\alpha$ were evaluated, and the optimization of $\alpha$ to maximize classification performance, as well as the comparison with baseline ML classifiers are left as future work. Future directions include considering similarity measures other than the Gaussian kernel and relaxing the bandlimited graph-signal assumption. Furthermore, using more data would help robustly validating performance while allowing the exploration of GNN-based classifiers. 
+						</p>
 
+						<h2 id="Data and code">Data and code availability</h2>
+
+						<p>
+						The data and code used in this project are publicly available online <a href="https://github.com/pohl-michel/fourier-glrt-based-graph-classification" target ="_blank">[Github link]</a>.
+						</p>
+
+						<h2 id="Acknowledgments">Acknowledgments</h2>
+
+						<p>
+						This work was conducted jointly at Centrale Mediterranée and Fresnel Institute under the supervision of Mouloud Adel. Image processing, including tensor construction and statistical feature design, was conducted by Imène Garali. Further tensor-data exploration and preprocessing were initially conducted together with Yassine Zniyed and Kaoutar Abdelalim.
+						</p>
 
 						<h2 id ="References">References</h2>
 
@@ -287,7 +301,7 @@
 							<li>Imène Garali, <a href="https://doi.org/10.70675/97069f6bz44bcz44c8z87f8z9058b2808c08" target ="_blank">"Aide au diagnostic de la maladie d'Alzheimer par des techniques de sélection d'attributs pertinents dans des images cérébrales fonctionnelles obtenues par Tomographie par Emission de Positons au 18FDG"</a>, Aix-Marseille Université, Ph.D. thesis (2015)</li>
 						</ol>
 
-						<i>Published on April 24, 2026, last update on April 24, 2026</i>
+						<i>Published on April 24, 2026, last update on May 15, 2026</i>
 
 					</section>
 
@@ -326,7 +340,9 @@
 									<li><a href="#Bandlimited signals">2.5. The bandlimited graph-signal assumption</a></li>
 								</ul>
 							</li>	
-							<li><a href="#Results">3. Results</a></li>			
+							<li><a href="#Results">3. Results and future directions</a></li>			
+							<li><a href="#Data and code">Data and code availability</a></li>	
+							<li><a href="#Acknowledgments">Acknowledgments</a></li>
 							<li><a href="#References">References</a></li>
 						</ul>
 					</nav>

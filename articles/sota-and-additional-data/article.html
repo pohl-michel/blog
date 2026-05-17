@@ -66,13 +66,13 @@
 
 						<span class="image main"><img src="research_children.jpg" style="max-width: 60%;" alt="" <figcaption>Photo by Clarisse Crosset on Unsplash </figcaption> </span>
 
-						<p> Properly handling tough comments in the peer review process is complex; here are some brief thoughts concerning two of these, particularly relevant to machine learning research: implementing state-of-the-art methods and validating your findings using a larger dataset. Understanding why these requests arise and how you can navigate them will help you succeed as a researcher and computer scientist.</p>
+						<p> Handling tough feedback in the peer review process can be complex. In this article, I discuss two common challenging comments that are particularly relevant to machine learning research: implementing state-of-the-art methods and validating findings on larger datasets. Understanding why these requests arise and how you can navigate them will help you succeed as a researcher and computer scientist.</p>
 
 					<!-- </section> -->
 
-						<h2 id="challenging comments"> Why those comments are challenging</h2>
+						<h2 id="challenging comments"> Why these comments are challenging</h2>
 
-						<p>When publishing academic work in computer science acquiring more data and comparing your proposed algorithms against state-of-the-art (SOTA) models are among the most challenging reviewer requests, for several reasons: 
+						<p>In computer science research, requests to acquire more data and compare a proposed algorithm against state-of-the-art (SOTA) models are among the most challenging reviewer comments, for several reasons: 
 							<ol>
 								<li>Acquiring more data
 									<ul>
@@ -83,7 +83,7 @@
 								</li>
 								<li>Comparing against SOTA models
 									<ul>
-										<li> reproducibility issues can arise, as some SOTA models do not release code or require extensive hyperparameter tuning, making fair comparison difficult. </li>
+										<li> some papers on SOTA models are not accompanied with code enabling full reproducibility, and some models require extensive hyperparameter tuning, making fair comparisons difficult. </li>
 										<li> there can be challenges due to computational costs, as deep learning models often require powerful GPUs and long training times. </li>
 										<li> lastly, the outcome can be negative: there is a risk that the SOTA method outperforms your approach, weakening your contribution. </li>
 									</ul>
@@ -106,10 +106,10 @@
 
 						<p>Here is some advice based on personal experience:
 							<ul>
-								<li> Concerning open-source datasets, one source that I often like using is <a href="https://datasetsearch.research.google.com/">Google Dataset Search</a>. </li>
-								<li> One may find common SOTA models and datasets in peer review articles. For instance, I have recently been passionate about video forecasting models, <a href="https://arxiv.org/abs/2004.05214">the following paper in TPAMI from Oprea et al.</a> lists available methods and data used in that field. Being familiar with the academic literature in your field is key to understand how your study compares and in which setting you have a chance to beat SOTA models.</li>
+								<li> Concerning open-source datasets, one source that I often use is <a href="https://datasetsearch.research.google.com/">Google Dataset Search</a>. </li>
+								<li> One may find common SOTA models and datasets in peer review articles. For instance, I have recently been especially interested in video forecasting models, and I found <a href="https://arxiv.org/abs/2004.05214">the following paper in TPAMI from Oprea et al.</a> listing recent methods and data in that field. Being familiar with the academic literature in your field is key to understanding how your study compares and in which setting you have a greater chance to beat SOTA models.</li>
 								<li> One can have a look at <a href="https://paperswithcode.com/">Papers with Code</a> for SOTA models. </li>
-								<li> Don't hesitate to use AI-tools! ChatGPT, Perplexity, Claude... Although they are not perfect yet, they can help steer you in some positive direction. </li>
+								<li> Do not hesitate to use AI tools! ChatGPT, Perplexity, Claude... Although they are not perfect yet, they can help steer you in some positive direction. </li>
 							</ul>							
 						</p>	
 						<!-- Concerning the SOTA method: think about fair comparison, not just comparison, e.g., is the SOTA model trained on much more data than the one in your study (in which case some adaptation is needed) -->
@@ -122,17 +122,17 @@
 
 						<h2 id="Time management"> Time management</h2>
 
-						<p> The most difficult aspect of these comments is usually the time commitment that they require. It is easy to formulate criticism, but it can take you weeks or months to address them. Peer review in academia can be unpredictable: sometimes you may get relatively easy comments to answer to, but sometimes, you will need to make a more substantial investment of your time.
+						<p> The most difficult aspect of these comments is usually the time commitment that they require. It is easy to formulate criticism, but it can take weeks or months to address requests. Peer review in academia can be unpredictable: sometimes you may get relatively easy comments to answer, but sometimes, you will need to invest time more substantially.
 							<ul>
-								<li> Make a timeline about how you wish to stay organized. If you don't have enough time, you can request a deadline extension. </li>
+								<li> Make a timeline about how you wish to stay organized. If you do not have enough time, you can request a deadline extension. </li>
 								<li> Ask yourself what you will sacrifice and reorganize your schedule (if needed) to deliver on your commitment to research and your career. A publication in a high-impact factor journal can open unexpected doors for you. Think about what motivates you in your research: what would be the benefits for the community if your work were to be published?</li>								
-								<li> Exploratory research before the initial submission may be the most enjoyable part of the process, handling reviewer comments can, however, feel like a race. At the resubmission stage, your day-to-day life may become more about (forced) execution than exploration. Consequently, you need to emphasize even more on adopting the right habits (waking up early, doing exercise, eating well...) and execute on your plans.</li>
+								<li> Exploratory research before the initial submission may be the most enjoyable part of the process, handling reviewer comments, however, can feel like a race. At the resubmission stage, your day-to-day life may become more about (forced) execution than exploration. Consequently, you may need to place even greater emphasis on adopting the right habits (waking up early, doing exercise, eating well...) and execute on your plans.</li>
 							</ul>							
 						</p>	
 
 						<h2 id="Partial revisions"> One possible solution: partial revisions</h2>
 
-						<p>If answering such requests feels impossible, one solution could be to request a partial revision. Unless the justification is strong, a partial revision is unlikely to be accepted in high-impact journals (typically with an impact factor greater than 5.0). Top-tier journals often enforce high experimental standards. However, the editor will make a decision at their own discretion. Some editors are flexible if you can convince them that the paper still makes a substantial contribution without the additional experiments. The following could be included in a partial revision:</p>	
+						<p>If answering such requests feels impossible, one solution could be to request a partial revision. Unless the justification is strong, a partial revision is unlikely to be accepted in high-impact journals (typically with an impact factor greater than 5.0). Top-tier journals often enforce high experimental standards. However, the editor will make a decision at their own discretion. Some editors are flexible if you can convince them that the paper still represents a substantial contribution without the additional experiments. A partial revision could include the following:</p>	
 						<ol>
 							<li>Strengthening existing results – instead of adding new data, you could provide additional analysis on the current dataset (e.g., statistical analysis, visualization).</li>
 							<li>Theoretical or conceptual justifications – if adding SOTA comparisons is challenging, you could:
@@ -166,7 +166,7 @@
 						 Good luck.
 						 The idea that peer review is intended as a way to objectively quantify research novelty, there is no politics (or not too much) meaning that if you get your neurips paper accepted, no one will downplay your contribution because everyone knows the prestige and impact of neurips. This is one of the reasons I love academia, as opposed to industry where success criteria can be implicit and ambiguous.-->
 
-						<i>Published on April 5, 2025</i>
+						<i>Published on April 5, 2025, last update on May 17, 2026</i>
 
 					</section>
 

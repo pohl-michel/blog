@@ -48,7 +48,7 @@
 
 						Have you ever wondered how AI could improve lung cancer treatment? And why recurrent neural networks (RNN) in particular may be helpful for that task? Also, what is online learning, and why is this particularly useful in that context?
 
-						Here, I will do my best to answer these questions by summarizing my recent research article <a href="https://doi.org/10.1016/j.cmpb.2022.106908" target ="_blank">"Prediction of the position of external markers using a recurrent neural network trained with unbiased online recurrent optimization for safe lung cancer radiotherapy"</a> published in "Computer methods and programs in biomedicine" and presenting its main findings <a href="https://doi.org/10.48550/arXiv.2106.01100" target ="_blank">[3]</a>. </p>
+						I address these questions here by summarizing my recent research article <a href="https://doi.org/10.1016/j.cmpb.2022.106908" target ="_blank">"Prediction of the position of external markers using a recurrent neural network trained with unbiased online recurrent optimization for safe lung cancer radiotherapy"</a> published in "Computer methods and programs in biomedicine" and presenting its main findings <a href="https://doi.org/10.48550/arXiv.2106.01100" target ="_blank">[3]</a>. </p>
 
 <!-- 									<iframe src="https://doi.org/10.48550/arXiv.2106.01100" title="W3Schools Free Online Web Tutorials"></iframe> 
 
@@ -63,7 +63,7 @@
 
 						<h2 id="Introduction">1. Why we need time series forecasting in lung radiotherapy</h2>
 
-						<p>Lung tumors move with the respiratory motion. Hence, it is challenging to target them precisely, as real-time imaging during the radiotherapy treatment has limitations. </p>
+						<p>Lung tumors move as patients breathe. Hence, targeting them precisely is challenging, as real-time imaging during the radiotherapy treatment has limitations. </p>
 
 						<figure>
 							<img src="images/pancreatic_tumor_motion.jpeg"  alt="" />
@@ -71,7 +71,7 @@
 						</figure>
 						<br><br>
 
-						<p><br>External markers are metallic objects placed on the chest that can help infer the position of tumors in the chest using spatial regression models, also called correspondence models.</p>
+						<p><br>External markers are metallic objects placed on the chest that can help infer the positions of tumors in the chest using spatial regression models, also called correspondence models.</p>
 
 						<figure>
 							<img src="images/radiotherapy_treatment_machine.png"  alt="" />
@@ -79,7 +79,7 @@
 						</figure>	
 						<br><br>
 
-						<p>Even with infrared tracking of external markers, the position of tumors is difficult to estimate accurately because of the inaccuracies inherent to these internal-external correspondence models but also because treatment systems are subject to latencies due to image acquisition, robotic control, and radiation beam activation. That delay can prevent effective tumor irradiation and lead to excessive dose delivery to healthy tissues, leading to side effects such as pneumonitis, a condition that can become life-threatening.</p>
+						<p>Even with infrared tracking of external markers, the tumor position remains difficult to estimate accurately. Indeed, internal–external correspondence models are imperfect, and treatment systems are subject to latencies due to image acquisition, robotic control, and radiation beam activation. This delay can prevent effective tumor irradiation and lead to excessive dose delivery to healthy tissues, leading to side effects such as pneumonitis, a condition that can become life-threatening.</p>
 
 						<figure>
 							<img src="images/tumor_motion_drawing.png" alt="" />
@@ -99,27 +99,27 @@
 						
 						<h3> 2.1. The dataset </h3>
 
-						<p> In this study, I used the <a href="https://paperswithcode.com/dataset/extmarker" target ="_blank">ExtMarker</a> dataset comprising nine sequences with the 3D position of three external markers on the chest of healthy individuals. The sampling frequency is 10 Hz, and the movement amplitude in the spine direction is between 6mm and 40mm. That dataset is public and more information can be found in <a href="https://doi.org/10.48550/arXiv.1508.00749" target ="_blank">[7]</a>. We divide the data for each sequence into training, cross-validation, and test sets. </p>
+						<p> In this study, I used a dataset comprising nine sequences with the 3D positions of three external markers on the chest of healthy individuals. The sampling frequency is 10 Hz, and the movement amplitude in the spine direction is between 6mm and 40mm. The dataset is public, and more information is available in <a href="https://doi.org/10.48550/arXiv.1508.00749" target ="_blank">[7]</a>. We divide the data for each sequence into training, cross-validation, and test sets. </p>
 
 						<figure>
 							<img src="images/data_partition.png" alt="" /> 
-							<figcaption> Data partition into training set, cross-validation set and test set for each of the 9 sequences containing the position of the markers. </figcaption>
+							<figcaption> Data partition into training set, cross-validation set and test set for each of the 9 sequences containing the positions of the markers. </figcaption>
 						</figure>
 						<br><br>
 
-						<p>Forecasting respiratory motion is challenging, as the breathing characteristics such as amplitude and period vary within each record, even though it appears predominantly cyclic. In addition, the individuals were asked to talk or laugh in approximately half of the records, which makes the task more complex. In real-world situations, sudden respiratory abnormalities such as coughing, hiccuping or yawning can also happen, which is why including challenging records is beneficial.</p>
+						<p>Forecasting respiratory motion is challenging, as the breathing characteristics such as amplitude and period vary within each record, even though it appears predominantly cyclic. In addition, the individuals were asked to talk or laugh in approximately half of the records, which makes the task more complex. In real-world situations, sudden respiratory abnormalities such as coughing, hiccuping, or yawning can also happen, which is why including challenging records is beneficial.</p>
 
 						<h3 id="section 2.2">2.2 Let's dive into the world of RNNs. </h3>
 
-						<p><a href="https://www.deeplearningbook.org/contents/rnn.html" target ="_blank">RNNs</a> are a specific type of neural network equipped with a feedback loop enabling them to remember information acquired over time. As we perform forecasting, the position of the markers in the past and the future are respectively the input and the output of the network. Forecasting is a self-supervised learning problem, as manual annotation is not needed. This study uses a simple vanilla architecture with a single hidden layer.</p>
+						<p><a href="https://www.deeplearningbook.org/contents/rnn.html" target ="_blank">RNNs</a> are specific neural networks equipped with feedback connections that allow them to retain information over time. As we perform forecasting, past marker positions are used as input, and future marker positions are predicted as output. Forecasting is a self-supervised learning problem, as manual annotation is not needed. This study uses a simple vanilla architecture with a single hidden layer.</p>
 
 						<figure>
 							<img src="images/RNN structure.png" alt="" />
-							<figcaption> Structure of the RNN predicting the position of the markers. The input vector uₙ corresponds to the positions in the past and the output vector yₙ₊₁ corresponds to the predicted positions. Adapted from <a href="https://doi.org/10.1016/j.compmedimag.2021.101941" target ="_blank">[6]</a> with permission from Elsevier, Copyright 2022. </figcaption>
+							<figcaption> Structure of the RNN predicting the positions of the markers. The input vector uₙ corresponds to the positions in the past and the output vector yₙ₊₁ corresponds to the predicted positions. Adapted from <a href="https://doi.org/10.1016/j.compmedimag.2021.101941" target ="_blank">[6]</a> with permission from Elsevier, Copyright 2022. </figcaption>
 						</figure>
 						<br><br>
 
-						<p>RNNs are typically trained offline using back-propagation through time (BPTT). Offline learning designates a learning process in which there are two separate steps for training and inference. In our study, we use online learning instead, which means that training and inference are performed simultaneously. In the context of radiotherapy, this enables the network to adapt to unseen respiratory patterns despite having seen only limited data. Indeed, data collection for medical applications of AI is often difficult due to regulations about personal information protection. This study investigates the efficiency of UORO <a href="https://doi.org/10.48550/arXiv.1702.05043" target ="_blank">[8]</a>, a recent approach to online learning with RNNs, to forecast respiratory motion.</p>
+						<p>RNNs are typically trained offline using back-propagation through time (BPTT). Offline learning designates a learning process in which there are two separate steps for training and inference. In our study, we use online learning instead, which means that training and inference are performed simultaneously. In the context of radiotherapy, this enables the network to adapt to unseen respiratory patterns despite having seen only limited data. Indeed, data collection for medical applications of AI is often difficult due to regulations about personal information protection. This study investigates the effectiveness of UORO <a href="https://doi.org/10.48550/arXiv.1702.05043" target ="_blank">[8]</a>, a recent approach to online learning with RNNs, to forecast respiratory motion.</p>
 
 						<p>Let's briefly discuss how UORO works. First, let's write the RNN equations. The first equation below (state equation) describes the evolution of the internal state vector xₙ, and the second equation (measurement equation) enables calculating the output vector yₙ₊₁. θₙ and uₙ respectively designate the parameter vector and the input vector. Note that the parameter vector depends on n because we perform online learning.</p>
 
@@ -157,7 +157,7 @@
 							\frac{\partial{F_{st}}}{\partial \theta}(x_n, u_n, \theta_n)
 						\]</p>									
 
-						<p>The first equation enables calculating the loss gradient as a function of the influence matrix ∂xₙ/∂θ. The second equation lets us update the influence matrix recursively at each time step. All the other partial derivatives can be computed using the definitions of the loss L and the chosen functions Fₒᵤₜ and Fₛₜ for our particular network; in our work, the latter are respectively a linear function and the element-wise hyperbolic tangent. That way of computing the loss gradient at each time step is called real-time recurrent learning (RTRL). The main drawback of RTRL is its high computational expense, as the update cost is O(q⁴), where q is the number of hidden units. This is due in particular to the size of the influence matrix, which has many entries that we need to update at each time step. The main idea of UORO is to estimate that matrix as the product of two random vectors (in other words, it is approximated by an unbiased rank-1 matrix estimator) and to update them at each time step:</p>
+						<p>The first equation enables calculating the loss gradient as a function of the influence matrix ∂xₙ/∂θ. The second equation lets us update the influence matrix recursively at each time step. All the other partial derivatives can be computed using the definitions of the loss Lₙ and the chosen functions Fₒᵤₜ and Fₛₜ for our particular network; in our work, the latter are respectively a linear function and the element-wise hyperbolic tangent. That way of computing the loss gradient at each time step is called real-time recurrent learning (RTRL). The main drawback of RTRL is its high computational expense, as the update cost is O(q⁴), where q is the number of hidden units. This is due in particular to the size of the influence matrix, which has many entries that we need to update at each time step. The main idea of UORO is to estimate that matrix as the product of two random vectors (in other words, it is approximated by an unbiased rank-1 matrix estimator) and to update them at each time step:</p>
 
 						<p>\[
 							\mathbb{E}(\tilde{x}_n \tilde{\theta}_n^T) = \partial{x_n}/ \partial \theta_n
@@ -168,7 +168,7 @@
 
 						<h3 id="section 2.3"> 2.3. UORO implementation in Matlab </h3>
 
-						<p>Let's try to understand the basic implementation of UORO in Matlab. Here, I will describe the <code>rnn_UORO</code> function of <a href="https://github.com/pohl-michel/time-series-forecasting-with-UORO-RTRL-LMS-and-linear-regression" target ="_blank">the Github repository corresponding to my paper</a>. If you have some knowledge of Python, there is nothing to be afraid of here, as the syntax of these two languages is very close to one another. You can skip this part if you are not interested in the code or prefer jumping to the analysis of the results.</p>
+						<p>Let's try to understand the basic implementation of UORO in Matlab. Here, I will describe the <code>rnn_UORO</code> function of <a href="https://github.com/pohl-michel/time-series-forecasting-with-UORO-RTRL-LMS-and-linear-regression" target ="_blank">the Github repository corresponding to my paper</a>. If you know some Python, the Matlab syntax should look familiar, as these two languages are relatively similar. You can skip this part if you are not interested in the code or prefer jumping to the analysis of the results.</p>
 
 						<p>As a side note, I would also like to mention the in-depth guide on realpython.com, entitled <a href="https://realpython.com/matlab-vs-python/" target ="_blank">"MATLAB vs Python: Why and How to Make the Switch"</a>, which compares Matlab and Python and helped me a lot when transitioning from Matlab to Python, as these two languages are quite similar. You can also read that if you are proficient in Python and want to understand the Matlab syntax better.</p>
 
@@ -192,18 +192,18 @@
 
 						<p>Finally, we update the gradient estimate with the <code>update_param_optim</code> auxiliary function described above (line 51). I used the <a href="https://www.mathworks.com/help/matlab/ref/reshape.html" target ="_blank">reshape</a> function and slicing, as the weight matrices <code>myRNN.Wa</code>, <code>myRNN.Wb</code>, and <code>myRNN.Wc</code> are hard-coded as 2D arrays and the vector <code>theta_vec</code> concatenating these weights is a line vector. In the end, I update the state vector and store the calculation time (with toc) and the instantaneous loss for later analysis.</p>
 
-						<p>The code in <a href="https://github.com/pohl-michel/time-series-forecasting-with-UORO-RTRL-LMS-and-linear-regression" target ="_blank">my Github repository</a> differs slightly as it also handles GPU computing, but I skipped that part to make explanations simple. Also, I experimentally found that using my GPU made the UORO calculations slower. Therefore, my article only reports the performance of UORO corresponding to CPU calculations.</p>
+						<p>The code in <a href="https://github.com/pohl-michel/time-series-forecasting-with-UORO-RTRL-LMS-and-linear-regression" target ="_blank">my Github repository</a> differs slightly as it also handles GPU computing, but I skipped that part to keep the explanation simple. Also, I experimentally found that using my GPU made the UORO calculations slower. Therefore, my article only reports the performance of UORO corresponding to CPU calculations.</p>
 
 
 						<h2 id="section 3">3. Results</h2>
 
 						<h3>3.1. Qualitative observation of the forecasting behavior</h3>
 
-						<p>Let's first define essential terms here. We call "horizon" and denote by h the time interval in advance for which the prediction is made, and signal history length (SHL) the interval of time, the information of which is used to make a single prediction at a given time step.</p>
+						<p>Let's first define essential terms here. We call "horizon" and denote by $h$ the time interval in advance for which the prediction is made, and signal history length (SHL) the interval of time, the information of which is used to make a single prediction at a given time step.</p>
 
 						<figure>
 							<img src="images/horison_SHL_definition.png" />
-							<figcaption> Forecasting a 1D position signal. The SHL and horizon are respectively denoted by h and  L. Reprinted from <a href="https://doi.org/10.48550/arXiv.2106.01100" target ="_blank">[3]</a>, Copyright 2022, with permission from Elsevier. </figcaption>
+							<figcaption> Forecasting a 1D position signal. The SHL and horizon are respectively denoted by $h$ and $L$. Reprinted from <a href="https://doi.org/10.48550/arXiv.2106.01100" target ="_blank">[3]</a>, Copyright 2022, with permission from Elsevier. </figcaption>
 						</figure><br><br>
 
 						<p>Let's first visually and qualitatively examine the predicted motion of marker 3 in sequence 1 (irregular breathing) along the spine direction for different horizon values.</p>
@@ -234,27 +234,27 @@
 
 						<h3 id="section 3.2">3.2. Numerical forecasting accuracy</h3>
 
-						<p>I confess that I picked the particular example above because it makes UORO look good. Still, in some situations, UORO does not perform as well as the other methods. So let's look closely at what happens when we average numerical precision metrics over horizon values between 0.1s and 2.0s and the nine sequences. Indeed, it was reported previously that the range of latencies in radiotherapy is somewhere 0.1s and 2.0s <a href="https://doi.org/10.1109/MCSE.2010.99" target ="_blank">[9]</a>.</p>
+						<p>I confess that I picked the particular example above because it makes UORO look good. Still, in some situations, UORO does not perform as well as the other methods. So let's look closely at what happens when we average numerical precision metrics over horizon values between 0.1s and 2.0s and the nine sequences. Indeed, reported latencies for radiotherapy treatment systems typically range from 0.1s to 2.0s <a href="https://doi.org/10.1109/MCSE.2010.99" target ="_blank">[9]</a>.</p>
 
 						<figure>
 							<img src="images/performance_comparison_table.png" alt="" />
 							<figcaption> Comparison of the forecasting performance of each algorithm. Each error value corresponds to the average of a given performance measure of the test set over the sequences considered and the horizon values between 0.1s and 2.0s. Adapted from <a href="https://doi.org/10.48550/arXiv.2106.01100" target ="_blank">[3]</a>, Copyright 2022, with permission from Elsevier. </figcaption>
 						</figure><br><br>
 
-						<p>I reported several metrics as they give different information about the forecasting behavior of each algorithm. The mean average error (MAE) is the average absolute error over time stricto sensu, the root-mean-square error (RMSE) penalizes more high deviations, and the jitter measures the oscillation amplitude of the predicted signal. Predictions that oscillate much are not desirable because they make controlling the robot guiding the radiation beam more complex.</p>
+						<p>I reported several metrics as they give different information about the forecasting behavior of each algorithm. The mean average error (MAE) is the average absolute error over time stricto sensu, the root-mean-square error (RMSE) penalizes large deviations more strongly, and the jitter measures the oscillation amplitude of the predicted signal. Highly oscillatory predictions are undesirable because they make robotic control of the radiation beam more complex.</p>
 
 						<p>When looking at the error metrics averaged over the nine sequences, we observe that RTRL beats UORO when it comes to the MAE, but the situation is the opposite when looking at the RMSE. LMS has relatively good precision, but its jitter is high. Of course, the errors are lower when considering only the sequences corresponding to regular breathing and higher when looking at those corresponding to irregular breathing.</p>
 
-						<p>But different systems have different latency times. The choice of the best algorithm in each scenario depends on the latency of the radiotherapy system considered. Therefore, I plotted the forecasting errors as a function of the horizon values h.</p>
+						<p>But different systems have different latency times. The choice of the best algorithm in each scenario depends on the latency of the radiotherapy system considered. Therefore, I plotted the forecasting errors as a function of the horizon values $h$.</p>
 
 						<figure>
 							<img src="images/MAE RMSE vs h.jpg" alt="" />
 							<figcaption> Forecasting performance of each algorithm as a function of the prediction horizon. Each point corresponds to the average of one performance measure of the test set across the 9 sequences. Reprinted from <a href="https://doi.org/10.48550/arXiv.2106.01100" target ="_blank">[3]</a>, Copyright 2022, with permission from Elsevier. </figcaption>
 						</figure><br><br>
 
-						<p>The graphs appear to have local irregularities because hyper-parameter optimization leads to different hyper-parameter choices for different values of h. However, the errors globally tend to increase as h increases. We observe that linear prediction is actually the most accurate forecasting algorithm for low values of h. LMS also appears to be efficient for intermediate values of h.</p>
+						<p>The graphs appear to have local irregularities because hyper-parameter optimization leads to different hyper-parameter choices for different values of $h$. However, the errors generally tend to increase as $h$ increases. We observe that linear prediction is actually the most accurate forecasting algorithm for low values of $h$. LMS also appears to be efficient for intermediate values of $h$.</p>
 
-						<p>The following graph summarizes the performance of each algorithm in terms of RMSE and jitter. As a side note, in my original article, I used a similar graph describing performance in terms of "normalized RMSE," abbreviated as nRMSE, instead of RMSE; the former is a measure additionally taking into account the amplitudes of the signals when evaluating performance. Again, we observe that both the RMSE and jitter are higher for signals corresponding to irregular breathing. This 2D representation can help find the algorithm with the highest forecasting accuracy given an acceptable jitter level and a specific horizon value.</p>
+						<p>The following graph summarizes the performance of each algorithm in terms of RMSE and jitter. As a side note, in my original article, I used a similar graph describing performance in terms of "normalized RMSE," abbreviated as nRMSE, instead of RMSE; the former is a measure additionally taking into account the amplitudes of the signals. Again, we observe that both the RMSE and jitter are higher for signals corresponding to irregular breathing. This 2D representation can help find the algorithm with the highest forecasting accuracy given an acceptable jitter level and a specific horizon value.</p>
 
 						<figure>
 							<img src="images/nRMSE vs jitter.png" alt="" />
@@ -271,7 +271,7 @@
 							<figcaption> Prediction nRMSE of UORO of the cross-validation set as a function of the learning rate and SHL, for different horizon values. The black dotted curves correspond to the nRMSE minimum averaged over the horizon values between 0.1s and 2.0s, and the associated error bars correspond to its standard deviation over these horizon values. Reprinted from <a href="https://doi.org/10.48550/arXiv.2106.01100" target ="_blank">[3]</a>, Copyright 2022, with permission from Elsevier. </figcaption>
 						</figure><br><br>
 
-						<p>We observe again that the higher the horizon h, the higher the prediction error. In the case of high values of h, the network appears more efficient with a higher learning rate and lower SHL. In other words, in that scenario, the network works better when taking into account only the most recent signals and adapting the weights faster when changes in the incoming respiratory patterns occur.</p>
+						<p>We observe again that the higher the horizon $h$, the higher the prediction error. In the case of high values of $h$, the network appears more efficient with a higher learning rate and lower SHL. In other words, in that scenario, the network works better when taking into account only the most recent signals and adapting the weights faster when changes in the incoming respiratory patterns occur.</p>
 
 
 						<h3 id="section 3.4">3.4. Time performance</h3>
@@ -286,11 +286,11 @@
 
 						<h2 id="section 4">4. In short</h2>
 
-						<p>This work is the first application of RNNs trained with UORO to respiratory motion compensation in radiotherapy. UORO is an online learning algorithm capable of learning data arriving in a streaming fashion, which enables high robustness to irregular breathing and needs fewer data than traditional learning algorithms. As a result, it has the potential to reduce irradiation of healthy tissues and, in turn, avoid side effects such as pneumothorax.</p>
+						<p>This work is the first application of RNNs trained with UORO to respiratory motion compensation in radiotherapy. UORO is an online learning algorithm capable of learning from data arriving in a streaming fashion, which enables high robustness to irregular breathing and requires less data than traditional learning algorithms. As a result, it has the potential to reduce irradiation of healthy tissues and, in turn, avoid side effects such as pneumothorax.</p>
 
-						<p>To the best of our knowledge, we used the most extensive range of horizon values  h to compare the different forecasting algorithms among the studies in the literature about respiratory motion prediction. We found that linear regression achieved the lowest RMSE for 0.1s ≤ h ≤  0.2s, followed by LMS for 0.3s ≤ h ≤ 0.5s, and UORO for h ≥ 0.6s, with respiratory signals sampled at 10Hz.</p>
+						<p>To the best of our knowledge, we used the most extensive range of horizon values $h$ to compare the different forecasting algorithms among the studies in the literature about respiratory motion prediction. We found that linear regression achieved the lowest RMSE for 0.1s ≤ $h$ ≤  0.2s, followed by LMS for 0.3s ≤ $h$ ≤ 0.5s, and UORO for $h$ ≥ 0.6s, with respiratory signals sampled at 10Hz.</p>
 
-						<p>If this story was interesting to you, please do not hesitate to read the <a href="https://arxiv.org/abs/2106.01100" target ="_blank">original research article</a>, where I cover this topic more extensively and discuss mathematical details (the article is also the first to provide detailed calculations for some of  the expressions related to the loss gradient in UORO for vanilla RNNs). <a href="https://doi.org/10.5281/zenodo.5506964" target ="_blank">The dataset and Matlab code</a> are openly available,  so you can use them for your own experiments if you wish. Please also kindly consider citing my research article if you do so.</p>
+						<p>If this story was interesting to you, please do not hesitate to read the <a href="https://arxiv.org/abs/2106.01100" target ="_blank">original research article</a>, where I cover this topic more extensively and discuss mathematical details (the article is also the first to provide detailed calculations for some of  the expressions related to the loss gradient in UORO for vanilla RNNs). <a href="https://doi.org/10.5281/zenodo.5506964" target ="_blank">The dataset and Matlab code</a> are publicly available. If you use them, please kindly consider citing that research article.</p>
 
 						<!-- <p>Thank you so much for the time that you have spent reading this. I sincerely hope that you could enjoy learning something interesting. Please do not hesitate to like this story, share it,  and let me know your thoughts in the comments section. :)</p> -->
 
@@ -328,9 +328,9 @@
 							<p>minimizes the variance of the approximation.</p>
 						</blockquote>
 
-						<p>The first part of this property is relatively easy to prove, and results from the linearity of the expectation operator. The variance minimization part requires a more detailed analysis. While I will not comment on the latter point here, I would like to connect this result to the Matlab implementation in Section 2.3. You can look up at the code and see that the variable <code>nu</code> in my implementation corresponds to the vector ν above (line 30). The variables <code>rho0</code> and <code>rho1</code> (lines 40 and 41) correspond to the quantities ρᵢ in the formulas above. Notice also how the latter are expressed as the square root of the norm of two vectors in the code.  The variable pred_par.eps_normalizer appearing around those fractions is here to guarantee numerical stability.</p>
+						<p>The first part of this property is relatively easy to prove, and results from the linearity of the expectation operator. The variance minimization part requires a more detailed analysis. While I will not comment on the latter point here, this result connects directly to the Matlab implementation in Section 2.3. You can look up at the code and see that the variable <code>nu</code> in my implementation corresponds to the vector ν above (line 30). The variables <code>rho0</code> and <code>rho1</code> (lines 40 and 41) correspond to the quantities ρᵢ in the formulas above. Notice also how the latter are expressed as the square root of the norm of two vectors in the code.  The variable pred_par.eps_normalizer appearing around those fractions helps guarantee numerical stability.</p>
 
-						<p>To derive the UORO algorithm, the rank-one trick is actually applied twice in conjunction with the equation describing the recursive update of the influence matrix ∂xₙ/∂θ (cf Section 2.2). The proof details are in the original UORO paper <a href="https://doi.org/10.48550/arXiv.1702.05043" target ="_blank">[8]</a>.</p>
+						<p>The UORO algorithm can be derived by applying twice the rank-one trick in conjunction with the equation describing the recursive update of the influence matrix ∂xₙ/∂θ (cf Section 2.2) <a href="https://doi.org/10.48550/arXiv.1702.05043" target ="_blank">[8]</a>.</p>
 
 
 						<h2 id ="References">References</h2>
@@ -348,7 +348,7 @@
 							<li>Ollivier Yann, Corentin Tallec, and Guillaume Charpiat, <a href="https://doi.org/10.48550/arXiv.1507.07680" target ="_blank">Training recurrent networks online without backtracking</a> (2015), ArXiv.org</li>
 						</ol>
 
-						<i>Published on July 5, 2022, last update on November 21, 2022</i>
+						<i>Published on July 5, 2022, last update on May 17, 2026</i>
 
 					</section>
 

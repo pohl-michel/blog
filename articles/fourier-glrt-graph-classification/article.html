@@ -122,7 +122,7 @@
 
 						<h3 id="GLRT"> 2.4. The generalized likelihood ratio test for signals with white, additive, Gaussian noise</h3>
 
-						<p style ="margin-bottom: 0.5em">Given the input graph signal $y \in \mathbb{R}^{M}$ for one subject to classify, we consider the following two alternative hypotheses:</p>
+						<p style ="margin-bottom: 0.5em">Given the input graph signal $y \in \mathbb{R}^{M}$ for one subject to classify, we consider the following two competing hypotheses:</p>
 						<!-- <p style="margin-bottom: 0"></p> -->
 						<ul style="color:black; margin-bottom: 1em">
 							<li>$\mathcal{H}_0$: $y$ belongs to the reference graph $\mathcal{G}_0$ corresponding to the healthy subjects</li>
@@ -152,11 +152,11 @@
 							\:.
 						\]
 
-						We can determine $\sigma$ using the maximum-a-posteriori (MAP) estimation method, as this quantity is not directly observed. In other words, we can set $\sigma$ to the value that maximizes $l(x, \sigma; y)$. Differentiating the log-likelihood gives:
+						Since $\sigma$ an unknown nuisance parameter, we estimate it by maximizing $l(x, \sigma; y)$ for fixed $x$. Differentiating the log-likelihood gives:
 						\[
 							\frac{\partial \operatorname{ln} l}{\partial \sigma} (x, \sigma; y) = - \frac{M}{\sigma} + \frac{\lVert y - x \rVert_2^2}{\sigma^3} \:.
 						\]
-						Hence, the value of $\sigma$ that maximizes the likelihood of the observation is:
+						This yields the following estimate for $\sigma$, conditional on $x$:
 						\[
 							\hat{\sigma}^2
 							= \frac{\lVert y - x \rVert_2^2 }{M} \:.
@@ -170,16 +170,17 @@
 						\]
 						In particular, this indicates that the likelihood of signal $x$ being the denoised version of $y$ increases when the standard deviation of the associated noise $\epsilon$ decreases.
 
-						The GLRT ratio corresponding to the two alternative hypotheses $\mathcal{H}_0$ and $\mathcal{H}_1$ can then be written as:
+						The generalized likelihood ratio for the two alternative hypotheses $\mathcal{H}_0$ and $\mathcal{H}_1$ is therefore:
 						\[
 							\rho = 
-							\frac{l(x_0, \hat{\sigma_0}; y)}{l(x_1, \hat{\sigma_1}; y)} = 
+							\frac{l(\hat{x}_0, \hat{\sigma}_0; y)}{l(\hat{x}_1, \hat{\sigma}_1; y)} = 
 							\left(
-								\frac{\hat{\sigma_1}}{\hat{\sigma_0}}
-							\right)^{M} \:.
+								\frac{\hat{\sigma}_1}{\hat{\sigma}_0}
+							\right)^{M} \:,
 						\]
+						where $\hat{x}_i$ and $\sigma{x}_i$ designates the maximum-likelihood estimates of $x$ and $\sigma$ under hypothesis $\mathcal{H}_i$. The expression of $\hat{x}_i$ is derived in the next section.
 
-						Assuming equal class priors (i.e., both classes are equally probable), the incoming data is classified as corresponding to the healthy case when $\rho \geq 1$, i.e. $\hat{\sigma_1} \geq \hat{\sigma_0}$. In other words, the class selected is that for which the input signal is the least noisy. 
+						Assuming equal class priors (i.e., both classes are equally probable), the incoming data is classified as corresponding to the healthy case when $\rho \geq 1$, i.e. $\hat{\sigma}_1 \geq \hat{\sigma}_0$. In other words, the class selected is that for which the input signal is the least noisy. 
 
 
 						<h3 id="Bandlimited signals"> 2.5. The bandlimited graph-signal assumption</h3>
@@ -195,10 +196,10 @@
 						$$\begin{aligned} 
 						\lVert y - x \rVert_2^2 &= \lVert F (F^{\text{T}} y - F^{\text{T}} x) \rVert_2^2 \\ 
 						&= \lVert F^{\text{T}} y - F^{\text{T}} x \rVert_2^2 \\ 
-						&= \lVert \Phi^*(F^{\text{T}} y) + \Phi(F^{\text{T}} y) - F^{\text{T}} x \rVert_2^2 \\
-						&= \lVert \Phi^*(F^{\text{T}} y) \rVert_2^2 + \lVert \Phi(F^{\text{T}} y) - F^{\text{T}} x \rVert_2^2 \\
+						&= \lVert \Phi^\perp(F^{\text{T}} y) + \Phi(F^{\text{T}} y) - F^{\text{T}} x \rVert_2^2 \\
+						&= \lVert \Phi^\perp(F^{\text{T}} y) \rVert_2^2 + \lVert \Phi(F^{\text{T}} y) - F^{\text{T}} x \rVert_2^2 \\
 						\end{aligned}$$
-						where $\Phi$ and $\Phi^*$ denote the orthogonal projections onto the subspace of $\mathbb{R}^{M}$ spanned by the first $K$ and last $M - K$ canonical basis vectors of $\mathbb{R}^{M}$. In particular, we have the inequality:
+						where $\Phi$ and $\Phi^\perp$ denote the orthogonal projections onto the subspace of $\mathbb{R}^{M}$ spanned by the first $K$ and last $M - K$ canonical basis vectors of $\mathbb{R}^{M}$. In particular, we have the inequality:
 							\[
 								\lVert y - x \rVert_2 \geq \lVert \Phi(F^{\text{T}} y) \rVert_2 \:,
 							\]
@@ -207,14 +208,14 @@
 								\hat{x} = F \, \Phi(F^{\text{T}} y) \:.
 							\]							
 
-						In particular, maximization of the likelihood $l(x, \sigma; y)$ yields this value of $\hat{x}$, the MAP estimate of $x$. Under the bandlimited signal assumption, we can also rewrite the MAP estimate of $\sigma$ as:
+						In particular, maximization of the likelihood $l(x, \sigma; y)$ yields this estimate for $\hat{x}$. Under the bandlimited signal assumption, we can also rewrite the maximum-likelihood estimate of $\sigma$ as:
 						\[
 							\hat{\sigma}^2
-							= \frac{\lVert \Phi^*(F^{\text{T}} y) \rVert_2^2}{M} 
+							= \frac{\lVert \Phi^\perp(F^{\text{T}} y) \rVert_2^2}{M} 
 							= \frac{\lVert y \rVert_2^2 - \lVert \Phi(F^{\text{T}} y) \rVert_2^2}{M}\:.
 						\]	
 
-						The second equality can be obtained by setting $x=0$ in the formula for $\lVert y - x \rVert_2^2$ above—it essentially uses the preservation of the signal energy (i.e., norm) by the GFT. In the binary graph-signal classification task using the GLRT rule under the equal-prior hypothesis, class 0 is selected when $\hat{\sigma_1} \geq \hat{\sigma_0}$, i.e. when:
+						The second equality can be obtained by setting $x=0$ in the formula for $\lVert y - x \rVert_2^2$ above—it essentially uses the preservation of the signal energy (i.e., norm) by the GFT. In the binary graph-signal classification task using the GLRT rule under the equal-prior hypothesis, class 0 is selected when $\hat{\sigma}_1 \geq \hat{\sigma}_0$, i.e. when:
 						\[
 							\lVert \Phi(F_{\mathcal{G}_0}^{\text{T}} y) \rVert_2^2 \geq \lVert \Phi(F_{\mathcal{G}_1}^{\text{T}} y) \rVert_2^2 \:,
 						\]				

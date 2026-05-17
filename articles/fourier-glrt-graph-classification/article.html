@@ -81,7 +81,7 @@
 							\[
 								y_{r,s} = \alpha \, \bar{y}_{r,s} \:,
 							\]
-						where $\alpha \in \mathbb{R}^5$ represent region- and subject-independent linear combination coefficients. This allows constructing one fully connected, undirected graph per class, whose nodes each represent one anatomical brain region. Given two regions indexed by $i$ and $j$, its weight $W_{i,j}$ characterize overall similarity between the corresponding scalar features in each class, as follows:
+						where $\alpha \in \mathbb{R}^5$ represent region- and subject-independent linear combination coefficients. This allows constructing one fully connected, undirected graph per class, whose nodes each represent one anatomical brain region. Given two regions indexed by $i$ and $j$, the weight $W_{i,j}$ characterizes the overall similarity between the corresponding scalar features for a given class, as follows:
 							\[
 								W_{i,j} = \text{exp} \left( -\sum_{s = 1}^{N_k}{(y_{i,s} - y_{j,s})^2} \right).
 							\]
@@ -179,7 +179,7 @@
 							\right)^{M} \:.
 						\]
 
-						Using the equal-prior hypothesis (i.e., both class are equally probable), the incoming data is classified as corresponding to the healthy case when $\rho \geq 1$, i.e. $\hat{\sigma_1} \geq \hat{\sigma_0}$. In other words, the class selected is that for which the input signal is the least noisy. 
+						Using the equal-prior hypothesis (i.e., both classes are equally probable), the incoming data is classified as corresponding to the healthy case when $\rho \geq 1$, i.e. $\hat{\sigma_1} \geq \hat{\sigma_0}$. In other words, the class selected is that for which the input signal is the least noisy. 
 
 
 						<h3 id="Bandlimited signals"> 2.5. The bandlimited graph-signal assumption</h3>
@@ -274,7 +274,7 @@
 						</p>
 
 						<p>
-						So far, only a few arbitrarily selected values of $\alpha$ were evaluated, and the optimization of $\alpha$ to maximize classification performance, as well as the comparison with baseline ML classifiers are left as future work. Future directions include considering similarity measures other than the Gaussian kernel and relaxing the bandlimited graph-signal assumption. Furthermore, using more data would help robustly validating performance while allowing the exploration of GNN-based classifiers. 
+						So far, only a few arbitrarily selected values of $\alpha$ were evaluated, and the optimization of $\alpha$ to maximize classification performance, as well as the comparison with baseline ML classifiers are left as future work. Future directions include considering similarity measures other than the Gaussian kernel and relaxing the bandlimited graph-signal assumption. Furthermore, using more data would help robustly validate performance while allowing the exploration of GNN-based classifiers. 
 						</p>
 
 						<h2 id="Data and code">Data and code availability</h2>

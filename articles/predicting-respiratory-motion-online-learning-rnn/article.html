@@ -168,7 +168,7 @@
 
 						<h3 id="section 2.3"> 2.3. UORO implementation in Matlab </h3>
 
-						<p>Let's try to understand the basic implementation of UORO in Matlab. Here, I will describe the <code>rnn_UORO</code> function of <a href="https://github.com/pohl-michel/time-series-forecasting-with-UORO-RTRL-LMS-and-linear-regression" target ="_blank">the Github repository corresponding to my paper</a>. If you know some Python, the Matlab syntax should look familiar, as these two languages are relatively similar. You can skip this part if you are not interested in the code or prefer jumping to the analysis of the results.</p>
+						<p>Let's try to understand the basic implementation of UORO in Matlab. Here, I will describe the <code>rnn_UORO</code> function of <a href="https://github.com/pohl-michel/time-series-forecasting-uoro-rtrl" target ="_blank">the Github repository corresponding to my paper</a>. If you know some Python, the Matlab syntax should look familiar, as these two languages are relatively similar. You can skip this part if you are not interested in the code or prefer jumping to the analysis of the results.</p>
 
 						<p>As a side note, I would also like to mention the in-depth guide on realpython.com, entitled <a href="https://realpython.com/matlab-vs-python/" target ="_blank">"MATLAB vs Python: Why and How to Make the Switch"</a>, which compares Matlab and Python and helped me a lot when transitioning from Matlab to Python, as these two languages are quite similar. You can also read that if you are proficient in Python and want to understand the Matlab syntax better.</p>
 
@@ -176,7 +176,7 @@
 
 						<script src="https://gist.github.com/pohl-michel/53606d9f5c6ea1fb83d0f888bfe11568.js"></script>
 
-						<p>I also used another auxiliary function to perform one gradient descent step with clipping at each time step. Here, <code>theta</code> is the RNN parameter vector, and <code>dtheta</code> is the loss gradient. Experimentally, I found that clipping helps stabilize the behavior of the RNN and achieve better performance.   If you look at my code in <a href="https://github.com/pohl-michel/time-series-forecasting-with-UORO-RTRL-LMS-and-linear-regression" target ="_blank">the Github repository</a>, you will notice that I also implemented adaptive moment estimation (ADAM). However, I experimentally noticed that the latter did not improve the forecasting accuracy. Therefore I only reported the results obtained with gradient descent in my article.</p>
+						<p>I also used another auxiliary function to perform one gradient descent step with clipping at each time step. Here, <code>theta</code> is the RNN parameter vector, and <code>dtheta</code> is the loss gradient. Experimentally, I found that clipping helps stabilize the behavior of the RNN and achieve better performance. If you look at my code in <a href="https://github.com/pohl-michel/time-series-forecasting-uoro-rtrl" target ="_blank">the Github repository</a>, you will notice that I also implemented adaptive moment estimation (ADAM). However, I experimentally noticed that the latter did not improve the forecasting accuracy. Therefore I only reported the results obtained with gradient descent in my article.</p>
 
 						<script src="https://gist.github.com/pohl-michel/356ecb4a0c13b92aad32d26e50a113dd.js"></script>
 
@@ -192,7 +192,7 @@
 
 						<p>Finally, we update the gradient estimate with the <code>update_param_optim</code> auxiliary function described above (line 51). I used the <a href="https://www.mathworks.com/help/matlab/ref/reshape.html" target ="_blank">reshape</a> function and slicing, as the weight matrices <code>myRNN.Wa</code>, <code>myRNN.Wb</code>, and <code>myRNN.Wc</code> are hard-coded as 2D arrays and the vector <code>theta_vec</code> concatenating these weights is a line vector. In the end, I update the state vector and store the calculation time (with toc) and the instantaneous loss for later analysis.</p>
 
-						<p>The code in <a href="https://github.com/pohl-michel/time-series-forecasting-with-UORO-RTRL-LMS-and-linear-regression" target ="_blank">my Github repository</a> differs slightly as it also handles GPU computing, but I skipped that part to keep the explanation simple. Also, I experimentally found that using my GPU made the UORO calculations slower. Therefore, my article only reports the performance of UORO corresponding to CPU calculations.</p>
+						<p>The code in <a href="https://github.com/pohl-michel/time-series-forecasting-uoro-rtrl" target ="_blank">my Github repository</a> differs slightly as it also handles GPU computing, but I skipped that part to keep the explanation simple. Also, I experimentally found that using my GPU made the UORO calculations slower. Therefore, my article only reports the performance of UORO corresponding to CPU calculations.</p>
 
 
 						<h2 id="section 3">3. Results</h2>
